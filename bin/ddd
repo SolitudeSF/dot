@@ -1,0 +1,3 @@
+#!/bin/sh
+[ "$(id -u)" = 0 ] || _sudo=sudo
+[ $# = 2 ] && exec $_sudo dd if="$1" of="$2"

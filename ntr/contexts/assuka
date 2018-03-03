@@ -1,0 +1,35 @@
+meta
+  name*:  assuka
+  author: solitude
+  source: pywal
+
+color
+  bg:     #161414
+  fg:     #ff8080
+  cursor: #ff8080
+
+color0:   #161414
+color8:   #2b2727
+
+color1:   #9d3333
+color9:   #d93434
+
+color2:   #05833e
+color10:  #01af50
+
+color3:   #b4802f
+color11:  #f8a92e
+
+color4:   #b74949
+color12:  #fe4e4e
+
+color5:   #b86262
+color13:  #ff6d6d
+
+color6:   #a97021
+color14:  #e8931d
+
+color7:   #b65959
+color15:  #ff8080
+
+wallpaper*: <{$HOME}>/assuka.png

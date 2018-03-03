@@ -1,0 +1,4 @@
+#!/bin/sh
+for w; do
+	echo "$w: "$(xdg-mime query filetype "$w")
+done

@@ -1,0 +1,33 @@
+meta
+  name*:  fahrenheit
+  author: fcpg
+  source: https://github.com/fcpg/vim-fahrenheit
+
+color
+  bg:     #000000
+  fg:     #ffaf5f
+  cursor: #d75f00
+
+color0:   #000000
+color8:   #262626
+
+color1:   #d75f00
+color9:   #d7875f
+
+color2:   #af875f
+color10:  #d7af87
+
+color3:   #ffd787
+color11:  #ffd75f
+
+color4:   #5f87af
+color12:  #87afd7
+
+color5:   #875f5f
+color13:  #af87af
+
+color6:   #ffd7af
+color14:  #ffffd7
+
+color7:   #a8a8a8
+color15:  #ffffff

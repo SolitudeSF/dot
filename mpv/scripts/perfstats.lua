@@ -1,0 +1,1 @@
+/home/solitude/.data/splug/github.com+kevinlekiller+mpv_scripts/perfstats/perfstats.lua

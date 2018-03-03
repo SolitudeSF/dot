@@ -1,0 +1,53 @@
+music_directory         "~/mus/"
+db_file                 "~/.data/mpd/database"
+log_file                "~/.data/mpd/log"
+pid_file                "~/.data/mpd/pid"
+state_file              "~/.data/mpd/state"
+playlist_directory      "~/.data/mpd/playlists"
+log_level               "default"
+password                "password@read,add,control,admin"
+default_permissions     "read,add,control,admin"
+user                    "solitude"
+bind_to_address         "127.0.0.1"
+bind_to_address         "~/.data/mpd/socket"
+port                    "6600"
+auto_update             "yes"
+#auto_update_depth      "3"
+replaygain              "album"
+replaygain_preamp       "0"
+#volume_normalization   "no"
+#audio_buffer_size      "2048"
+#buffer_before_play     "10%"
+#connection_timeout     "60"
+#max_connections        "10"
+#max_playlist_length    "16384"
+#max_command_list_size  "2048"
+#max_output_buffer_size "8192"
+filesystem_charset      "UTF-8"
+#id3v1_encoding         "ISO-8859-1"
+
+input {
+    plugin  "tidal"
+    enabled "no"
+}
+
+audio_output {
+    type "pulse"
+    name "mpd pulse"
+}
+
+audio_output {
+    type   "fifo"
+    name   "mpd fifo"
+    path   "/tmp/mpd.fifo"
+    format "48000:16:2"
+}
+
+audio_output {
+    type        "httpd"
+    name        "mpd soryegeton"
+    encoder     "opus"
+    port        "8000"
+    quality     "0"
+    format      "48000:16:2"
+}

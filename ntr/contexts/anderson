@@ -1,0 +1,33 @@
+meta
+  name*:  anderson
+  author: tlhr
+  source: https://github.com/tlhr/anderson.vim
+
+color
+  bg:     #363432
+  fg:     #c5beba
+  cursor: #d0d0d0
+
+color0:   #363432
+color8:   #645d59
+
+color1:   #be503e
+color9:   #f0a4af
+
+color2:   #7bb292
+color10:  #9ad1bc
+
+color3:   #d7ae38
+color11:  #c4c18b
+
+color4:   #628b97
+color12:  #bad4f5
+
+color5:   #c7a095
+color13:  #e7c6be
+
+color6:   #88a2a4
+color14:  #a8c1c5
+
+color7:   #837d7a
+color15:  #c5beba

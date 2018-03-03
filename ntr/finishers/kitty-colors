@@ -1,0 +1,2 @@
+#!/bin/sh
+kitty @ set-colors -a -c "$XDG_CONFIG_HOME/kitty/colors.conf"

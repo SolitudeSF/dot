@@ -1,0 +1,33 @@
+meta
+  name*:  blaquemagick
+  author: xero
+  source: https://github.com/xero/dotfiles/blob/master/urxvt/blaquemagick.Xcolors
+
+color
+  bg:     #222222
+  fg:     #c2c2b0
+  cursor: #c2c2b0
+
+color0:   #222222
+color8:   #222222
+
+color1:   #5F8787
+color9:   #5F8787
+
+color2:   #666666
+color10:  #666666
+
+color3:   #87875f
+color11:  #87875f
+
+color4:   #888888
+color12:  #888888
+
+color5:   #8181a6
+color13:  #8181a6
+
+color6:   #777777
+color14:  #777777
+
+color7:   #c1c1c1
+color15:  #c1c1c1

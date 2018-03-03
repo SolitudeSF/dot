@@ -1,0 +1,4 @@
+#!/bin/sh
+for term in /dev/pts/[0-9]*; do
+      cat "$XDG_CACHE_HOME/terminal_colors" > "$term"
+done

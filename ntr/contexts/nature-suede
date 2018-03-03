@@ -1,0 +1,33 @@
+meta
+  name*:  Nature Suede
+  author: Gslob
+  source: http://terminal.sexy/#Fw8NdGxIOSklmHJMkI8yqpZMe4VOa1ZEXFFCyLVbVEsur2Uvw8E9yLVbcKFsmHJMd4cl5NyM
+
+color
+  bg:     #170f0d
+  fg:     #746c48
+  cursor: #746c48
+
+color0:   #392925
+color8:   #544b2e
+
+color1:   #98724c
+color9:   #af652f
+
+color2:   #908f32
+color10:  #c3c13d
+
+color3:   #aa964c
+color11:  #c8b55b
+
+color4:   #7b854e
+color12:  #70a16c
+
+color5:   #6b5644
+color13:  #98724c
+
+color6:   #5c5142
+color14:  #778725
+
+color7:   #c8b55b
+color15:  #e4dc8c

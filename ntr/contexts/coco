@@ -1,0 +1,33 @@
+meta
+  name*:  coco
+  author: dkeg
+  source: https://github.com/dkeg/crayolo
+
+color
+  bg:     #1f1d1d
+  fg:     #ccbaad
+  cursor: #ccbaad
+
+color0: #201e1e
+color8: #201e1e
+
+color1: #6b4747
+color9: #6b4747
+
+color2: #8d7138
+color10: #8d7138
+
+color3: #856237
+color11: #856237
+
+color4: #3c3c49
+color12: #3c3c49
+
+color5: #3c342e
+color13: #3c342e
+
+color6: #5d5a4b
+color14: #5d5a4b
+
+color7: #ccbaad
+color15: #eae2dc

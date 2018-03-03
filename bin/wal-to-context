@@ -1,0 +1,50 @@
+#!/usr/bin/env elvish
+use re
+
+data   = (all | from-json)
+col    = $data[colors]
+spec   = $data[special]
+wall   = $data[wallpaper]
+name   = (re:replace '(\..+)?$' '' (path-base $wall))
+author = (get-env USER)
+
+if (> (count $args) 0) {
+  name = $args[0]
+  if (> (count $args) 1) { author = $args[1] }
+}
+
+echo meta
+echo '  name*:  '$name
+echo '  author: '$author
+echo '  source: pywal'
+echo
+echo color
+echo '  bg:     '$spec[background]
+echo '  fg:     '$spec[foreground]
+echo '  cursor: '$spec[cursor]
+echo
+echo 'color0:   '$col[color0]
+echo 'color8:   '$col[color8]
+echo
+echo 'color1:   '$col[color1]
+echo 'color9:   '$col[color9]
+echo
+echo 'color2:   '$col[color2]
+echo 'color10:  '$col[color10]
+echo
+echo 'color3:   '$col[color3]
+echo 'color11:  '$col[color11]
+echo
+echo 'color4:   '$col[color4]
+echo 'color12:  '$col[color12]
+echo
+echo 'color5:   '$col[color5]
+echo 'color13:  '$col[color13]
+echo
+echo 'color6:   '$col[color6]
+echo 'color14:  '$col[color14]
+echo
+echo 'color7:   '$col[color7]
+echo 'color15:  '$col[color15]
+echo
+echo 'wallpaper*: '(re:replace &literal=$true '^'(put ~) '{{$HOME}}' $wall)

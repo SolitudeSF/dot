@@ -1,0 +1,33 @@
+meta
+  name*:  stellarized
+  author: nightsense
+  source: https://github.com/nightsense/stellarized
+
+color
+  bg:     #222532
+  fg:     #bead9d
+  cursor: #ecdac9
+
+color0:   #222532
+color8:   #2d3243
+
+color1:   #ca7375
+color9:   #ca7375
+
+color2:   #5c9a61
+color10:  #5c9a61
+
+color3:   #a58949
+color11:  #a58949
+
+color4:   #578fcc
+color12:  #578fcc
+
+color5:   #b178b5
+color13:  #b178b5
+
+color6:   #009ba2
+color14:  #009ba2
+
+color7:   #bead9d
+color15:  #ecdac9

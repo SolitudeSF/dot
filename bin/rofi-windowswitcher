@@ -1,0 +1,2 @@
+#!/bin/sh
+rofi -show window -modi window -show-icons -columns 2 -kb-accept-entry 'Return,Alt+Tab'

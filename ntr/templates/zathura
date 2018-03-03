@@ -1,0 +1,8 @@
+set selection-clipboard clipboard
+set window-title-basename true
+set statusbar-bg "<{color.bg}>"
+set statusbar-fg "<{color.fg}>"
+set recolor-lightcolor "<{color.fg}>"
+set recolor-darkcolor "<{color.bg}>"
+set recolor-keephue
+set recolor true

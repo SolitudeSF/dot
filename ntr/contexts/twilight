@@ -1,0 +1,33 @@
+meta
+  name*:  twilight
+  author: Chris Kempson
+  source: http://terminal.sexy/#Hh4ep6enHh4ez2pMj51q-e6YdYemm4Wdr8Tbp6enX1pgz2pMj51q-e6YdYemm4Wdr8Tb____
+
+color
+  bg:     #1e1e1e
+  fg:     #a7a7a7
+  cursor: #a7a7a7
+
+color0:   #1e1e1e
+color8:   #5f5a60
+
+color1:   #cf6a4c
+color9:   #cf6a4c
+
+color2:   #8f9d6a
+color10:  #8f9d6a
+
+color3:   #f9ee98
+color11:  #f9ee98
+
+color4:   #7587a6
+color12:  #7587a6
+
+color5:   #9b859d
+color13:  #9b859d
+
+color6:   #afc4db
+color14:  #afc4db
+
+color7:   #a7a7a7
+color15:  #ffffff

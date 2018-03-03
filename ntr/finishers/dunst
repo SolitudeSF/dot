@@ -1,0 +1,7 @@
+#!/bin/sh
+for i in $(pgrep dunst)
+do
+	[ "$(readlink -e "/proc/$i/exe")" = "/usr/bin/dunst" ] && kill "$i" && break
+done
+disown dunst &
+notify-send "ntr - ${NTR_name}" "dunst reloaded"

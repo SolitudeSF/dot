@@ -1,0 +1,9 @@
+#!/bin/sh
+[ -z "$1" ] && return 1 || f=$(command -v "$1")
+if [ -z "$f" ]; then
+	f="$HOME/bin/$1"
+	$EDITOR "$f"
+	[ -f "$f" ] && chmod +x "$f"
+else
+	exec $EDITOR "$f"
+fi

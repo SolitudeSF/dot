@@ -1,0 +1,33 @@
+meta
+  name*:  allomancer
+  author: Nequo
+  source: https://github.com/Nequo/vim-allomancer
+
+color
+  bg:     #282c34
+  fg:     #abb2bf
+  cursor: #abb2bf
+
+color0:   #282c34
+color8:   #55606d
+
+color1:   #e06c75
+color9:   #af5f5f
+
+color2:   #87af87
+color10:  #87af87
+
+color3:   #d7afaf
+color11:  #ff875f
+
+color4:   #6e88a6
+color12:  #6e88a6
+
+color5:   #d18ec2
+color13:  #875faf
+
+color6:   #5fafaf
+color14:  #5fafaf
+
+color7:   #abb2bf
+color15:  #eceff4

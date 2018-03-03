@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "What the heck? :---DD"
+printf %s "$(mpw -t x gpg 2>/dev/null)" | xclip -sel c -l 1
+gpg2 -d -q "$HOME/.password.gpg" | xclip -l 1
+mpw -t x ssh -M "$(xclip -o)" 2>/dev/null | xclip -sel c -l 1
+ssh-add

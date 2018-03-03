@@ -1,0 +1,15 @@
+if [ -z "$NO_LTO" ]; then
+	XBPS_CFLAGS="-flto -fuse-linker-plugin"
+	XBPS_CXXFLAGS="${XBPS_CFLAGS}"
+	XBPS_LDGLAGS="-flto -fuse-linker-plugin"
+fi
+XBPS_MAKEJOBS=8
+XBPS_CCACHE=yes
+XBPS_ALLOW_RESTRICTED=yes
+XBPS_PKG_OPTIONS_mpv=~jack,~sndio,~wayland,~alsa
+XBPS_PKG_OPTIONS_mpd=~sndio
+XBPS_PKG_OPTIONS_mediainfo=~GUI
+XBPS_PKG_OPTIONS_lxappearance=gtk3
+XBPS_PKG_OPTIONS_polybar=~i3
+XBPS_PKG_OPTIONS_retroarch=~jack
+XBPS_PKG_OPTIONS_zenity=~webkit

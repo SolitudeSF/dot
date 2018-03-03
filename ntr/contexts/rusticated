@@ -1,0 +1,33 @@
+meta
+  name*:  rusticated
+  author: nightsense
+  source: https://github.com/nightsense/rusticated
+
+color
+  bg:     #463f32
+  fg:     #d3d0cc
+  cursor: #d3d0cc
+
+color00:  #d3d0cc
+color08:  #c4c1bb
+
+color01:  #874749
+color09:  #874749
+
+color02:  #35633a
+color10:  #35633a
+
+color03:  #6b5729
+color11:  #6b5729
+
+color04:  #325c89
+color12:  #325c89
+
+color05:  #744b78
+color13:  #744b78
+
+color06:  #00646a
+color14:  #00646a
+
+color07:  #463f32
+color15:  #322c20

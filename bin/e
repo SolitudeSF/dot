@@ -1,0 +1,5 @@
+#!/bin/sh
+F=0
+for arg; do [ -f "$arg" ] && F=1 && break; done
+[ $F = 1 ] && F='' || F=$(fd -t f | fzy)
+exec "$EDITOR" "$@" "$F"

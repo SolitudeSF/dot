@@ -1,0 +1,33 @@
+meta
+  name*:  iosvkem
+  author: neutaaaaan
+  source: https://github.com/neutaaaaan/iosvkem
+
+color
+  bg:     #1b1d1e
+  fg:     #dddddd
+  cursor: #dddddd
+
+color0:   #1b1d1e
+color8:   #808080
+
+color1:   #d01b61
+color9:   #d01b61
+
+color2:   #60aa00
+color10:  #60aa00
+
+color3:   #d08928
+color11:  #d08928
+
+color4:   #6c9ef8
+color12:  #6c9ef8
+
+color5:   #b77fdb
+color13:  #b77fdb
+
+color6:   #00aa80
+color14:  #00aa80
+
+color7:   #dddddd
+color15:  #ffffff

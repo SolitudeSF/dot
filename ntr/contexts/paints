@@ -1,0 +1,33 @@
+meta
+  name*:  paints
+  author: dkeg
+  source: https://github.com/dkeg/crayolo#paints
+
+color
+  bg:     #2f2a2a
+  fg:     #c9c8c8
+  cursor: #c9c8c8
+
+color0:   #332e2e
+color8:   #332e2e
+
+color1:   #854340
+color9:   #854340
+
+color2:   #668c71
+color10:  #668c71
+
+color3:   #b2885d
+color11:  #b2885d
+
+color4:   #41647b
+color12:  #41647b
+
+color5:   #915556
+color13:  #915556
+
+color6:   #477578
+color14:  #477578
+
+color7:   #c9c8c8
+color15:  #c9c8c8

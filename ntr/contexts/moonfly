@@ -1,0 +1,33 @@
+meta
+  name*:  moonfly
+  author: bluz71
+  source: https://github.com/bluz71/vim-moonfly-colors
+
+color
+  bg:     #080808
+  fg:     #b2b2b2
+  cursor: #b2b2b2
+
+color0:   #373c40
+color8:   #f09479
+
+color1:   #ff5454
+color9:   #f74782
+
+color2:   #8cc85f
+color10:  #42cf89
+
+color3:   #e3c78a
+color11:  #cfcfb0
+
+color4:   #80a0ff
+color12:  #78c2ff
+
+color5:   #ce76e8
+color13:  #ae81ff
+
+color6:   #7ee0ce
+color14:  #85dc85
+
+color7:   #de935f
+color15:  #e2637f

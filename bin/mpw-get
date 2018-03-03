@@ -1,0 +1,13 @@
+#!/usr/bin/env elvish
+t=""
+if (eq 0 (count $args)) {
+  sites=[(keys (cat ~/.mpw.d/SolitudeSF.mpsites.json | from-json)[sites])]
+  if (eq ?(tty -s) $ok) {
+    t=(echo &sep="\n" $@sites | fzy)
+  } else {
+    t=(echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 25)
+  }
+} else {
+  t=$args[0]
+}
+mpw -t x -M (gpg2 -d -q ~/.password.gpg) $t 2>/dev/null | xclip -sel c -r

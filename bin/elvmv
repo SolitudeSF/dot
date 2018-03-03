@@ -1,0 +1,81 @@
+#!/usr/bin/env elvish
+
+use re
+
+fn call [a @b]{
+  list = [(splits ' ' $a)]
+  bin = (external $list[0])
+  rest = [$@b]
+  if (> (count $list) 1) {
+    rest = [$list[1:] $@b]
+  }
+  $bin $@rest
+}
+
+fn list-items [a]{
+  if (-is-dir $a) { put $a/* } else { put $a }
+}
+
+items = []
+
+if (== (count $args) 0) {
+  items = [./*]
+} else {
+  for i $args {
+    if (eq $i '-') {
+      each [x]{ items = [$@items (list-items $x)] }
+    } else {
+      items = [$@items (list-items $i)]
+    }
+  }
+}
+
+high = (- (count $items) 1)
+file = (mktemp -p /tmp elvmvXXXXX)
+print > $file
+c = 0
+
+for i $items {
+  echo $c"\t"$items[$c] >> $file
+  c = (+ $c 1)
+}
+
+editor = vi
+if (has-env VISUAL) {
+  editor = (get-env VISUAL)
+} elif (has-env EDITOR) {
+  editor = (get-env EDITOR)
+}
+
+fn abort [&code=1 a]{
+  echo $a >&2
+  rm $file
+  exit $code
+}
+
+try {
+  call $editor $file
+} except {
+  abort 'Editor exited with error. Aborting...'
+}
+
+cat $file | each [l]{
+  matches = (re:find '^(\d+)\t?(.*)$' $l)
+  if (not (eq $matches '')) {
+    id = $matches[groups][1][text]
+    name = $matches[groups][2][text]
+    src = $items[$id]
+    if (> $id $high) {
+      abort 'Unknown item id: '$id'. Aborting...'
+    } elif (not (eq $src $name)) {
+      mkdir -p (path-dir $name)
+      mv $items[$id] $name
+    }
+  } elif (re:match '^\s*$' $l) {
+    continue
+  } else {
+    abort 'Couldn''t parse line "'$l'". Aborting...'
+  }
+}
+
+rm $file

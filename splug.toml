@@ -1,0 +1,97 @@
+# Kakoune plugins
+
+["https://github.com/alexherbo2/auto-pairs.kak"]
+files = ["rc/auto-pairs.kak"]
+
+["https://github.com/alexherbo2/select.kak"]
+files = ["rc/select.kak"]
+
+["https://github.com/alexherbo2/yank-ring.kak"]
+files = ["rc/yank-ring.kak"]
+
+["https://gitlab.com/fsub/kakoune-mark"]
+files = ["mark.kak"]
+
+["https://github.com/lenormf/kakoune-extra"]
+files = ["widgets/git-branch.kak", "alignr.kak", "readline.kak", "vcs.kak"]
+
+["https://github.com/Delapouite/kakoune-auto-percent"]
+files = ["auto-percent.kak"]
+
+["https://github.com/Delapouite/kakoune-text-objects"]
+files = ["text-objects.kak"]
+
+["https://github.com/Delapouite/kakoune-cd"]
+files = ["cd.kak"]
+
+["https://github.com/Delapouite/kakoune-buffers"]
+files = ["buffers.kak"]
+
+["https://github.com/Delapouite/kakoune-select-view"]
+files = ["select-view.kak"]
+
+["https://github.com/Delapouite/kakoune-palette"]
+files = ["palette.kak"]
+
+["https://github.com/h-youhei/kakoune-each-line-selection"]
+files = ["each-line-selection.kak"]
+
+["https://github.com/h-youhei/kakoune-surround"]
+files = ["surround.kak"]
+
+["https://github.com/eraserhd/kak-ansi"]
+branch = "develop"
+files = ["rc/ansi.kak"]
+
+["https://github.com/occivink/kakoune-expand"]
+files = ["expand.kak"]
+
+["https://github.com/occivink/kakoune-sudo-write"]
+files = ["sudo-write.kak"]
+
+["https://github.com/occivink/kakoune-find"]
+files = ["find.kak"]
+
+["https://github.com/occivink/kakoune-gdb"]
+files = ["gdb.kak"]
+
+["https://github.com/occivink/kakoune-filetree"]
+files = ["filetree.kak"]
+
+["https://github.com/occivink/kakoune-vertical-selection"]
+files = ["vertical-selection.kak"]
+
+["https://github.com/occivink/kakoune-phantom-selection"]
+files = ["phantom-selection.kak"]
+
+["https://gitlab.com/notramo/elvish.kak"]
+files = ["elvish.kak"]
+
+["https://github.com/TeddyDD/kakoune-edit-or-dir"]
+files = ["rc/edit-or-dir.kak"]
+
+["https://github.com/andreyorst/smarttab.kak"]
+files = ["rc/smarttab.kak"]
+
+# mpv plugins
+
+["https://github.com/ElegantMonkey/mpv-webm"]
+files = ["build/webm.lua"]
+
+["https://github.com/jgreco/mpv-scripts"]
+files = ["fastforward.lua"]
+
+["https://github.com/jonniek/mpv-filenavigator"]
+files = ["navigator.lua"]
+
+["https://github.com/kevinlekiller/mpv_scripts"]
+files = ["perfstats/perfstats.lua"]
+
+["https://github.com/mpv-player/mpv"]
+files = ["TOOLS/lua/autoload.lua"]
+
+["https://github.com/nimatrueway/mpv-locatefile-lua-script"]
+files = ["locatefile.lua"]
+
+["https://github.com/occivink/mpv-scripts"]
+#files = [""]

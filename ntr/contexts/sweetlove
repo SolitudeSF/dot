@@ -1,0 +1,34 @@
+meta
+  name*:  sweetlove
+  author: boroshlawa
+
+color
+  bg:     #1f1f1f
+  fg:     #c0b18b
+  cursor: #c0b18b
+
+color0:   #4a3637
+color8:   #402e2e
+
+color1:   #d17b49
+color9:   #ac5d2f
+
+color2:   #7b8748
+color10:  #647035
+
+color3:   #af865a
+color11:  #8f6840
+
+color4:   #535c5c
+color12:  #444b4b
+
+color5:   #775759
+color13:  #614445
+
+color6:   #6d715e
+color14:  #585c49
+
+color7:   #c0b18b
+color15:  #978965
+
+wallpaper*: <{$HOME}>/pic/paintings/T6qdJcW.jpg

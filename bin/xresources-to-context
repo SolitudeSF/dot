@@ -1,0 +1,40 @@
+#!/usr/bin/env elvish
+use re
+c = [&]
+for l [(all)] {
+  if (re:match '^(\*\.?|URxvt\*)' $l) {
+     echo $l | eawk [_ k v]{
+       c[(re:replace '(^\*\.?|^URxvt\*|:$)' '' $k)] = $v
+     }
+  }
+}
+echo color
+echo '  bg:     '$c[background]
+echo '  fg:     '$c[foreground]
+if (has-key $c cursorColor) {
+  echo '  cursor: '$c[cursorColor]
+}
+echo
+echo 'color0:   '$c[color0]
+echo 'color8:   '$c[color8]
+echo
+echo 'color1:   '$c[color1]
+echo 'color9:   '$c[color9]
+echo
+echo 'color2:   '$c[color2]
+echo 'color10:  '$c[color10]
+echo
+echo 'color3:   '$c[color3]
+echo 'color11:  '$c[color11]
+echo
+echo 'color4:   '$c[color4]
+echo 'color12:  '$c[color12]
+echo
+echo 'color5:   '$c[color5]
+echo 'color13:  '$c[color13]
+echo
+echo 'color6:   '$c[color6]
+echo 'color14:  '$c[color14]
+echo
+echo 'color7:   '$c[color7]
+echo 'color15:  '$c[color15]

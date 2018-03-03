@@ -1,0 +1,5 @@
+#!/bin/sh
+for i in $(pgrep polybar)
+do
+	[ "$(readlink -e "/proc/$i/exe")" = "/usr/bin/polybar" ] && kill -USR1 "$i" && exit 0
+done

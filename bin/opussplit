@@ -1,0 +1,2 @@
+#!/bin/sh
+split2flac -nd -D -F -cue *cue "$@" && opus *flac && rm *flac

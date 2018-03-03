@@ -1,0 +1,35 @@
+meta
+  name*:  kiryoko
+  author: solitude
+  source: pywal
+
+color
+  bg:     #2b212e
+  fg:     #fffdf5
+  cursor: #fffdf5
+
+color0:   #2b212e
+color8:   #403145
+
+color1:   #E6AEAC
+color9:   #ffc5c0
+
+color2:   #D4B2B1
+color10:  #ffcfcc
+
+color3:   #E9888C
+color11:  #ff98a0
+
+color4:   #F4D5CE
+color12:  #ffe1d0
+
+color5:   #D795A8
+color13:  #ffaad0
+
+color6:   #D9CCD7
+color14:  #ffddff
+
+color7:   #f4eae3
+color15:  #fffdf5
+
+wallpaper*: <{$HOME}>/b5da99f2ecfa8605b59525668365e05f.jpg

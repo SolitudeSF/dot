@@ -1,0 +1,33 @@
+meta
+  name*:  vice
+  author: bcicen
+  source: https://github.com/bcicen/vim-vice
+
+color
+  bg:     #303030
+  fg:     #fdfdfd
+  cursor: #fdfdfd
+
+color0:   #303030
+color8:   #878787
+
+color1:   #ff00ff
+color9:   #ff87d7
+
+color2:   #a3d4a3
+color10:  #afffd7
+
+color3:   #ffffaf
+color11:  #ffffaf
+
+color4:   #87ffff
+color12:  #afffff
+
+color5:   #afafd7
+color13:  #ffafdf
+
+color6:   #87ffff
+color14:  #afffff
+
+color7:   #878787
+color15:  #ffffff

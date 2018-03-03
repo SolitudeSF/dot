@@ -1,0 +1,1 @@
+/home/solitude/.data/splug/github.com+jonniek+mpv-filenavigator/navigator.lua

@@ -1,0 +1,2 @@
+#!/bin/sh
+git commit --amend --no-edit -q && git push -f -q

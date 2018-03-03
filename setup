@@ -1,0 +1,129 @@
+#!/bin/sh
+
+cd "$(dirname "$0")"
+
+OP="ln -s"
+DIR="$(pwd)"
+CONF=${XDG_CONFIG_HOME:-$HOME/.config/}
+CONTEXT=${COLORSCHEME:-$(ls "$DIR/ntr/contexts" | sort -R | head -1)}
+
+_help() {
+	echo 'Available targets:
+profile
+nim
+ntr
+splug
+xinit | sx
+Xresources
+bspwm
+sxhkd
+polybar
+dunst
+rofi
+firefox
+kitty
+elvish
+kak (kakoune)
+pqiv
+mpv
+mpd
+ncmpcpp
+ranger
+zathura
+neofetch
+user-dirs
+fontconfig'
+}
+
+_install() {
+	if [ -e "$2" ]; then
+		echo "$2 already exists. Skipping..."
+	else
+		mkdir -p "$(dirname "$2")"
+		$OP "$DIR/$1" "$2" && echo "$1 installed to $2"
+	fi
+}
+
+_render() {
+	ntr -i:"$DIR/ntr/templates/$1" -o:"$2" "$CONTEXT"
+}
+
+for arg; do
+	case $arg in
+		h|help)
+			_help;;
+		-c)
+			OP="cp -r";;
+		nim)
+			_install $arg.nim "$CONF/nim/config.nims";;
+		bspwm)
+			_install $arg "$CONF/bspwm/bspwmrc";;
+		sxhkd)
+			_install $arg "$CONF/sxhkd/sxhkdrc";;
+		dunst)
+			_render $arg "$CONF/dunst/dunstrc";;
+		polybar)
+			_render $arg "$CONF/polybar/config";;
+		rofi)
+			_install $arg "$CONF/rofi/config.rasi";;
+		pqiv)
+			_install $arg "$CONF/pqivrc";;
+		mpv)
+			_install $arg/mpv.conf "$CONF/mpv/mpv.conf"
+			_install $arg/scripts "$CONF/mpv/scripts";;
+		mpd)
+			_install $arg "$CONF/mpd/mpd.conf";;
+		ncmpcpp)
+			_install $arg "$CONF/ncmpcpp/config";;
+		kak)
+			_install $arg/kakrc "$CONF/kak/kakrc"
+			_install $arg/autoload "$CONF/kak/autoload";;
+		zathura)
+			_render $arg "$CONF/zathura/zathurarc";;
+		ranger)
+			_install $arg/commands.py "$CONF/ranger/commands.py"
+			_install $arg/rc.conf "$CONF/ranger/rc.conf"
+			_install $arg/rifle.conf "$CONF/ranger/rifle.conf"
+			_install $arg/scope.sh "$CONF/ranger/scope.sh";;
+		kitty)
+			_install $arg/kitty.conf "$CONF/kitty/kitty.conf"
+			_install $arg/diff.conf "$CONF/kitty/diff.conf"
+			_render kitty-colors "$CONF/kitty/colors.conf";;
+		firefox)
+			FF_DIR=$HOME/.mozilla/firefox/$(ls -tr "$HOME/.mozilla/firefox/" | grep -v profiles.ini | tail -1)
+			FF_CHROME=$FF_DIR/chrome
+			_install $arg/user.js "$FF_DIR/user.js"
+			_install $arg/userChrome.css "$FF_CHROME/userChrome.css";;
+		elvish)
+			_install $arg/rc.elv "$HOME/.elvish/rc.elv"
+			for i in "$arg"/lib/* ; do
+				_install "$i" "$HOME/.elvish/lib/$(basename "$i")"
+			done;;
+		neofetch)
+			_install $arg.sh "$CONF/neofetch/config.conf";;
+		gitconfig)
+			_install $arg.ini "$CONF/git/config";;
+		xbps-src)
+			_install $arg "$XBPS_DISTDIR/etc/conf";;
+		profile)
+			_install $arg "$HOME/.profile";;
+		Xresources)
+			_render $arg "$HOME/.Xresources";;
+		XCompose)
+			_install $arg "$HOME/.XCompose";;
+		xinit)
+			_install sx.sh "$HOME/.xinitrc";;
+		sx)
+			_install $arg.sh "$CONF/sx/sxrc";;
+		ntr)
+			_install $arg "$CONF/ntr";;
+		splug)
+			_install $arg.toml "$CONF/splug/config.toml";;
+		user-dirs)
+			_install $arg "$CONF/user-dirs.dirs";;
+		fontconfig)
+			_install $arg "$CONF/fontconfig/fonts.conf";;
+		*)
+			echo "Not recognized argument: $arg";;
+	esac
+done

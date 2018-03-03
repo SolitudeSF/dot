@@ -1,0 +1,33 @@
+meta
+  name*:  petal
+  author: dkeg
+  source: https://github.com/dkeg/crayolo#petal
+
+color
+  bg:     #22211f
+  fg:     #b4b399
+  cursor: #b4b399
+
+color0:   #252422
+color8:   #4a4843
+
+color1:   #785326
+color9:   #785326
+
+color2:   #516941
+color10:  #516941
+
+color3:   #827834
+color11:  #827834
+
+color4:   #42514f
+color12:  #42514f
+
+color5:   #6a5632
+color13:  #6a5632
+
+color6:   #4e5d4d
+color14:  #4e5d4d
+
+color7:   #b4b399
+color15:  #c9c9b6
