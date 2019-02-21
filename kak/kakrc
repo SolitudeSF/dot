@@ -1,7 +1,6 @@
 # Merge and manually source plugins
 eval %sh{
-    cat $(find "$kak_config/autosource" -name '*\.kak') >/tmp/kakmerge.kak
-    printf %s 'source /tmp/kakmerge.kak'
+    cat $(find "$kak_config/autosource" -name '*\.kak')
 }
 
 # Initialization
@@ -28,7 +27,7 @@ addhl global/ column 80 default,rgb:303030
 addhl global/ regex '\h+$' 0:default,red
 addhl global/ regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
 addhl global/ show-matching
-addhl global/ wrap -word -indent -marker ↪
+addhl global/ wrap -word -indent -marker ''
 addhl global/ dynregex '%reg{/}' 0:+u
 addhl global/ dynregex '%opt{curword}' 0:+b
 
@@ -164,6 +163,7 @@ hook global BufCreate .*srcpkgs/.+/template$ %{
 hook global BufCreate .*/\.?((sx|xinit)(rc)?|profile) %{ set buffer filetype sh }
 hook global BufCreate .*\.ino %{ set buffer filetype cpp }
 hook global BufCreate .*\.cs %{ addhl window/java }
+hook global BufCreate .*\.rasi %{ set buffer filetype css }
 
 # Filetype settings
 hook global WinSetOption filetype=sh %{

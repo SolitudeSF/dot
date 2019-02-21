@@ -1,0 +1,21 @@
+configuration {
+        modi: "run,drun";
+        width: 55;
+        lines: 25;
+        columns: 2;
+        font: "Iosevka SS04 12";
+        show-icons: true;
+        terminal: "kitty -1";
+        ssh-client: "ssh";
+        ssh-command: "{terminal} {ssh-client} {host}";
+        run-command: "{cmd}";
+        run-shell-command: "{terminal} {cmd}";
+        drun-match-fields: "name,generic,exec,categories,comment";
+        drun-display-format: "{name} [({comment})]";
+        matching: "normal";
+        theme: "theme";
+        display-window: "▣";
+        display-run: "▲";
+        display-ssh: "◆";
+        display-drun: "▶";
+}

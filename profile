@@ -6,6 +6,8 @@ XDG_RUNTIME_DIR=/tmp/runtime-$USER
 XBPS_DISTDIR=$HOME/git/void-packages
 DOTS_DIR=$HOME/dot
 
+mkdir -p $XDG_RUNTIME_DIR
+
 # Override system variables
 PATH=$HOME/bin:$HOME/.nimble/bin:$DOTS_DIR/bin:$PATH
 
@@ -21,7 +23,6 @@ GTK2_RC_FILES=$XDG_CONFIG_HOME/gtk-2.0/gtkrc
 LESSHISTFILE="-"
 GNUPGHOME=$XDG_DATA_HOME/gnupg
 GPG_AGENT_INFO=$GNUPGHOME/S.gpg-agent:0:1
-DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/S.dbus"
 
 _JAVA_AWT_WM_NONREPARENTING=1
 _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
@@ -31,7 +32,7 @@ export \
  XDG_DATA_HOME XDG_RUNTIME_DIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_RUNTIME_DIR \
  XBPS_DISTDIR DOTS_DIR GTK2_RC_FILES LESSHISTFILE TERMINAL EDITOR VISUAL \
  PAGER MANPAGER GPG_TTY GPG_AGENT_INFO GNUPGHOME QT_QPA_PLATFORMTHEME \
- _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS DBUS_SESSION_BUS_ADDRESS
+ _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS
 
 # Init sharable {ssh,gpg}-agent
 if [ -z "$SSH_AUTH_SOCK" ]; then
@@ -43,6 +44,6 @@ fi
 
 # Start X or shell
 if [ -z "$DISPLAY" ] && [ "$GPG_TTY" = /dev/tty1 ]; then
-	exec dbus-launch --sh-syntax sx
+	exec dbus-launch sx
 fi
 exec elvish

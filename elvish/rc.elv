@@ -9,7 +9,6 @@ fn xr [@a]{ sudo xbps-remove -R $@a }
 
 -exports- = [&]
 
-
 {
   use theme
   use completers
