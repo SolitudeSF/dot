@@ -6,8 +6,8 @@ mpd_connection_timeout = "5"
 
 # Directories
 mpd_music_dir = "/mnt/media/Music"
-ncmpcpp_directory = "~/.config/ncmpcpp"
-lyrics_directory = "~/.cache/lyrics"
+ncmpcpp_directory = "~/.local/etc/ncmpcpp"
+lyrics_directory = "~/.local/cache/lyrics"
 
 # General
 mouse_list_scroll_whole_page = "no"

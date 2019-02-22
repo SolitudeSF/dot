@@ -1,7 +1,7 @@
 # Set common directories
-XDG_DATA_HOME=$HOME/.data
-XDG_CACHE_HOME=$HOME/.cache
-XDG_CONFIG_HOME=$HOME/.etc
+XDG_DATA_HOME=$HOME/.local/share
+XDG_CACHE_HOME=$HOME/.local/cache
+XDG_CONFIG_HOME=$HOME/.local/etc
 XDG_RUNTIME_DIR=/tmp/runtime-$USER
 XBPS_DISTDIR=$HOME/git/void-packages
 DOTS_DIR=$HOME/dot
@@ -9,7 +9,7 @@ DOTS_DIR=$HOME/dot
 mkdir -p $XDG_RUNTIME_DIR
 
 # Override system variables
-PATH=$HOME/bin:$HOME/.nimble/bin:$DOTS_DIR/bin:$PATH
+PATH=$HOME/.local/bin:$HOME/.nimble/bin:$PATH
 
 GPG_TTY=$(tty)
 TERMINAL='kitty -1'

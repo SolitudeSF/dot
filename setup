@@ -65,7 +65,7 @@ for arg; do
 		polybar)
 			_render $arg "$CONF/polybar/config";;
 		rofi)
-			_install $arg "$CONF/rofi/config.rasi";;
+			_install $arg.rasi "$CONF/rofi/config.rasi";;
 		pqiv)
 			_install $arg "$CONF/pqivrc";;
 		mpv)

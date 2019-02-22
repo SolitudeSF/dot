@@ -1,7 +1,5 @@
 # Merge and manually source plugins
-eval %sh{
-    cat $(find "$kak_config/autosource" -name '*\.kak')
-}
+eval %sh{ cat $(find "$kak_config/autosource" -name '*\.kak') }
 
 # Initialization
 decl -hidden regex curword
@@ -35,42 +33,44 @@ addhl global/ dynregex '%opt{curword}' 0:+b
 map global normal <space> ,
 map global normal -docstring 'remove all sels except main' <backspace> <space>
 map global normal -docstring 'remove main sel' <a-backspace> <a-space>
-map global normal -docstring 'comment line' '#' :comment-line<ret>
-map global normal -docstring 'comment block' '<a-#>' :comment-block<ret>
+map global normal -docstring 'comment line' '#' ': comment-line<ret>'
+map global normal -docstring 'comment block' '<a-#>' ': comment-block<ret>'
 map global normal -docstring 'delete to end of line' D <a-l>d
 map global normal -docstring 'yank to end of line' Y <a-l>y
 
-map global user -docstring "add phantom selection" f :phantom-sel-add-selection<ret>
-map global user -docstring "clear all phantom selections" <a-f> :phantom-sel-select-all<ret>:phantom-sel-clear<ret>
-map global user -docstring "next phantom selection" F :phantom-sel-iterate-next<ret>
-map global user -docstring "previous phantom selection" <a-F> :phantom-sel-iterate-prev<ret>
+map global user -docstring "add phantom selection" f ': phantom-sel-add-selection<ret>'
+map global user -docstring "clear all phantom selections" <a-f> ': phantom-sel-select-all<ret>: phantom-sel-clear<ret>'
+map global user -docstring "next phantom selection" F ': phantom-sel-iterate-next<ret>'
+map global user -docstring "previous phantom selection" <a-F> ': phantom-sel-iterate-prev<ret>'
 
-map global user -docstring "filetree" t :filetree<ret>
-map global user -docstring 'buffers' <ret> :rofi-buffers<ret>
+map global user -docstring 'filetree' t ': filetree<ret>'
 
-map global normal -docstring 'select view' <a-%> ':select-view<ret>'
-map global view   -docstring 'select view' s '<esc>:select-view<ret>'
+map global normal -docstring 'select view' <a-%> ': select-view<ret>'
+map global view   -docstring 'select view' s '<esc>: select-view<ret>'
 
-map global user -docstring "add mark" m :mark-word<ret>
-map global user -docstring "clear marks" M :mark-clear<ret>
+map global user -docstring "add mark" m ': mark-word<ret>'
+map global user -docstring "clear marks" M ': mark-clear<ret>'
 
-map global user -docstring "expand selection" e :expand<ret>
-map global user -docstring "expand repeat" E :expand-repeat<ret>
+map global user -docstring "expand selection" e ': expand<ret>'
+map global user -docstring "expand repeat" E ': expand-repeat<ret>'
 
-map global normal <c-p> ':yank-ring-previous<ret>'
-map global normal <c-n> ':yank-ring-next<ret>'
-map global normal Y ':yank-ring-open<ret>'
+map global normal Y ': yank-ring<ret>'
+map global normal <c-p> ': yank-ring<ret><c-p>'
+map global normal <c-n> ': yank-ring<ret><c-n>'
+
+map global user -docstring 'buffers…' b ': enter-buffers-mode<ret>'
+map global user -docstring 'buffers (lock)…' B ': enter-user-mode -lock buffers<ret>'
 
 declare-user-mode surround
-map global user -docstring "surround mode" s ':enter-user-mode surround<ret>'
-map global surround -docstring 'surround' s ':surround<ret>'
-map global surround -docstring 'change' c ':change-surround<ret>'
-map global surround -docstring 'delete' d ':delete-surround<ret>'
-map global surround -docstring 'select tag' t ':select-surrounding-tag<ret>'
-map global surround -docstring 'auto-pairs surround' a ':auto-pairs-surround<ret>'
+map global user -docstring "surround mode" s ': enter-user-mode surround<ret>'
+map global surround -docstring 'surround' s ': surround<ret>'
+map global surround -docstring 'change' c ': change-surround<ret>'
+map global surround -docstring 'delete' d ': delete-surround<ret>'
+map global surround -docstring 'select tag' t ': select-surrounding-tag<ret>'
+map global surround -docstring 'auto-pairs surround' a ': auto-pairs-surround<ret>'
 
 declare-user-mode anchor
-map global normal ';' ':enter-user-mode anchor<ret>'
+map global normal ';' ': enter-user-mode anchor<ret>'
 map global anchor -docstring 'reduce to anchor' a '<a-;>;'
 map global anchor -docstring 'reduce to cursor' c ';'
 map global anchor -docstring 'flip cursor and anchor' f '<a-;>'
@@ -83,8 +83,8 @@ map global user -docstring "clip-paste before" P '!xsel -b -o<ret>'
 map global user -docstring "clip-paste replace" R '|xsel -b -o<ret>'
 map global user -docstring "clip-yank" y '<a-|>xclip -i -f -sel c<ret>'
 
-map global user -docstring "next error" l :lint-next-error<ret>
-map global user -docstring "previous error" L :lint-previous-error<ret>
+map global user -docstring "next error" l ': lint-next-error<ret>'
+map global user -docstring "previous error" L ': lint-previous-error<ret>'
 
 # Functions
 def toggle-highlighter -params .. -docstring 'Toggle highlighter' %{
@@ -101,12 +101,6 @@ def lint-on-write -docstring 'Activate linting on buffer write' %{
     lint-enable
     hook buffer BufWritePost .* %{ lint }
 }
-
-def rofi-buffers -docstring 'Select an open buffer using Rofi' %{ eval %sh{
-    BUF=$(eval set -- "$kak_buflist"; for i; do echo "$i"; done\
-          | rofi -dmenu -no-custom -p 'Select buffer: ')
-    [ -n "$BUF" ] && echo buffer "$BUF"
-} }
 
 def no-tabs -params 0..1 -docstring 'Indent with spaces' %{
     eval %sh{ [ -n "$1" ] && printf %s "
@@ -126,16 +120,12 @@ def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
 }
 
 # Hooks
-hook global WinCreate ^[^*]+$ %{
-    auto-pairs-enable
-}
-
-hook global BufOpenFile .* %{
-    change-directory-current-buffer
-}
+hook global WinDisplay .* info-buffers
+hook global WinCreate .* auto-pairs-enable
+hook global BufOpenFile .* change-directory-current-buffer
 
 hook global NormalIdle .* %{
-    try %{ exec -draft '<a-i>w:palette-status<ret>' }
+    try %{ exec -draft '<a-i>w: palette-status<ret>' }
 }
 
 hook global BufWritePre .* %{ nop %sh{
