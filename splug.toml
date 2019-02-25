@@ -55,9 +55,6 @@ files = ["find.kak"]
 ["https://github.com/occivink/kakoune-gdb"]
 files = ["gdb.kak"]
 
-["https://github.com/occivink/kakoune-filetree"]
-files = ["filetree.kak"]
-
 ["https://github.com/occivink/kakoune-vertical-selection"]
 files = ["vertical-selection.kak"]
 

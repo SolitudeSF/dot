@@ -1,1 +1,0 @@
-/home/solitude/.data/splug/github.com+mpv-player+mpv/TOOLS/lua/autoload.lua

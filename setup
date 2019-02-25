@@ -70,7 +70,6 @@ for arg; do
 			_install $arg "$CONF/pqivrc";;
 		mpv)
 			_install $arg/mpv.conf "$CONF/mpv/mpv.conf"
-			_install $arg/scripts "$CONF/mpv/scripts";;
 		mpd)
 			_install $arg "$CONF/mpd/mpd.conf";;
 		ncmpcpp)

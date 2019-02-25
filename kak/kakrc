@@ -10,7 +10,6 @@ set global autoreload yes
 set global kitty_window_type os
 set global termcmd 'kitty -1 sh -c'
 set global grepcmd 'rg -iHL --column'
-set global filetree_find_cmd 'fd -L -t f -d 2'
 set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}} {{context_info}}
 ◂%val{client}⊙%val{session}▸'
@@ -42,8 +41,6 @@ map global user -docstring "add phantom selection" f ': phantom-sel-add-selectio
 map global user -docstring "clear all phantom selections" <a-f> ': phantom-sel-select-all<ret>: phantom-sel-clear<ret>'
 map global user -docstring "next phantom selection" F ': phantom-sel-iterate-next<ret>'
 map global user -docstring "previous phantom selection" <a-F> ': phantom-sel-iterate-prev<ret>'
-
-map global user -docstring 'filetree' t ': filetree<ret>'
 
 map global normal -docstring 'select view' <a-%> ': select-view<ret>'
 map global view   -docstring 'select view' s '<esc>: select-view<ret>'

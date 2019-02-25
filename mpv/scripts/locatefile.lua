@@ -1,1 +1,0 @@
-/home/solitude/.data/splug/github.com+nimatrueway+mpv-locatefile-lua-script/locatefile.lua
