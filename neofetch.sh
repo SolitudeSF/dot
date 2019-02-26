@@ -19,7 +19,6 @@ print_info() {
     info GPU gpu
     info Memory memory
     prin
-    info Song song
     info cols
 }
 
@@ -53,11 +52,6 @@ gtk_shorthand=on
 gtk2=on
 gtk3=on
 
-music_player=mpd
-song_format="%artist% - %album% - %title%"
-song_shorthand=on
-mpc_args=()
-
 colors=(distro)
 bold=on
 underline_enabled=on
@@ -72,8 +66,7 @@ ascii_colors=(distro)
 ascii_bold=on
 
 image_backend=kitty
-image_source=$(get_mpd_album_art)
-[ -z "$image_source" ] && image_source=$(randfile "$(xdg-user-dir PICTURES)/anzu")
+image_source=$(randfile "$(xdg-user-dir PICTURES)/anzu")
 image_loop=off
 thumbnail_dir="${XDG_CACHE_HOME:-$HOME/.cache}/thumbnails/neofetch"
 # none fit fill *
