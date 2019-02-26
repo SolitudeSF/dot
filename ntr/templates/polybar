@@ -20,8 +20,8 @@ offset-y = 0
 padding-right = 1
 module-margin = 1
 modules-left = bspwm xwindow
-modules-center = 
-modules-right = github wlan memory cpu temperature date
+modules-center =
+modules-right = github wlan battery memory cpu temperature date
 font-0 = Inter:pixelsize=9;3
 font-1 = Sarasa UI J:size=10;2
 font-2 = Siji;3
@@ -64,16 +64,6 @@ label-empty =
 type = internal/xwindow
 label = %title:0:80:…%
 
-[module/mpd]
-type = internal/mpd
-icon-prev = 
-icon-play = 
-icon-pause = 
-icon-next = 
-label-song-maxlen = 45
-label-song-ellipsis = true
-format-online = <label-song> <toggle> <icon-prev> <icon-next>
-
 [module/github]
 type = internal/github
 token = ${file:<{$HOME}>/sns/github.key}
@@ -86,9 +76,10 @@ label = %notifications%
 
 [module/wlan]
 type = internal/network
-interface = wlan0
+interface = wlo1
 format-connected = <ramp-signal> <label-connected>
-label-connected = %downspeed%
+label-connected = %downspeed% %essid%
+interval = 3
 format-disconnected =
 ramp-signal-0 = 
 ramp-signal-1 = 
@@ -96,6 +87,65 @@ ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${color.black-bright}
+
+[module/battery]
+type = internal/battery
+;full-at = 99
+battery = BAT0
+adapter = ACAD
+
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+;   %percentage% (default)
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = + %percentage%%
+
+;   %percentage% (default)
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging = %percentage%%
+
+;   %percentage% (default)
+label-full = %percentage%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-framerate = 500
 
 [module/memory]
 type = internal/memory
