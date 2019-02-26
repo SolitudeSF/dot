@@ -23,6 +23,7 @@ rofi
 firefox
 kitty
 elvish
+fish
 kak (kakoune)
 pqiv
 mpv
@@ -69,7 +70,7 @@ for arg; do
 		pqiv)
 			_install $arg "$CONF/pqivrc";;
 		mpv)
-			_install $arg/mpv.conf "$CONF/mpv/mpv.conf"
+			_install $arg/mpv.conf "$CONF/mpv/mpv.conf";;
 		mpd)
 			_install $arg "$CONF/mpd/mpd.conf";;
 		ncmpcpp)
@@ -93,6 +94,8 @@ for arg; do
 			FF_CHROME=$FF_DIR/chrome
 			_install $arg/user.js "$FF_DIR/user.js"
 			_install $arg/userChrome.css "$FF_CHROME/userChrome.css";;
+		fish)
+			_install $arg/config.fish "$CONF/fish/config.fish";;
 		elvish)
 			_install $arg/rc.elv "$HOME/.elvish/rc.elv"
 			for i in "$arg"/lib/* ; do

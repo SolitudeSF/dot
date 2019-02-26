@@ -7,7 +7,6 @@ mpd &
 sxhkd &
 devmon &
 dunst &
-emacs --daemon &
 kbdd &
 polybar -q main &
 exec bspwm
