@@ -2,7 +2,7 @@ set -x PATH $HOME/.local/bin $HOME/.nimble/bin $PATH
 set -x GPG_TTY (tty)
 
 set fish_prompt_pwd_dir_length 1
-set -U fish_greeting
+set -e fish_greeting
 
 set fish_color_error       red
 set fish_color_end         red

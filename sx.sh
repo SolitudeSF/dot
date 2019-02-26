@@ -8,5 +8,6 @@ sxhkd &
 devmon &
 dunst &
 kbdd &
+syncthing -no-browser &
 polybar -q main &
 exec bspwm

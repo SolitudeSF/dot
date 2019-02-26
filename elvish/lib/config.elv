@@ -28,3 +28,4 @@ fn pqiv { e $conf/pqivrc }
 fn mpv { e $conf/mpv/mpv.conf }
 fn ncmpcpp { e $@setini $conf/ncmpcpp/config }
 fn bedrock { e /bedrock/etc/bedrock.conf }
+fn fish { e $conf/fish/config.fish }
