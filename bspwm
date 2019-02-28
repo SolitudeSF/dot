@@ -14,3 +14,7 @@ bspc rule -a Firefox desktop='^2'
 bspc rule -a mpv state=floating
 bspc rule -a Peek state=floating
 bspc rule -a kittyfloat state=floating
+
+bspc rule -a 'labview' state=floating
+bspc rule -a 'Matlab-GLEE' state=floating
+bspc rule -a 'MATLAB R2018b' state=floating

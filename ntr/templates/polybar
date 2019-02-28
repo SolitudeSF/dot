@@ -76,7 +76,7 @@ format-online = <label-song> <toggle> <icon-prev> <icon-next>
 
 [module/github]
 type = internal/github
-token = ${file:<{$HOME}>/.github}
+token = ${file:<{$HOME}>/sns/github.key}
 empty-notifications = false
 interval = 10
 format = <label>
