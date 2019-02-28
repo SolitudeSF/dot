@@ -32,6 +32,7 @@ ncmpcpp
 ranger
 zathura
 neofetch
+gtk
 user-dirs
 fontconfig'
 }
@@ -121,6 +122,9 @@ for arg; do
 			_install $arg "$CONF/ntr";;
 		splug)
 			_install $arg.toml "$CONF/splug/config.toml";;
+		gtk)
+			_install $arg/gtkrc "${GTK2_RC_FILES:-$HOME/.gtkrc}"
+			_install $arg/settings.ini "$CONF/gtk-3.0/settings.ini"
 		user-dirs)
 			_install $arg "$CONF/user-dirs.dirs";;
 		fontconfig)
