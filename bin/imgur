@@ -1,0 +1,21 @@
+#!/usr/bin/env elvish
+
+resp = [&]
+id = (from-json <~/sns/imgur.json)[SolitudeAnon][id]
+command = [-sLX POST 'https://api.imgur.com/3/image' --data-binary '@-' -H "Authorization: Client-ID "$id ]
+
+if (not-eq ?(tty -s) $ok) {
+  resp = (all | base64 | curl $@command | from-json)
+} elif (> (count $args) 0) {
+  resp = (base64 $args[0] | curl $@command | from-json)
+} else {
+  exit 1
+}
+
+if (and (has-key $resp success) (eq $resp[success] $true)) {
+  echo Uploaded to $resp[data][link]
+  echo Delete hash: $resp[data][deletehash]
+} else {
+  echo Upload failed
+  exit 1
+}

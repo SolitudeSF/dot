@@ -228,7 +228,7 @@ edit:completion:arg-completer[brl] = [@cmd]{
 }
 
 edit:completion:arg-completer[promotescript] = [@cmd]{
-  pwd=~/bin put *
+  pwd=~/.local/bin fd -t f
 }
 
 edit:completion:arg-completer[edit-script] = $edit:complete-sudo~

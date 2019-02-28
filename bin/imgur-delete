@@ -1,0 +1,15 @@
+#!/usr/bin/env elvish
+
+if (== (count $args) 0) {
+  echo Provide deletion hash
+  exit 1
+}
+
+id = (from-json <~/sns/imgur.json)[SolitudeAnon][id]
+resp = (curl -sLX DELETE 'https://api.imgur.com/3/image/'$args[0] -H 'Authorization: Client-ID '$id | from-json)
+if (and (has-key $resp success) (eq $resp[success] $true)) {
+  echo Image deleted
+} else {
+  echo Failed to delete image
+  exit 1
+}
