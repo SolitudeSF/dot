@@ -1,7 +1,6 @@
 if [ -z "$NO_LTO" ]; then
-	XBPS_CFLAGS="-flto -fuse-linker-plugin"
+	XBPS_CFLAGS="-flto"
 	XBPS_CXXFLAGS="${XBPS_CFLAGS}"
-	XBPS_LDGLAGS="-flto -fuse-linker-plugin"
 fi
 XBPS_MAKEJOBS=8
 XBPS_CCACHE=yes

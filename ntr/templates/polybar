@@ -86,7 +86,7 @@ label = %notifications%
 
 [module/wlan]
 type = internal/network
-interface = wlan0
+interface = wlp0s29u1u6
 format-connected = <ramp-signal> <label-connected>
 label-connected = %downspeed%
 format-disconnected =

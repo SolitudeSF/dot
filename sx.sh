@@ -7,7 +7,7 @@ mpd &
 sxhkd &
 devmon &
 dunst &
-kbdd &
+perWindowLayoutD &
 syncthing -no-browser &
 polybar -q main &
 exec bspwm
