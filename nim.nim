@@ -9,19 +9,13 @@ proc setCompiler(s: string) =
   switch "gcc.exe", c
   switch "gcc.linkerexe", c
 
-when defined(win):
-  setCompiler "x86_64-w64-mingw32-gcc"
-  switch "gcc.options.linker", ""
-  switch "os", "windows"
-  switch "define", "windows"
-
 when defined(musl):
   setCompiler "x86_64-linux-musl-gcc"
   switch "passL", "-static"
 
 when defined(release):
-  switch "nimcache", "/tmp/nim/" & projectName() & "/r"
+  switch "nimcache", "/tmp/nim/" & projectName() & "_r"
   switch "passC", "-flto"
   switch "passL", "-s"
 else:
-  switch "nimcache", "/tmp/nim/" & projectName() & "/d"
+  switch "nimcache", "/tmp/nim/" & projectName() & "_d"

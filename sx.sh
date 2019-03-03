@@ -4,10 +4,10 @@ setxkbmap -layout us,ru -variant ,ruu -option 'grp:shifts_toggle,grp:shift_caps_
 start-pulseaudio-x11 &
 setroot --restore &
 mpd &
-sxhkd &
-devmon &
 dunst &
 perWindowLayoutD &
-syncthing -no-browser &
-polybar -q main &
+disown sxhkd &
+disown devmon &
+disown syncthing -no-browser &
+disown polybar -q main &
 exec bspwm
