@@ -1,5 +1,8 @@
 # Merge and manually source plugins
-eval %sh{ cat $(find "$kak_config/autosource" -name '*\.kak') }
+eval %sh{
+    cat $(find "$kak_config/autosource" -name '*\.kak')
+    kak-lsp --kakoune -s $kak_session
+}
 
 # Initialization
 decl -hidden regex curword
@@ -99,6 +102,13 @@ def lint-on-write -docstring 'Activate linting on buffer write' %{
     hook buffer BufWritePost .* %{ lint }
 }
 
+def lsp-engage -docstring 'Enable language server' %{
+    lsp-enable
+    lsp-auto-hover-enable
+    map global user -docstring "Enter lsp user mode" l ': enter-user-mode lsp<ret>'
+    map global user -docstring "Lock lsp user mode" L ': enter-user-mode -lock lsp<ret>'
+}
+
 def no-tabs -params 0..1 -docstring 'Indent with spaces' %{
     eval %sh{ [ -n "$1" ] && printf %s "
         set buffer indentwidth $1
@@ -160,6 +170,11 @@ hook global WinSetOption filetype=sh %{
 
 hook global WinSetOption filetype=elvish %{
     no-tabs 2
+}
+
+hook global WinSetOption filetype=python %{
+    lsp-engage
+    hook window BufWritePre .* lsp-formatting-sync
 }
 
 hook global WinSetOption filetype=nim %{

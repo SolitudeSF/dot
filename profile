@@ -27,6 +27,8 @@ GPG_AGENT_INFO=$GNUPGHOME/S.gpg-agent:0:1
 _JAVA_AWT_WM_NONREPARENTING=1
 _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 
+unset LS_COLORS
+
 # Mass export
 export \
  XDG_DATA_HOME XDG_RUNTIME_DIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_RUNTIME_DIR \
@@ -41,6 +43,9 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
 	fi
 	. "$XDG_CACHE_HOME/ssh-env"
 fi
+
+# Sensitive info
+. $HOME/sns/profile
 
 # Start X or shell
 if [ -z "$DISPLAY" ] && [ "$GPG_TTY" = /dev/tty1 ]; then
