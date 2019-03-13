@@ -48,7 +48,7 @@ fi
 . $HOME/sns/profile
 
 # Start X or shell
-if [ -z "$DISPLAY" ] && [ "$GPG_TTY" = /dev/tty1 ]; then
+if [ "$GPG_TTY" = /dev/tty1 ]; then
 	exec dbus-launch sx
 fi
 exec elvish

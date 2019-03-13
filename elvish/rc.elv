@@ -6,6 +6,11 @@ use module
 fn ls [@a]{ e:exa --group-directories-first -s Name $@a }
 fn xqt [a]{ e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 fn xr [@a]{ sudo xbps-remove -R $@a }
+fn r [@a]{
+  f = (mktemp)
+  if ?(ranger --choosedir=$f $@a) { cd (cat $f) }
+  rm -f $f
+}
 
 -exports- = [&]
 
