@@ -45,7 +45,7 @@ show_indicators = yes
 
 icon_position = left
 max_icon_size = 32
-icon_path = /usr/share/icons/Paper/16x16/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/16x16/apps/
+icon_path = /usr/share/icons/Papirus/32x32/status/:/usr/share/icons/Papirus/32x32/devices/:/usr/share/icons/Papirus/32x32/apps/:/usr/share/icons/Papirus/32x32/actions
 
 ### History ###
 
@@ -55,7 +55,7 @@ history_length = 20
 ### Misc/Advanced ###
 
 dmenu = /usr/bin/rofi -dmenu -p dunst:
-browser = <{$HOME}>/app/firefox/firefox
+browser = /usr/bin/firefox
 always_run_script = true
 title = Dunst
 class = Dunst

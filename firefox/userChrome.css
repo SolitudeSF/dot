@@ -1,3 +1,4 @@
+/* Hide tabbar */
 #TabsToolbar {
   visibility: collapse !important;
 }
@@ -6,9 +7,12 @@
   max-width: none !important;
   min-width: 0px !important;
 }
+
+/* Hide sidebar header and outline */
 #sidebar-box + #sidebar-splitter {
   display: none !important;
 }
+
 #sidebar-box #sidebar-header {
-  visibility: collapse;
+  display: none;
 }

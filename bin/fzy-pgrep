@@ -1,7 +1,0 @@
-#!/bin/sh
-ps up $(pgrep -f ${@:-.}) | \
-	while read -r l; do
-		printf '%s\n' "$l" >&2
-		fzy | awk '{print $2}'
-		break
-done

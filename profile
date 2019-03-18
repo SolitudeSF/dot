@@ -5,11 +5,12 @@ XDG_CONFIG_HOME=$HOME/.local/etc
 XDG_RUNTIME_DIR=/tmp/runtime-$USER
 XBPS_DISTDIR=$HOME/git/void-packages
 DOTS_DIR=$HOME/dot
+GOPATH=$HOME/.go
 
 mkdir -p $XDG_RUNTIME_DIR
 
 # Override system variables
-PATH=$HOME/.local/bin:$HOME/.nimble/bin:$PATH
+PATH=$HOME/.local/bin:$DOTS_DIR/bin:$HOME/.nimble/bin:$HOME/.cargo/bin:$GOPATH/bin:$PATH
 
 GPG_TTY=$(tty)
 TERMINAL='kitty -1'

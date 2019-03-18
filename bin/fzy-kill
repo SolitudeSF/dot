@@ -1,2 +1,0 @@
-#!/bin/sh
-kill $(fzpgrep ${1:-.})
