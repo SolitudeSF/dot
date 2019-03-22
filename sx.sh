@@ -7,7 +7,10 @@ mpd &
 dunst &
 perWindowLayoutD &
 disown sxhkd &
-disown devmon &
+disown devmon -s \
+	--exec-on-drive 'notify-send -a udevil -i media-removable "$l" "$f mounted at $d"' \
+	--exec-on-unmount 'notify-send -a udevil -i media-removable "$l" "$f unmounted from $d"' \
+	--exec-on-removed 'notify-send -a udevil -i media-removable "$l" "$f removed from $d"' &
 disown syncthing -no-browser &
 disown polybar -q main &
 exec bspwm

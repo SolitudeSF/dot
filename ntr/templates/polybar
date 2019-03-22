@@ -22,10 +22,9 @@ module-margin = 1
 modules-left = bspwm xwindow
 modules-center = mpd
 modules-right = github wlan memory cpu temperature date
-font-0 = Inter:pixelsize=9;3
-font-1 = Sarasa UI J:size=10;2
-font-2 = Siji;3
-font-3 = forkawesome:pixelsize=10;4
+font-0 = Sarasa UI J:size=10;2
+font-1 = Siji;3
+font-2 = forkawesome:pixelsize=10;4
 background = ${color.background}
 foreground = ${color.foreground}
 border-size = 1

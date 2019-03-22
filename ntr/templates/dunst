@@ -19,7 +19,7 @@ idle_threshold = 120
 
 ### Text ###
 
-font = Inter 9
+font = Sarasa UI J 9
 line_height = 0
 markup = full
 
@@ -45,7 +45,7 @@ show_indicators = yes
 
 icon_position = left
 max_icon_size = 32
-icon_path = /usr/share/icons/Papirus/32x32/status/:/usr/share/icons/Papirus/32x32/devices/:/usr/share/icons/Papirus/32x32/apps/:/usr/share/icons/Papirus/32x32/actions
+icon_path = /usr/share/icons/Paper/32x32/status/:/usr/share/icons/Paper/32x32/devices/:/usr/share/icons/Paper/32x32/apps/:/usr/share/icons/Paper/32x32/actions
 
 ### History ###
 
