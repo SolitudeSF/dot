@@ -8,9 +8,6 @@ files = ["rc/auto-pairs.kak"]
 ["https://github.com/alexherbo2/search-highlighter.kak"]
 files = ["rc/search-highlighter.kak"]
 
-["https://github.com/alexherbo2/yank-ring.kak"]
-files = ["rc/yank-ring.kak"]
-
 ["https://gitlab.com/fsub/kakoune-mark"]
 files = ["mark.kak"]
 

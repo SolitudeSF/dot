@@ -10,7 +10,7 @@ background = <{color.bg}>
 foreground = <{color.fg}>
 red  = <{color5}>
 green = <{color2}>
-black-bright = <{color8}>
+fg-bright = <{darken:<{color.fg}>:0.3}>
 
 [bar/main]
 width = 1914
@@ -23,12 +23,11 @@ modules-left = bspwm xwindow
 modules-center = mpd
 modules-right = github wlan memory cpu temperature date
 font-0 = Sarasa UI J:size=10;2
-font-1 = Siji;3
-font-2 = forkawesome:pixelsize=10;4
+font-1 = 3270Medium Nerd Font Mono:size=15;4
 background = ${color.background}
 foreground = ${color.foreground}
 border-size = 1
-border-color = ${color.black-bright}
+border-color = ${color.fg-bright}
 wm-restack = bspwm
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -71,7 +70,7 @@ icon-pause = 
 icon-next = 
 label-song-maxlen = 45
 label-song-ellipsis = true
-format-online = <label-song> <toggle> <icon-prev> <icon-next>
+format-online = <label-song> <toggle><icon-prev><icon-next>
 
 [module/github]
 type = internal/github
@@ -79,50 +78,46 @@ token = ${file:<{$HOME}>/sns/github.key}
 empty-notifications = false
 interval = 10
 format = <label>
-format-prefix = "  "
-format-prefix-foreground = ${color.black-bright}
+format-prefix = " "
+format-prefix-foreground = ${color.fg-bright}
 label = %notifications%
 
 [module/wlan]
 type = internal/network
 interface = wlan0
-format-connected = <ramp-signal> <label-connected>
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${color.fg-bright}
 label-connected = %downspeed%
 format-disconnected =
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${color.black-bright}
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${color.black-bright}
+format-prefix = "﬙ "
+format-prefix-foreground = ${color.fg-bright}
 label = %percentage_used%%
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${color.black-bright}
+format-prefix = " "
+format-prefix-foreground = ${color.fg-bright}
 label = %percentage%%
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
 warn-temperature = 85
-format = <ramp> <label>
-format-warn = <ramp> <label-warn>
+format = <label>
+format-warn = <label-warn>
+format-prefix = " "
+format-warn-prefix = " "
+format-prefix-foreground = ${color.fg-bright}
+format-warn-prefix-foreground = ${color.fg-bright}
 label = %temperature-c%
 label-warn = %temperature-c%
 label-warn-foreground = ${color.red}
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${color.black-bright}
 
 [module/date]
 type = internal/date
@@ -131,6 +126,6 @@ date =
 date-alt = " %d-%m-%Y"
 time = %H:%M
 time-alt = %H:%M:%S
-format-prefix = 
-format-prefix-foreground = ${color.black-bright}
+format-prefix = 
+format-prefix-foreground = ${color.fg-bright}
 label = %date% %time%
