@@ -1,0 +1,70 @@
+from pygments.style import Style
+from pygments.token import (
+    Comment,
+    Error,
+    Keyword,
+    Literal,
+    Name,
+    Number,
+    Operator,
+    String,
+    Text,
+)
+
+
+class NTRStyle(Style):
+    base00 = "<{color0}>"
+    base01 = "<{color1}>"
+    base02 = "<{color2}>"
+    base03 = "<{color3}>"
+    base04 = "<{color4}>"
+    base05 = "<{color5}>"
+    base06 = "<{color6}>"
+    base07 = "<{color7}>"
+    base08 = "<{color8}>"
+    base09 = "<{color9}>"
+    base0a = "<{color10}>"
+    base0b = "<{color11}>"
+    base0c = "<{color12}>"
+    base0d = "<{color13}>"
+    base0e = "<{color14}>"
+    base0f = "<{color15}>"
+
+    default_style = ""
+
+    background_color = base00
+    highlight_color = base02
+
+    styles = {
+        Text: base05,
+        Error: base08,  # .err
+        Comment: base03,  # .c
+        Comment.Preproc: base0f,  # .cp
+        Comment.PreprocFile: base0b,  # .cpf
+        Keyword: base0e,  # .k
+        Keyword.Type: base08,  # .kt
+        Name.Attribute: base0d,  # .na
+        Name.Builtin: base0d,  # .nb
+        Name.Builtin.Pseudo: base08,  # .bp
+        Name.Class: base0d,  # .nc
+        Name.Constant: base09,  # .no
+        Name.Decorator: base09,  # .nd
+        Name.Function: base0d,  # .nf
+        Name.Namespace: base0d,  # .nn
+        Name.Tag: base0e,  # .nt
+        Name.Variable: base0d,  # .nv
+        Name.Variable.Instance: base08,  # .vi
+        Number: base09,  # .m
+        Operator: base0c,  # .o
+        Operator.Word: base0e,  # .ow
+        Literal: base0b,  # .l
+        String: base0b,  # .s
+        String.Interpol: base0f,  # .si
+        String.Regex: base0c,  # .sr
+        String.Symbol: base09,  # .ss
+    }
+
+
+NTRStyle.__name__ = "NTRStyle"
+globals()[NTRStyle.__name__] = globals()["NTRStyle"]
+del globals()["NTRStyle"]

@@ -72,7 +72,7 @@ ascii_colors=(distro)
 ascii_bold=on
 
 image_backend=kitty
-image_source=$(get_mpd_album_art)
+image_source=$(getmpdalbumart)
 [ -z "$image_source" ] && image_source=$(randfile "$(xdg-user-dir PICTURES)/anzu")
 image_loop=off
 thumbnail_dir="${XDG_CACHE_HOME:-$HOME/.cache}/thumbnails/neofetch"

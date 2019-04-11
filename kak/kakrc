@@ -1,13 +1,13 @@
 # Manually merge and source plugins
 eval %sh{
-    cat $(find "$kak_config/autosource" -name '*\.kak')
+    kaksource "$kak_config/autosource"
     kak-lsp --kakoune -s $kak_session
+    colorcol
 }
 
 # Initialization
 
 decl -hidden regex curword
-decl str termcmd 'kitty -1 sh -c'
 
 set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
@@ -15,14 +15,15 @@ set global autoreload yes
 set global kitty_window_type kitty
 set global grepcmd 'rg -iHL --column'
 set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
-%val{cursor_line}:%val{cursor_char_column} {{mode_info}} {{context_info}}
-◂%val{client}⊙%val{session}▸'
+%val{cursor_line}:%val{cursor_char_column} {{mode_info}}
+{{context_info}}◂%val{client}⊙%val{session}▸'
 
 set global connect_source "%val{config}/autosource/splug"
 set global connect_shell elvish
 set global fzf_implementation sk
 set global fzf_file_command fd
-set global fzf_highlighter bat
+set global fzf_highlight_cmd bat
+set global fzf_sk_grep_command 'rg -LHn'
 
 unalias global e edit
 alias global e edit-or-dir
@@ -162,6 +163,9 @@ hook global BufReload    .* %{ git show-diff }
 hook global WinCreate .* %{
     auto-pairs-enable
     search-highlighter-enable
+    colorcol-enable
+    colorcol-auto-refresh
+    discord-presence-enable
 }
 
 hook global BufWritePre .* %{ nop %sh{
@@ -203,7 +207,6 @@ hook global WinSetOption filetype=elvish %{
 hook global WinSetOption filetype=(go|rust|python) %{
     lsp-engage
     set global lsp_server_configuration pyls.plugins.jedi_completion.include_params=false
-    hook window BufWritePre .* lsp-formatting-sync
 }
 
 hook global WinSetOption filetype=nim %{

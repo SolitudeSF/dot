@@ -1,0 +1,5 @@
+#!/bin/sh
+wall_path=$HOME/.wallpaper
+cmd='hsetroot -full'
+[ -n "$1" ] && printf %s "$1" >"$wall_path"
+$cmd "$(cat "$wall_path")"

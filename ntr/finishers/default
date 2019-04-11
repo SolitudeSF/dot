@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -n "$NTR_wallpaper" ] && setroot --store -z "$NTR_wallpaper" || return 0
+[ -n "$NTR_wallpaper" ] && wlp "$NTR_wallpaper"

@@ -3,7 +3,7 @@ t=""
 if (eq 0 (count $args)) {
   @sites=(keys (from-json <~/.mpw.d/(get-env MPW_FULLNAME).mpsites.json)[sites])
   if (eq ?(tty -s) $ok) {
-    t=(echo &sep="\n" $@sites | fzy)
+    t=(echo &sep="\n" $@sites | sk)
   } else {
     t=(echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 25)
   }
