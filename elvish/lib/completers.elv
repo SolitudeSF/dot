@@ -53,11 +53,12 @@ edit:completion:arg-completer[waifu2x-converter-cpp] = [@cmd]{
   if (has-value [-i --input -o --output] $cmd[-2]) {
     edit:complete-filename $cmd[-1]
   } elif (has-value [-m --mode] $cmd[-2]) {
-    put noise scale noise_scale
-  } elif (eq $cmd[-2] --noise_level) {
-    put 1 2 3
+    put noise scale noise-scale
+  } elif (eq $cmd[-2] --noise-level) {
+    put 0 1 2 3
   } else {
-    put --scale_ratio --noise_level --mode --jobs -i -o
+    put --scale-ratio --noise-level --mode --jobs --png-compression \
+      --image-quality --silent -i -o
   }
 }
 
@@ -167,7 +168,7 @@ edit:completion:arg-completer[ntr] = [@cmd]{
 }
 
 edit:completion:arg-completer[update] = [@cmd]{
-  update | each [x]{ if (has-prefix $x "\t") { put $x[1:] } }
+  update | each [x]{ if (has-prefix $x "    ") { put $x[4:] } }
 }
 
 edit:completion:arg-completer[xr] = [@cmd]{

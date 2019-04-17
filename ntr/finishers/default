@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -n "$NTR_wallpaper" ] && wlp "$NTR_wallpaper"
+[ -n "$NTR_wallpaper" ] && wlp "$NTR_wallpaper" || exit 0

@@ -25,7 +25,7 @@ fn sxhkd { edit $conf/sxhkd/sxhkdrc; pkill -USR1 -x sxhkd }
 fn polybar { edit $ntrtmp/polybar }
 fn rofi { edit &type=css $conf/rofi/config.rasi }
 fn dunst { edit $ntrtmp/dunst }
-fn elvish { pwd=~/.elvish edit (list -edit elv | select) }
+fn elvish { pwd=~/.elvish edit (list -e elv | select) }
 fn nim { edit $conf/nim/config.nims }
 fn min { edit $E:HOME/.minrc }
 fn ntr { pwd=$conf/ntr edit (list | select) }

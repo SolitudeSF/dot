@@ -1,0 +1,35 @@
+meta
+  name*:  falcon
+  author: fenetikm
+  source: https://github.com/fenetikm/falcon
+
+color
+  bg:     #020221
+  fg:     #b4b4b9
+  sel_bg: #ddcfbf
+  sel_fg: #36363a
+  cursor: #ffe8c0
+
+color0:   #000004
+color8:   #020221
+
+color1:   #ff3600
+color9:   #ff8e78
+
+color2:   #718e3f
+color10:  #b1bf75
+
+color3:   #ffc552
+color11:  #ffd392
+
+color4:   #635196
+color12:  #99a4bc
+
+color5:   #ff761a
+color13:  #ffb07b
+
+color6:   #34bfa4
+color14:  #8bccbf
+
+color7:   #b4b4b9
+color15:  #f8f8ff

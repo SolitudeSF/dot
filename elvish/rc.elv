@@ -3,15 +3,20 @@ use util
 use config
 use module
 
-fn ls [@a]{ exa --group-directories-first -s Name $@a }
-fn cat [@a]{ bat $@a }
+
+fn alias [@a]{ put [@b]{ (external $a[0]) (explode $a[1:]) $@b } }
+
 fn xqt [a]{ e $E:XBPS_DISTDIR/srcpkgs/$a/template }
-fn xr [@a]{ sudo xbps-remove -R $@a }
+
 fn r [@a]{
   f = (mktemp)
   if ?(ranger --choosedir=$f $@a) { cd (e:cat $f) }
   rm -f $f
 }
+
+ls~ = (alias exa --group-directories-first -s Name)
+cat~ = (alias bat)
+xr~ = (alias sudo xbps-remove -R)
 
 -exports- = [&]
 
