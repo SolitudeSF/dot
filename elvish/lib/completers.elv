@@ -185,8 +185,8 @@ xbps-src-arch = []
 
 edit:completion:arg-completer[xbps-src] = [@cmd]{
   if (== (count $xbps-src-cmds) 0) {
-    @xbps-src-cmds = (xbps-src -h | take 122 | drop 4 | each [x]{ put (re:find &max=1 '^\w+(\-\w+)*' $x)[text] })
-    @xbps-src-arch = (xbps-src -h | take 155 | drop 129)[1:]
+    @xbps-src-cmds = (xbps-src -h | take 129 | drop 4 | each [x]{ put (re:find &max=1 '^\w+(\-\w+)*' $x)[text] })
+    @xbps-src-arch = (xbps-src -h | take 162 | drop 136)[1:]
   }
   if (eq $cmd[-2] '-a') {
     explode $xbps-src-arch

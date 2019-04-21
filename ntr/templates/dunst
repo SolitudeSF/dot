@@ -45,7 +45,7 @@ show_indicators = yes
 
 icon_position = left
 max_icon_size = 32
-icon_path = /home/solitude/.icons/Paper/32x32/status/:/home/solitude/.icons/Paper/32x32/devices/:/home/solitude/.icons/Paper/32x32/apps/:/home/solitude/.icons/Paper/32x32/actions
+icon_path = <{$HOME}>/.icons/Paper/32x32/status/:<{$HOME}>/.icons/Paper/32x32/devices/:<{$HOME}>/.icons/Paper/32x32/apps/:<{$HOME}>/.icons/Paper/32x32/actions
 
 ### History ###
 

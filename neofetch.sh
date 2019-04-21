@@ -72,12 +72,15 @@ ascii_colors=(distro)
 ascii_bold=on
 
 image_backend=kitty
+crop_mode=none
 image_source=$(getmpdalbumart)
-[ -z "$image_source" ] && image_source=$(randfile "$(xdg-user-dir PICTURES)/anzu")
+if [ -z "$image_source" ]; then
+	image_source=$(randfile "$(xdg-user-dir PICTURES)/anzu")
+        crop_mode=fill
+fi
 image_loop=off
 thumbnail_dir="${XDG_CACHE_HOME:-$HOME/.cache}/thumbnails/neofetch"
 # none fit fill *
-crop_mode=fill
 # northwest north northeast west center
 # east southwest south southeast
 crop_offset=center
