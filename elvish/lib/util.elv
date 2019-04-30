@@ -26,6 +26,7 @@ fn switch [a b]{
 }
 
 fn pad [a b &with=' ' &left=$true]{
+  a = (to-string $a)
   p = (repeat (- $b (count $a)) $with | joins '')
   if $left {
     put $p$a

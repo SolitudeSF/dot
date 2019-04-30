@@ -14,7 +14,6 @@ bspc rule -a Firefox desktop='^2'
 bspc rule -a mpv state=floating
 bspc rule -a Peek state=floating
 bspc rule -a kittyfloat state=floating
-bspc rule -a "league of legends.exe" state=floating
 bspc rule -a TelegramDesktop desktop='^3'
 bspc rule -a Hexchat desktop='^3'
 bspc rule -a Ripcord desktop='^3'

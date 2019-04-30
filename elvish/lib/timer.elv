@@ -7,8 +7,6 @@ m = 0
 h = 0
 composed = ''
 
-fn pad [a]{ if (< $a 10) { put '0'$a } }
-
 util:add-after-readline [_]{ start = (date +%s) }
 util:add-before-readline {
   delta = (- (date +%s) $start)

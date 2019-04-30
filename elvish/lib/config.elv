@@ -5,9 +5,11 @@ ntrtmp = $conf/ntr/templates
 fn list [@a]{
   fd . -L -t f $@a
 }
+
 fn select [@a]{
   sk --height=35% --layout=reverse -m $@a
 }
+
 fn edit [&type='' @a]{
   settype = []
   if (not-eq $type '') {
