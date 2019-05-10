@@ -40,3 +40,6 @@ when defined(release):
   switch "passL", "-s"
 else:
   switch "nimcache", "/tmp/nim/" & projectName() & "_d"
+
+when defined(hotcodereloading):
+  switch "nimcache", "nimcache"

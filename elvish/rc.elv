@@ -4,7 +4,7 @@ use config
 use module
 
 
-fn alias [@a]{ put [@b]{ (external $a[0]) (explode $a[1:]) $@b } }
+fn alias [cmd @a]{ put [@b]{ (external $cmd) (explode $a) $@b } }
 
 fn xqt [a]{ e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
