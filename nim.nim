@@ -2,8 +2,6 @@ from macros import error
 
 type Compiler = enum gcc = "gcc", clang = "clang"
 
-const is199 = (NimMajor, NimMinor, NimPatch) >= (0, 19, 9)
-
 proc setCompiler(s: string, compiler = gcc, cpp = false) =
   let c = findExe s
   let cpp = (if cpp: ".cpp" else: "")
@@ -34,16 +32,18 @@ when defined(musl):
   setCompiler "x86_64-linux-musl-gcc"
   switch "passL", "-static"
 
-when is199:
-  switch "styleCheck", "hint"
-
-when defined(release):
-  when is199:
-    switch "nimcache", "/tmp/nim/" & projectName() & "_r"
+when defined(release) or defined(danger):
   switch "passC", "-flto"
   switch "passL", "-s"
-elif is199:
-  switch "nimcache", "/tmp/nim/" & projectName() & "_d"
+
+when (NimMajor, NimMinor, NimPatch) >= (0, 19, 9):
+  switch "styleCheck", "hint"
+  when defined(release):
+    switch "nimcache", "/tmp/nim/" & projectName() & "_r"
+  when defined(danger):
+    switch "nimcache", "/tmp/nim/" & projectName() & "_d"
+  else:
+    switch "nimcache", "/tmp/nim/" & projectName()
 
 when defined(hotcodereloading):
   switch "nimcache", "nimcache"

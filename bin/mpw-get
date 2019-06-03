@@ -10,4 +10,4 @@ if (eq 0 (count $args)) {
 } else {
   t=$args[0]
 }
-mpw -t x -M (gpg2 -d -q ~/sns/password.gpg) $t 2>/dev/null | xclip -sel c -r
+mpw -t x -M (gpg2 -d -q ~/sns/password.gpg) $t 2>/dev/null | xclip -sel c -r -l 1

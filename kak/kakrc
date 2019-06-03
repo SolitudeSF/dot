@@ -220,9 +220,10 @@ hook global WinSetOption filetype=nim %{
     set buffer gdb_program 'nim-gdb'
     set buffer formatcmd "nimpretty ${kak_buffile}"
     set buffer makecmd 'nimble build'
+    no-tabs 2
+    lsp-engage
     # set buffer lintcmd "sh -c 'cp -f $0 $0.nim;nim --stdout --colors:off --hints:off --path:$(dirname ${kak_buffile}) check $0 | sed \"s/(/:/;s/, /:/;s/)/:/\" | sed \":a;N;/\n[buf.nim]/!s/\n//;ta;P;D\"'"
     # set buffer lintcmd "sh -c 'nim --stdout --hints:off check $0 | sed \'s/(/:/;s/, /:/;s/)/:/\''"
     # lint-on-write
     # format-on-write
-    no-tabs 2
 }
