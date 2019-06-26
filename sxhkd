@@ -31,9 +31,6 @@ super + space
 super + shift + m
 	exec mpv "$(xclip -sel c -o)"
 
-super + shift + e
-	exec spacefm
-
 super + shift + {n,p}
 	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \
 		{ncmpcpp,htop}

@@ -33,17 +33,18 @@ when defined(musl):
   switch "passL", "-static"
 
 when defined(release) or defined(danger):
+  switch "excessiveStackTrace", "off"
   switch "passC", "-flto"
   switch "passL", "-s"
 
-when (NimMajor, NimMinor, NimPatch) >= (0, 19, 9):
-  switch "styleCheck", "hint"
-  when defined(release):
-    switch "nimcache", "/tmp/nim/" & projectName() & "_r"
-  when defined(danger):
-    switch "nimcache", "/tmp/nim/" & projectName() & "_d"
-  else:
-    switch "nimcache", "/tmp/nim/" & projectName()
+when defined(release):
+  switch "nimcache", "/tmp/nim/" & projectName() & "_r"
+when defined(danger):
+  switch "nimcache", "/tmp/nim/" & projectName() & "_d"
+else:
+  switch "nimcache", "/tmp/nim/" & projectName()
 
 when defined(hotcodereloading):
   switch "nimcache", "nimcache"
+
+switch "styleCheck", "hint"

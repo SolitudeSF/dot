@@ -1,6 +1,5 @@
 # Manually merge and source plugins
 eval %sh{
-    kaksource "$kak_config/autosource"
     kak-lsp --kakoune -s $kak_session
     colorcol
 }
@@ -17,12 +16,8 @@ set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
 
-set global connect_source "%val{config}/autosource/splug"
+set global connect_source "%val{config}/autoload/splug"
 set global connect_shell elvish
-set global fzf_implementation sk
-set global fzf_file_command fd
-set global fzf_highlight_cmd bat
-set global fzf_sk_grep_command 'rg -LHn'
 
 unalias global e edit
 alias global e edit-or-dir
@@ -109,6 +104,7 @@ map global clipboard -docstring 'clip-yank' y '<a-|>xclip -i -f -sel c<ret>'
 map global clipboard -docstring 'clip-cut -> insert mode' c '<a-|>xclip -i -f -sel c<ret><a-c>'
 
 # Functions
+
 def toggle-highlighter -params .. -docstring 'Toggle highlighter' %{
     try %{
         addhl window/%arg{@} %arg{@}
@@ -162,10 +158,17 @@ hook global ModuleLoad kitty %{
     set global kitty_window_type kitty
 }
 
+hook global ModuleLoad fzf %{
+    set global fzf_implementation sk
+    set global fzf_file_command fd
+    set global fzf_highlight_cmd bat
+    set global fzf_sk_grep_command 'rg -LHn'
+}
+
 hook global WinDisplay .* info-buffers
 hook global NormalIdle .* %{ try %{ exec -draft '<a-i>w: palette-status<ret>' } }
 hook global BufWritePost .* %{ git show-diff }
-hook global BufReload    .* %{ git show-diff }
+hook global BufReload .* %{ git show-diff }
 
 hook global WinCreate .* %{
     auto-pairs-enable
@@ -197,7 +200,7 @@ hook global BufCreate .*srcpkgs/.+/template$ %{
 
 hook global BufCreate .*/\.?((sx|xinit)(rc)?|profile) %{ set buffer filetype sh }
 hook global BufCreate .*\.ino %{ set buffer filetype cpp }
-hook global BufCreate .*\.cs %{ addhl window/java }
+hook global BufCreate .*\.cs %{ addhl buffer/java }
 hook global BufCreate .*\.rasi %{ set buffer filetype css }
 
 # Filetype settings
@@ -211,7 +214,11 @@ hook global WinSetOption filetype=elvish %{
     no-tabs 2
 }
 
-hook global WinSetOption filetype=(go|rust|python) %{
+hook global WinSetOption filetype=(go|rust|c|cpp) %{
+    lsp-engage
+}
+
+hook global WinSetOption filetype=python %{
     lsp-engage
     set global lsp_server_configuration pyls.plugins.jedi_completion.include_params=false
 }
@@ -222,8 +229,4 @@ hook global WinSetOption filetype=nim %{
     set buffer makecmd 'nimble build'
     no-tabs 2
     lsp-engage
-    # set buffer lintcmd "sh -c 'cp -f $0 $0.nim;nim --stdout --colors:off --hints:off --path:$(dirname ${kak_buffile}) check $0 | sed \"s/(/:/;s/, /:/;s/)/:/\" | sed \":a;N;/\n[buf.nim]/!s/\n//;ta;P;D\"'"
-    # set buffer lintcmd "sh -c 'nim --stdout --hints:off check $0 | sed \'s/(/:/;s/, /:/;s/)/:/\''"
-    # lint-on-write
-    # format-on-write
 }

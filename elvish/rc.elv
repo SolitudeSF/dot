@@ -1,10 +1,6 @@
 use epm
 use util
 use config
-use module
-
-
-fn alias [cmd @a]{ put [@b]{ (external $cmd) (explode $a) $@b } }
 
 fn xqt [a]{ e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
@@ -14,6 +10,8 @@ fn r [@a]{
   rm -f $f
 }
 
+fn alias [cmd @a]{ put [@b]{ (external $cmd) (explode $a) $@b } }
+
 ls~ = (alias exa --group-directories-first -s Name)
 cat~ = (alias bat)
 xr~ = (alias sudo xbps-remove -R)
@@ -21,10 +19,11 @@ xr~ = (alias sudo xbps-remove -R)
 -exports- = [&]
 
 {
+  use github.com/xiaq/edit.elv/smart-matcher
   use theme
   use completers
-  use github.com/xiaq/edit.elv/smart-matcher
   use stack
+  use module
   -exports- = (module:exported $stack:)
   smart-matcher:apply
   util:add-before-readline {

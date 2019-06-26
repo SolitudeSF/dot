@@ -1,7 +1,7 @@
 #!/usr/bin/env elvish
 t=""
 if (eq 0 (count $args)) {
-  @sites=(keys (from-json <~/.mpw.d/(get-env MPW_FULLNAME).mpsites.json)[sites])
+  @sites=(keys (from-json <(get-env XDG_CONFIG_HOME)/mpwc/(get-env MPW_FULLNAME).mpsites.json)[sites])
   if (eq ?(tty -s) $ok) {
     t=(echo &sep="\n" $@sites | sk)
   } else {
@@ -10,4 +10,4 @@ if (eq 0 (count $args)) {
 } else {
   t=$args[0]
 }
-mpw -t x -M (gpg2 -d -q ~/sns/password.gpg) $t 2>/dev/null | xclip -sel c -r -l 1
+gpg2 -d -q ~/sns/password.gpg | mpwc -S -k max -s $t 2>/dev/null | xclip -sel c -r -l 1

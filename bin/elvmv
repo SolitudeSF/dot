@@ -1,17 +1,5 @@
 #!/usr/bin/env elvish
 
-use re
-
-fn call [a @b]{
-  list = [(splits ' ' $a)]
-  bin = (external $list[0])
-  rest = [$@b]
-  if (> (count $list) 1) {
-    rest = [$list[1:] $@b]
-  }
-  $bin $@rest
-}
-
 fn list-items [a]{
   if (-is-dir $a) { put $a/* } else { put $a }
 }
@@ -30,14 +18,11 @@ if (== (count $args) 0) {
   }
 }
 
-high = (- (count $items) 1)
 file = (mktemp -p /tmp elvmvXXXXX)
 print > $file
-c = 0
 
 for i $items {
-  echo $c"\t"$items[$c] >> $file
-  c = (+ $c 1)
+  echo $i >> $file
 }
 
 editor = vi
@@ -54,28 +39,20 @@ fn abort [&code=1 a]{
 }
 
 try {
-  call $editor $file
+  (external $editor) $file
 } except {
   abort 'Editor exited with error. Aborting...'
 }
 
+i = 0
 cat $file | each [l]{
-  matches = (re:find '^(\d+)\t?(.*)$' $l)
-  if (not (eq $matches '')) {
-    id = $matches[groups][1][text]
-    name = $matches[groups][2][text]
-    src = $items[$id]
-    if (> $id $high) {
-      abort 'Unknown item id: '$id'. Aborting...'
-    } elif (not (eq $src $name)) {
-      mkdir -p (path-dir $name)
-      mv $items[$id] $name
-    }
-  } elif (re:match '^\s*$' $l) {
-    continue
-  } else {
-    abort 'Couldn''t parse line "'$l'". Aborting...'
+  if (eq $l '') {
+    rm $items[$i]
+  } elif (not-eq $l $items[$i]) {
+    mkdir -p (path-dir $l)
+    mv $items[$i] $l
   }
+  i = (+ $i 1)
 }
 
 rm $file
