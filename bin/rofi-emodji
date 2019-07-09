@@ -1,11 +1,9 @@
 #!/bin/sh
 # romoji - rofi based emoji picker
 
-EMOJI=$(sed '0,/^exit/d' $0 | rofi -dmenu -i -l 15 | grep -Po '^.')
-if [ "$EMOJI" ]; then
-	printf %s "$EMOJI" | xclip -i
-	sleep 0.1
-	xdotool click 2
+EMOJI=$(sed '0,/^exit/d' "$0" | rofi -dmenu -i -l 15 | grep -Po '^.')
+if [ -n "$EMOJI" ]; then
+	printf %s "$EMOJI" | xclip -i -sel c
 	exit $?
 fi
 exit 1

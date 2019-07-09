@@ -40,5 +40,6 @@ fn rifle { edit $conf/ranger/rifle.conf }
 fn kak { edit $conf/kak/kakrc }
 fn pqiv { edit $conf/pqivrc }
 fn mpv { edit $conf/mpv/mpv.conf }
+fn mpwc { edit $conf/mpwc/(get-env MPW_FULLNAME).mpsites }
 fn ncmpcpp { edit &type=ini $conf/ncmpcpp/config }
 fn bedrock { edit /bedrock/etc/bedrock.conf; sudo brl apply }

@@ -1,7 +1,7 @@
 #!/usr/bin/env elvish
 t=""
 if (eq 0 (count $args)) {
-  @sites=(keys (from-json <(get-env XDG_CONFIG_HOME)/mpwc/(get-env MPW_FULLNAME).mpsites.json)[sites])
+  @sites=(cat (get-env XDG_CONFIG_HOME)/mpwc/(get-env MPW_FULLNAME).mpsites)
   if (eq ?(tty -s) $ok) {
     t=(echo &sep="\n" $@sites | sk)
   } else {

@@ -12,7 +12,7 @@ fn r [@a]{
 
 fn alias [cmd @a]{ put [@b]{ (external $cmd) (explode $a) $@b } }
 
-ls~ = (alias exa --group-directories-first -s Name)
+ls~ = (alias lc)
 cat~ = (alias bat)
 xr~ = (alias sudo xbps-remove -R)
 

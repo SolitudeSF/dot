@@ -20,6 +20,7 @@ sxhkd
 polybar
 dunst
 rofi
+lc
 firefox
 kitty
 elvish
@@ -76,9 +77,10 @@ for arg; do
 			_install $arg "$CONF/mpd/mpd.conf";;
 		ncmpcpp)
 			_install $arg "$CONF/ncmpcpp/config";;
+		lc)
+			_install $arg "$CONF/lc/config";;
 		kak)
-			_install $arg/kakrc "$CONF/kak/kakrc"
-			_install $arg/autoload "$CONF/kak/autoload";;
+			_install $arg "$CONF/kak/kakrc";;
 		zathura)
 			_render $arg "$CONF/zathura/zathurarc";;
 		ranger)

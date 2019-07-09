@@ -154,11 +154,11 @@ def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
 
 # Hooks
 
-hook global ModuleLoad kitty %{
+hook global ModuleLoaded kitty %{
     set global kitty_window_type kitty
 }
 
-hook global ModuleLoad fzf %{
+hook global ModuleLoaded fzf %{
     set global fzf_implementation sk
     set global fzf_file_command fd
     set global fzf_highlight_cmd bat
