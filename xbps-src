@@ -1,10 +1,16 @@
+GRAPHITE="-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
+CFLAGS="-flto=8 ${GRAPHITE} -ftree-vectorize"
+CXXFLAGS="${CFLAGS}"
+LDFLAGS="${CFLAGS} -fuse-linker-plugin"
+
 XBPS_MAKEJOBS=8
 XBPS_CCACHE=yes
 XBPS_ALLOW_RESTRICTED=yes
+
 XBPS_PKG_OPTIONS_mpv=~jack,~sndio,~alsa,~wayland
 XBPS_PKG_OPTIONS_mpd=~sndio
 XBPS_PKG_OPTIONS_SDL2=~sndio
 XBPS_PKG_OPTIONS_mediainfo=~GUI
-XBPS_PKG_OPTIONS_polybar=~i3
+XBPS_PKG_OPTIONS_polybar=~i3,~alsa
 XBPS_PKG_OPTIONS_retroarch=~jack
 XBPS_PKG_OPTIONS_zenity=~webkit

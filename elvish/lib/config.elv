@@ -37,6 +37,7 @@ fn kitty-diff { edit &type=ini $conf/kitty/diff.conf }
 fn kitty-colors { edit &type=ini $dot/ntr/templates/kitty-colors }
 fn ranger { edit $conf/ranger/rc.conf }
 fn rifle { edit $conf/ranger/rifle.conf }
+fn lc { edit $conf/lc/config }
 fn kak { edit $conf/kak/kakrc }
 fn pqiv { edit $conf/pqivrc }
 fn mpv { edit $conf/mpv/mpv.conf }

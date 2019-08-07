@@ -3,11 +3,11 @@
 #
 
 # power operations
-super + End ; {s,S}
-	i3lock && sudo -n {zzz,ZZZ}
+super + End ; {s,S,alt + s}
+	i3lock && loginctl {suspend,hibernate,hybrid-sleep}
 
 super + End ; {r,p}
-	sudo -n {reboot,poweroff}
+	loginctl {reboot,poweroff}
 
 super + End ; {l,b}
 	{i3lock,xset dpms force off}
@@ -15,8 +15,8 @@ super + End ; {l,b}
 alt + Tab
 	rofi-windowswitcher
 
-super + shift + {End,Insert}
-	exec {rofi-powermenu,rofi-bspwm-unhide}
+super + shift + {End,Insert,Return}
+	exec {rofi-powermenu,rofi-bspwm-unhide,rofi -modi emoji -show emoji}
 
 super + {_,shift + }Print
 	exec {peek -t, peek}
@@ -50,8 +50,8 @@ XF86MonBrightness{Up,Down}
 # screencap
 #
 
-Print
-	screenshot
+{_,ctrl} + Print
+	screenshot {-s -u,-u}
 
 #
 # bspwm hotkeys

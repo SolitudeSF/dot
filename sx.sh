@@ -5,13 +5,14 @@ start-pulseaudio-x11 &
 wlp &
 mpd &
 perWindowLayoutD &
-disown dunst &
-disown unclutter &
 disown sxhkd &
+disown unclutter &
+disown /usr/libexec/xfce-polkit &
+disown dunst &
+disown syncthing -no-browser &
+disown polybar -q main &
 disown devmon -s \
  --exec-on-drive 'notify-send -a udevil -i media-removable "$l" "$f mounted at $d"' \
  --exec-on-unmount 'notify-send -a udevil -i media-removable "$l" "$f unmounted from $d"' \
  --exec-on-remove 'notify-send -a udevil -i media-removable "$l" "$f removed from $d"' &
-disown syncthing -no-browser &
-disown polybar -q main &
 exec bspwm

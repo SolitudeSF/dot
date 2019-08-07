@@ -30,7 +30,7 @@ xr~ = (alias sudo xbps-remove -R)
     util:set-title (tilde-abbr $pwd) >/dev/tty
   }
   util:add-after-readline [a]{
-    if (eq $a '') { print "\r" >/dev/tty; ls >/dev/tty }
+    if (eq $a '') { print "\r" >/dev/tty; ls >/dev/tty; echo >/dev/tty }
     util:set-title (splits ' ' $a | take 1)' '(tilde-abbr $pwd) >/dev/tty
   }
 }

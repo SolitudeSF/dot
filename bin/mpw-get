@@ -2,11 +2,7 @@
 t=""
 if (eq 0 (count $args)) {
   @sites=(cat (get-env XDG_CONFIG_HOME)/mpwc/(get-env MPW_FULLNAME).mpsites)
-  if (eq ?(tty -s) $ok) {
-    t=(echo &sep="\n" $@sites | sk)
-  } else {
-    t=(echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 25)
-  }
+  t=(echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 20 -columns 1)
 } else {
   t=$args[0]
 }

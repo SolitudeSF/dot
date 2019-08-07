@@ -2,7 +2,7 @@
 dir=$(xdg-user-dir PICTURES)/screen
 [ -d "$dir" ] || mkdir -p "$dir"
 path=$dir/$(date "+%Y-%m-%d_%H:%M:%S").png
-if maim -u -s "$path"; then
+if maim "$@" "$path"; then
 	notify-send --icon "$path" "Screenshot saved" "$path"
 	xclip -sel c -t image/png "$path"
 fi

@@ -80,7 +80,7 @@ for arg; do
 		lc)
 			_install $arg "$CONF/lc/config";;
 		kak)
-			_install $arg "$CONF/kak/kakrc";;
+			_install $arg.kak "$CONF/kak/kakrc";;
 		zathura)
 			_render $arg "$CONF/zathura/zathurarc";;
 		ranger)

@@ -34,13 +34,17 @@ when defined(musl):
 
 when defined(release) or defined(danger):
   switch "excessiveStackTrace", "off"
-  switch "passC", "-flto"
+  switch "passC", "-march=native -O3"
+  switch "passC", "-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
+  switch "passC", "-flto=8"
+  switch "passC", "-ftree-vectorize"
+  switch "passL", "-fuse-linker-plugin"
   switch "passL", "-s"
 
-when defined(release):
-  switch "nimcache", "/tmp/nim/" & projectName() & "_r"
 when defined(danger):
   switch "nimcache", "/tmp/nim/" & projectName() & "_d"
+elif defined(release):
+  switch "nimcache", "/tmp/nim/" & projectName() & "_r"
 else:
   switch "nimcache", "/tmp/nim/" & projectName()
 

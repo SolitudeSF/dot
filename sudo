@@ -1,4 +1,3 @@
-Cmnd_Alias POWER_CMD = /bedrock/cross/pin/bin/halt, /bedrock/cross/pin/bin/reboot, /bedrock/cross/pin/bin/poweroff, /usr/sbin/zzz, /usr/sbin/ZZZ
 Cmnd_Alias XBPS_CMD = /usr/sbin/xbps-install, /usr/sbin/xbps-remove, /usr/sbin/xbps-reconfigure
 Cmnd_Alias PACMAN_CMD = /bedrock/cross/bin/pacman
 Cmnd_Alias EXCEPT_CMD = /usr/sbin/radeontop
@@ -13,7 +12,6 @@ Defaults timestamp_timeout = -1
 
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
-%wheel ALL=(ALL) NOPASSWD: POWER_CMD
 %wheel ALL=(ALL) NOPASSWD: EXCEPT_CMD
 
 #includedir /etc/sudoers.d

@@ -1,10 +1,7 @@
-#cligen/cfUt.cfToCL include syntax is [include__NotAllUpper] => include file
-#while [include__ALLUPPER] instead includes the file pointed to by "$ALLUPPER".
-
 kind = "numeric  cset 0123456789-_.:,%"
 kind = "capsdoc  cset ABCDEFGHIJKLMNOPQRSTUVWXYZ_-."
 kind = "object   SFX .o .a .la .so core .pyc .pyo .dvi .elc .obj"
-kind = "script   SFX .pl .awk .sed .sh .csh .gpi akefile .log .nims .R .js .scm .lsp .cfg .cf .conf"
+kind = "script   SFX .pl .awk .elv .sh .csh .gpi akefile .log .nims .R .js .scm .lsp .cfg .cf .conf"
 kind = "compress SFX .z .gz .bz .bz2 .lz .Lz .xz 4z .zs .zs"
 kind = "tarchive SFX .tar .tgz .tbz .tbz2 .tlz .txz .tLz .tzs"
 kind = "archive  SFX .zip .rar .deb .rpm"
@@ -14,19 +11,12 @@ kind = "header   sfx .h .hh .pxi .pxd .diff .patch"
 kind = "source   sfx .s .c .cc .cpp .d .i .java .f .f95 .m .nb .py .pyx .nim .vim .el .tex .fig .jl"
 kind = "document sfx .txt .doc .html .htm .ps .eps .pdf .prn .mif .fm .md .rst"
 kind = "image    sfx .img .bmp .jpg .gif .jpeg .png .ppm"
-kind = "audio    sfx .au .mp3 .wav .ogg .m4a"
-kind = "video    sfx .mpg .mpeg .mp4 .avi .flv .ogm .mkv .m4v .mts .m2ts .wmv .mov .swf .asf .rm webm"
+kind = "audio    sfx .opus .au .mp3 .wav .ogg .m4a"
+kind = "video    sfx .mpg .mpeg .mp4 .avi .flv .ogm .mkv .m4v .mts .m2ts .wmv .mov .swf .asf .rm .webm"
 kind = "dot      PFX ."                 #classic Unix dot file/dir/ln/etc.
 kind = "onOutErr PFX o. e."             #outputs from cb's "on hosts cmd" system
-#kind = "media    any image audio video" #combo
-#kind = "special  none reg"
-#kind = "sWithL   PFX l"
-#kind = "eWithC   SFX c"
-#kind = "combo    all sWithL eWithC ELF"
-#kind = "sysOwn   uid 0 1 2 3 4 5 6 7 8 9"  #call first 10 owners "sys"
-#kind = "sysGrp   gid 0 1 2 3 4 5 6 7 8 9"  #call first 10 group ids "sys"
 
-colors = "fhot- = BLACK"
+colors = "fhot- = black"
 colors = "fhot0 = PURPLE"
 colors = "fhot1 = BLUE"
 colors = "fhot2 = CYAN"
@@ -35,7 +25,7 @@ colors = "fhot4 = YELLOW"
 colors = "fhot5 = RED"
 colors = "fhot+ = WHITE"
 
-colors = "FHOT- = black"
+colors = "FHOT- = BLACK"
 colors = "FHOT0 = purple"
 colors = "FHOT1 = blue"
 colors = "FHOT2 = cyan"
@@ -44,7 +34,7 @@ colors = "FHOT4 = yellow"
 colors = "FHOT5 = red"
 colors = "FHOT+ = white"
 
-colors = "bhot- = on_BLACK"
+colors = "bhot- = on_black"
 colors = "bhot0 = on_PURPLE"
 colors = "bhot1 = on_BLUE"
 colors = "bhot2 = on_CYAN"
@@ -53,7 +43,7 @@ colors = "bhot4 = on_YELLOW"
 colors = "bhot5 = on_RED"
 colors = "bhot+ = on_WHITE"
 
-colors = "BHOT- = on_black"
+colors = "BHOT- = on_BLACK"
 colors = "BHOT0 = on_purple"
 colors = "BHOT1 = on_blue"
 colors = "BHOT2 = on_cyan"
@@ -62,31 +52,26 @@ colors = "BHOT4 = on_yellow"
 colors = "BHOT5 = on_red"
 colors = "BHOT+ = on_white"
 
-[include__LC_THEME] #..LC_THEME set.  Defs used by color, ageFmt, maybe style.
-
-color="dot:0x04:0      NONE"
-color="onOutErr:0xF0:0 FHOT-"
-color="compress:0x3D:0 fhot1"
-color="tarchive:0x3E:0 fhot1"
-color="archive:0x3F:0  fhot1"
-color="audio:0x70:0    fhot0"
-color="image:0x71:0    fhot0"
-color="video:0x72:0    fhot0"
-#color="media:0x72:0    fhot0"
-#color="special:0x72:2  blink"
-#color="combo:0x00:0    blink"
-color="script:0x40:0   fhot4"
-color="pointer:0x50:0  FHOT0"                #pointers odd ducks=>alt bank
-color="header:0x58:0   fhot2"                #Intefaces are cooler prelude
-color="source:0x60:0   fhot3"                #..to neutral warmth impls.
-color="object:0x68:0   fhot5"                #Could arguably swap obj&exec
-color="backup:0x80:0   FHOT4"                #backups odd ducks=>alt bank
-color="capsdoc:0x23:0  fhot+"                #Docs are just a different
-color="numeric:0x21:0  fhot+"                #process entirely => gray scl
-color="document:0x24:0 fhot+"
+color="dot:0x04:1       NONE"
+color="onOutErr:0xF0:0  FHOT-"
+color="compress:0x3D:0  fhot1"
+color="tarchive:0x3E:0  fhot1"
+color="archive:0x3F:0   fhot1"
+color="audio:0x70:0     fhot0"
+color="image:0x71:0     fhot0"
+color="video:0x72:0     fhot0"
+color="script:0x40:0    fhot4"
+color="pointer:0x50:0:ɷ FHOT0"
+color="header:0x58:0    fhot2"
+color="source:0x60:0    fhot3"
+color="object:0x68:0    fhot5"
+color="backup:0x80:0    FHOT4"
+color="capsdoc:0x23:0   fhot+"
+color="numeric:0x21:0   fhot+"
+color="document:0x24:0  fhot+"
 
 color="symlink:0x10:1  italic"
-color="dir:0x20:1      BLUE   bold"
+color="dir:0x20:0      BLUE   bold"
 color="reg:0x65:1      NONE"
 color="cdev:0x30:0     YELLOW on_purple"
 color="bdev:0x40:1     CYAN   on_purple"
@@ -108,7 +93,7 @@ color="worldW:0x40:4   on_RED"            #world writable higherD 2clobber
 #struck can sometimes be hard to read text; hence hard to read dirents get it:
 color="unR:0xF8:5      struck"            #unreadable or isDir & no-exec
 
-color="exec:0x70:6     bold"
+color="exec:0x70:6:¶   bold"
 
 color="unknown:0x22:0  NONE"              #Added if missing;Here to set ord
 
@@ -145,12 +130,12 @@ ageFmt =        "+0@/1          <s fhot5"
 #%r if you worry about automounters/NFS hanging on link tgts.  Also, -f below
 #should really end in "*4 if you ask me,but stdlib parsecfg sez "invalid token".
 
-Style = r"""s   = -X./       "-f%s %f"""
+Style = r"""s   = -X./.      "-f%s %f"""
 Style = r"""S   = -DLss"""
-Style = r"""psa = -l -X./    "-f%P %S %f%R"""
+Style = r"""psa = -l -X./.   "-f%P %S %f%R"""
 Style = r"""ps  = -s psa -xdot"""
 # Same as above+ showing times
-Style = r"""la  = -l -X./    "-f%P %s %m %f%R"""
+Style = r"""la  = -l -X./.   "-f%P %s %m %f%R"""
 Style = r"""l   = -s la -xdot"""
 Style = r"""ls  = -s l  -os"""
 Style = r"""lu  = -s l  -oa  "-f%P %s %a %f%R"""
@@ -160,7 +145,7 @@ Style = r"""lv  = -s l  -ov  "-f%P %s %v %f%R"""
 Style = r"""lc  = -s l  -oc  "-f%P %s %c %f%R"""
 Style = r"""lb  = -s l  -ob  "-f%P %s %b %f%R"""
 # Same as above+ showing owner
-Style = r"""lla = -Hl -X./    "-f%P %{bold}U %s %m %f%R"""
+Style = r"""lla = -Hl -X./.   "-f%P %{bold}U %s %m %f%R"""
 Style = r"""ll  = -Hslla -xdot"""
 Style = r"""lls = -Hsll  -os"""
 Style = r"""llu = -Hsll  -oa "-f%{bold}U %P %s %a %f%R"""
@@ -170,19 +155,19 @@ Style = r"""llv = -Hsll  -ov "-f%{bold}U %P %s %v %f%R"""
 Style = r"""llc = -Hsll  -oc "-f%{bold}U %P %s %c %f%R"""
 Style = r"""llb = -Hsll  -ob "-f%{bold}U %P %s %b %f%R"""
 # Show most things:
-Style = r"""La =  -Hl -X./    "-f%K %P %n %{bold}U %{italic}G %S %M %f%R"""
+Style = r"""La =  -Hl -X./.   "-f%o %P %n %{bold}U %{italic}G %S %M %f%R"""
 Style = r"""L  =  -HsLa -xdot"""
 Style = r"""Ls =  -HsL  -os"""
-Style = r"""Lu =  -HsL  -oa  "-f%n %K %{bold}U %{italic}G %P %S %A %f%R"""
-Style = r"""Lm =  -HsL  -om  "-f%n %K %{bold}U %{italic}G %P %S %M %f%R"""
-Style = r"""Lt =  -HsL  -om  "-f%n %K %{bold}U %{italic}G %P %S %M %f%R"""
-Style = r"""Lv =  -HsL  -ov  "-f%n %K %{bold}U %{italic}G %P %S %V %f%R"""
-Style = r"""Lc =  -HsL  -oc  "-f%n %K %{bold}U %{italic}G %P %S %C %f%R"""
-Style = r"""Lb =  -HsL  -ob  "-f%n %K %{bold}U %{italic}G %P %S %B %f%R"""
+Style = r"""Lu =  -HsL  -oa  "-f%n %o %{bold}U %{italic}G %P %S %A %f%R"""
+Style = r"""Lm =  -HsL  -om  "-f%n %o %{bold}U %{italic}G %P %S %M %f%R"""
+Style = r"""Lt =  -HsL  -om  "-f%n %o %{bold}U %{italic}G %P %S %M %f%R"""
+Style = r"""Lv =  -HsL  -ov  "-f%n %o %{bold}U %{italic}G %P %S %V %f%R"""
+Style = r"""Lc =  -HsL  -oc  "-f%n %o %{bold}U %{italic}G %P %S %C %f%R"""
+Style = r"""Lb =  -HsL  -ob  "-f%n %o %{bold}U %{italic}G %P %S %B %f%R"""
 #All but rdev. 4 time stamps => either terse file ages | wide terminals.
-Style = r"""LLa = -He./ "-f%n %o %S %P %{bold}U %{italic}G %B %C %M %A %f%R"""
+Style = r"""LLa = -HX./ "-f%n %o %S %P %{bold}U %{italic}G %B %C %M %A %f%R"""
 Style = r"""LL  = -HsLLa -xdot"""
-Style = r"""LLai = -He./ "-f%i %n %o %S %P %{bold}U %{italic}G %B %C %M %A %f%R"""
+Style = r"""LLai = -HX./ "-f%i %n %o %S %P %{bold}U %{italic}G %B %C %M %A %f%R"""
 Style = r"""LLi = -HsLLai -xdot"""
 Style = r"""debug = -H "-f%0%1%2%3%4%5%6%7%8%9%.%/ %f%R"""
 #Almost exactly GNU ls -lA --no-color
@@ -190,4 +175,4 @@ Style = r"""gls = "-tp1g -> " --ageFmt,= --ageFmt,= "-a-15778476@%b %e  %Y" "-a-
 
 glyph  = "▶ "
 order  = 0134EN   #Default sort order: kind-order0,1; fmtKindNum0,1; longExt,Nm
-format = %f
+format = "%@%f"

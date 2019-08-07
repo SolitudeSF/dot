@@ -136,12 +136,12 @@ def lsp-engage -docstring 'Enable language server' %{
 }
 
 def no-tabs -params 0..1 -docstring 'Indent with spaces' %{
+    expandtab
     eval %sh{ [ -n "$1" ] && printf %s "
         set buffer indentwidth $1
         set buffer tabstop $1
         set buffer softtabstop $1
     " }
-    expandtab
     hook buffer InsertKey <space> %{ try %{
         exec -draft h<a-i><space><a-k>^\h+<ret>
         exec -with-hooks <tab>
@@ -161,7 +161,7 @@ hook global ModuleLoaded kitty %{
 hook global ModuleLoaded fzf %{
     set global fzf_implementation sk
     set global fzf_file_command fd
-    set global fzf_highlight_cmd bat
+    set global fzf_highlight_command bat
     set global fzf_sk_grep_command 'rg -LHn'
 }
 
