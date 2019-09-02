@@ -1,6 +1,6 @@
 kind = "numeric  cset 0123456789-_.:,%"
 kind = "capsdoc  cset ABCDEFGHIJKLMNOPQRSTUVWXYZ_-."
-kind = "object   SFX .o .a .la .so core .pyc .pyo .dvi .elc .obj"
+kind = "object   SFX .o .a .la .so .pyc .pyo .dvi .elc .obj"
 kind = "script   SFX .pl .awk .elv .sh .csh .gpi akefile .log .nims .R .js .scm .lsp .cfg .cf .conf"
 kind = "compress SFX .z .gz .bz .bz2 .lz .Lz .xz 4z .zs .zs"
 kind = "tarchive SFX .tar .tgz .tbz .tbz2 .tlz .txz .tLz .tzs"
@@ -15,6 +15,7 @@ kind = "audio    sfx .opus .au .mp3 .wav .ogg .m4a"
 kind = "video    sfx .mpg .mpeg .mp4 .avi .flv .ogm .mkv .m4v .mts .m2ts .wmv .mov .swf .asf .rm .webm"
 kind = "dot      PFX ."                 #classic Unix dot file/dir/ln/etc.
 kind = "onOutErr PFX o. e."             #outputs from cb's "on hosts cmd" system
+kind = "core     PFX core"
 
 colors = "fhot- = black"
 colors = "fhot0 = PURPLE"
@@ -65,6 +66,7 @@ color="pointer:0x50:0:ɷ FHOT0"
 color="header:0x58:0    fhot2"
 color="source:0x60:0    fhot3"
 color="object:0x68:0    fhot5"
+color="core:0x68:0      fhot5"
 color="backup:0x80:0    FHOT4"
 color="capsdoc:0x23:0   fhot+"
 color="numeric:0x21:0   fhot+"

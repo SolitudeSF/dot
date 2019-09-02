@@ -2,7 +2,7 @@ from macros import error
 
 type Compiler = enum gcc = "gcc", clang = "clang"
 
-proc setCompiler(s: string, compiler = gcc, cpp = false) =
+proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   let c = findExe s
   let cpp = (if cpp: ".cpp" else: "")
   if c.len == 0:
@@ -52,3 +52,4 @@ when defined(hotcodereloading):
   switch "nimcache", "nimcache"
 
 switch "styleCheck", "hint"
+switch "parallelBuild", "0"

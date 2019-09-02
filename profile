@@ -17,7 +17,7 @@ GPG_TTY=$(tty)
 TERMINAL='kitty -1'
 EDITOR=kak
 VISUAL=kak
-PAGER=less
+PAGER=kakpager
 MANPAGER=less
 QT_QPA_PLATFORMTHEME=gtk2
 

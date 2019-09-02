@@ -4,13 +4,13 @@
 
 # power operations
 super + End ; {s,S,alt + s}
-	i3lock && loginctl {suspend,hibernate,hybrid-sleep}
+	lockscreen && loginctl {suspend,hibernate,hybrid-sleep}
 
 super + End ; {r,p}
 	loginctl {reboot,poweroff}
 
 super + End ; {l,b}
-	{i3lock,xset dpms force off}
+	{lockscreen,xset dpms force off}
 
 alt + Tab
 	rofi-windowswitcher
@@ -24,6 +24,9 @@ super + {_,shift + }Print
 # applications
 super + Return
 	exec kitty -1
+
+super + Home
+	exec rofi -modi calc -show calc
 
 super + space
 	exec rofi -show drun
@@ -148,10 +151,6 @@ super + ctrl + {1-9}
 # cancel the preselection for the focused node
 super + ctrl + space
 	bspc node -p cancel
-
-# cancelthe preselection for the focused desktop
-super + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
 # move/resize

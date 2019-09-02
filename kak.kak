@@ -33,13 +33,13 @@ alias global c connect-terminal
 
 face global LineNumbersWrapped black
 
-addhl global/ number-lines -hlcursor -separator ' '
-addhl global/ column 80 default,rgb:303030
-addhl global/ regex '\h+$' 0:default,red
-addhl global/ regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
-addhl global/ show-matching
-addhl global/ wrap -word -indent -marker ''
-addhl global/ dynregex '%opt{curword}' 0:+b
+addhl global/number-lines number-lines -hlcursor -separator ' '
+addhl global/ruler column 80 default,rgb:303030
+addhl global/trailing-whitespace regex '\h+$' 0:default,red
+addhl global/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
+addhl global/matching-brackets show-matching
+addhl global/wrap wrap -word -indent -marker ''
+addhl global/current-word dynregex '%opt{curword}' 0:+b
 
 # Keybinds
 
