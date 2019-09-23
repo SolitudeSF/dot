@@ -4,7 +4,7 @@
 
 # power operations
 super + End ; {s,S,alt + s}
-	lockscreen && loginctl {suspend,hibernate,hybrid-sleep}
+	loginctl {suspend,hibernate,hybrid-sleep}
 
 super + End ; {r,p}
 	loginctl {reboot,poweroff}

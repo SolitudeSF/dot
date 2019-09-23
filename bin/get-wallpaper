@@ -1,2 +1,0 @@
-#!/usr/bin/env elvish
- print [(splits "'" (cat $E:XDG_CONFIG_HOME/setroot/.setroot-restore))][-2]

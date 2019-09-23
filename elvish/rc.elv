@@ -35,4 +35,5 @@ xr~ = (alias sudo xbps-remove -R)
   }
 }
 
+-override-wcwidth 🦀 2
 set-env GPG_TTY (tty)

@@ -8,7 +8,7 @@ DOTS_DIR=$HOME/dot
 GOPATH=$XDG_DATA_HOME/go
 CARGO_HOME=$XDG_DATA_HOME/cargo
 
-mkdir -p $XDG_RUNTIME_DIR
+mkdir -p "$XDG_RUNTIME_DIR"
 
 # Override system variables
 PATH=$HOME/.local/bin:$DOTS_DIR/bin:$HOME/.nimble/bin:$CARGO_HOME/bin:$GOPATH/bin:$PATH
@@ -47,7 +47,7 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
 fi
 
 # Sensitive info
-. $HOME/sns/profile
+. "$HOME/sns/profile"
 
 # Start X or shell
 if [ "$GPG_TTY" = /dev/tty1 ]; then

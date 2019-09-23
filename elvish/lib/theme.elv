@@ -16,9 +16,8 @@ if (or (has-env SSH_CLIENT) (has-env SSH_TTY)) {
 }
 
 fn sym {
-  if ?(isnimbleproject) {
-    put 👑
-  } else { put $basesym }
+  o = (e = ?(getprojecticon))
+  if $e { put $o } else { put $basesym }
 }
 
 fn pwd {

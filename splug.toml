@@ -12,7 +12,7 @@ files = ["rc/search-highlighter.kak"]
 files = ["mark.kak"]
 
 ["https://github.com/lenormf/kakoune-extra"]
-files = ["widgets/git-branch.kak", "readline.kak", "vcs.kak"]
+files = ["widgets/git-branch.kak", "vcs.kak"]
 
 ["https://github.com/Delapouite/kakoune-auto-percent"]
 files = ["auto-percent.kak"]
@@ -56,6 +56,9 @@ files = ["vertical-selection.kak"]
 ["https://github.com/occivink/kakoune-phantom-selection"]
 files = ["phantom-selection.kak"]
 
+["https://github.com/occivink/kakoune-sort-selections"]
+files = ["sort-selections.kak"]
+
 ["https://gitlab.com/notramo/elvish.kak"]
 files = ["elvish.kak"]
 
@@ -69,6 +72,9 @@ files = ["rc/smarttab.kak"]
 files = ["rc/tagbar.kak"]
 
 ["https://github.com/andreyorst/fzf.kak"]
+
+["https://github.com/chambln/kakoune-readline"]
+files = ["readline.kak"]
 
 # mpv plugins
 

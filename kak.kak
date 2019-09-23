@@ -29,6 +29,7 @@ alias global bo! buffer-only-force
 alias global sw sudo-write
 alias global cdb change-directory-current-buffer
 alias global f find
+alias global s sort-selections
 alias global c connect-terminal
 
 face global LineNumbersWrapped black
@@ -51,15 +52,15 @@ map global normal -docstring 'comment block' '<a-#>' ': comment-block<ret>'
 map global normal -docstring 'delete to end of line' D <a-l>d
 map global normal -docstring 'yank to end of line' Y <a-l>
 
-map global user -docstring 'add phantom selection' f ': phantom-selection-add-selection<ret>'
-map global user -docstring 'clear all phantom selections' <a-f> ': phantom-selection-select-all<ret>: phantom-selection-clear<ret>'
-map global user -docstring 'next phantom selection' F ': phantom-selection-iterate-next<ret>'
-map global user -docstring 'previous phantom selection' <a-F> ': phantom-selection-iterate-prev<ret>'
+map global user -docstring 'add phantom selection' <a-f> ': phantom-selection-add-selection<ret>'
+map global user -docstring 'clear all phantom selections' <a-F> ': phantom-selection-select-all<ret>: phantom-selection-clear<ret>'
+map global user -docstring 'next phantom selection' f ': phantom-selection-iterate-next<ret>'
+map global user -docstring 'previous phantom selection' F ': phantom-selection-iterate-prev<ret>'
 
 map global normal -docstring 'select view' <a-%> ': select-view<ret>'
 map global view   -docstring 'select view' s '<esc>: select-view<ret>'
 
-map global user -docstring 'select selection on each line' s ': keep-selection-each-line<ret>'
+map global user -docstring 'select selection on each line' <a-s> ': keep-selection-each-line<ret>'
 map global user -docstring 'drop selection on each line' S ': drop-selection-each-line<ret>'
 
 map global user -docstring 'add mark' m ': mark-word<ret>'
@@ -79,20 +80,24 @@ map global user -docstring "next error" l ': lint-next-error<ret>'
 map global user -docstring "previous error" L ': lint-previous-error<ret>'
 
 declare-user-mode surround
-map global user -docstring 'surround mode' <a-s> ': enter-user-mode surround<ret>'
+map global user -docstring 'surround mode' s ': enter-user-mode surround<ret>'
 map global surround -docstring 'surround' s ': surround<ret>'
 map global surround -docstring 'change' c ': change-surround<ret>'
 map global surround -docstring 'delete' d ': delete-surround<ret>'
-map global surround -docstring 'select tag' t ': select-surrounding-tag<ret>'
+map global surround -docstring 'select surround' <a-s> ': select-surround<ret>'
+map global surround -docstring 'surround tag' S ': surrounding-tag<ret>'
+map global surround -docstring 'change tag' C ': change-surrounding-tag<ret>'
+map global surround -docstring 'delete tag' D ': delete-surrounding-tag<ret>'
+map global surround -docstring 'select surrounding tag' <a-S> ': select-surrounding-tag<ret>'
 map global surround -docstring 'auto-pairs surround' a ': auto-pairs-surround<ret>'
 
 declare-user-mode anchor
 map global normal ';' ': enter-user-mode anchor<ret>'
-map global anchor -docstring 'reduce to anchor' a '<a-;>;'
-map global anchor -docstring 'reduce to cursor' c ';'
-map global anchor -docstring 'flip cursor and anchor' f '<a-;>'
 map global anchor -docstring 'ensure anchor after cursor' h '<a-:><a-;>'
 map global anchor -docstring 'ensure cursor after anchor' l '<a-:>'
+map global anchor -docstring 'flip cursor and anchor' f '<a-;>'
+map global anchor -docstring 'reduce to anchor' a '<a-;>;'
+map global anchor -docstring 'reduce to cursor' c ';'
 map global anchor -docstring 'select cursor and anchor' s '<a-S>'
 
 declare-user-mode clipboard
@@ -124,15 +129,10 @@ def lint-on-write -docstring 'Activate linting on buffer write' %{
     hook buffer BufWritePost .* lint
 }
 
-def format-on-write -docstring 'Format buffer on write' %{
-    hook buffer BufWritePost .* format
-}
-
 def lsp-engage -docstring 'Enable language server' %{
     lsp-enable
     lsp-auto-hover-enable
-    map global user -docstring 'Enter lsp user mode' l ': enter-user-mode lsp<ret>'
-    map global user -docstring 'Lock lsp user mode' L ': enter-user-mode -lock lsp<ret>'
+    map global user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
 }
 
 def no-tabs -params 0..1 -docstring 'Indent with spaces' %{
@@ -206,7 +206,7 @@ hook global BufCreate .*\.rasi %{ set buffer filetype css }
 # Filetype settings
 
 hook global WinSetOption filetype=sh %{
-    set buffer lintcmd 'shellcheck -x -fgcc'
+    set buffer lintcmd 'shellcheck --norc -x -f gcc'
     lint-on-write
 }
 
@@ -218,15 +218,42 @@ hook global WinSetOption filetype=(go|rust|c|cpp) %{
     lsp-engage
 }
 
-hook global WinSetOption filetype=python %{
+hook global WinSetOption filetype=html %{
+    set buffer formatcmd 'prettier --parser html'
+    set buffer lintcmd 'htmlhint -f unix'
+    lint-on-write
     lsp-engage
+}
+
+hook global WinSetOption filetype=css %{
+    set buffer formatcmd 'prettier --parser css'
+    set buffer lintcmd 'stylelint -f unix'
+    lint-on-write
+    lsp-engage
+}
+
+hook global WinSetOption filetype=scss %{
+    set buffer formatcmd 'prettier --parser scss'
+    set buffer lintcmd 'stylelint -f unix'
+    lint-on-write
+    lsp-engage
+}
+
+hook global WinSetOption filetype=markdown %{
+    set buffer formatcmd 'prettier --parser markdown'
+}
+
+hook global WinSetOption filetype=python %{
     set global lsp_server_configuration pyls.plugins.jedi_completion.include_params=false
+    lsp-engage
 }
 
 hook global WinSetOption filetype=nim %{
     set buffer gdb_program 'nim-gdb'
-    set buffer formatcmd "nimpretty ${kak_buffile}"
+    set buffer formatcmd 'nimprettify'
     set buffer makecmd 'nimble build'
+    set buffer lintcmd 'nimlint'
     no-tabs 2
+    lint-on-write
     lsp-engage
 }
