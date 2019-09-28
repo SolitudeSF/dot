@@ -25,7 +25,6 @@ firefox
 kitty
 elvish
 kak (kakoune)
-pqiv
 mpv
 mpd
 ncmpcpp
@@ -69,8 +68,6 @@ for arg; do
 			_render $arg "$CONF/polybar/config";;
 		rofi)
 			_install $arg.rasi "$CONF/rofi/config.rasi";;
-		pqiv)
-			_install $arg "$CONF/pqivrc";;
 		mpv)
 			_install $arg/mpv.conf "$CONF/mpv/mpv.conf";;
 		mpd)

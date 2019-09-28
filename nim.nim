@@ -41,15 +41,14 @@ when defined(release) or defined(danger):
   switch "passL", "-fuse-linker-plugin"
   switch "passL", "-s"
 
-when defined(danger):
+when defined(hotcodereloading):
+  switch "nimcache", "nimcache"
+elif defined(danger):
   switch "nimcache", "/tmp/nim/" & projectName() & "_d"
 elif defined(release):
   switch "nimcache", "/tmp/nim/" & projectName() & "_r"
 else:
   switch "nimcache", "/tmp/nim/" & projectName()
-
-when defined(hotcodereloading):
-  switch "nimcache", "nimcache"
 
 switch "styleCheck", "hint"
 switch "parallelBuild", "0"

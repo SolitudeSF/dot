@@ -37,3 +37,6 @@ xr~ = (alias sudo xbps-remove -R)
 
 -override-wcwidth 🦀 2
 set-env GPG_TTY (tty)
+set-env PAGER kakpager
+set-env MANPAGER less
+set-env LESSHISTFILE -

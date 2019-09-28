@@ -1,7 +1,0 @@
-[options]
-browse=yes
-max-depth=0
-thumbnail-persistence=yes
-hide-info-box=yes
-lazy-load=yes
-disable-backends=archive,archive_cbx
