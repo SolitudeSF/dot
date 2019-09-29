@@ -1,5 +1,5 @@
 #!/bin/sh
-export MPW_FULLNAME="(cat "$HOME/sns/mpwname")"
-mpwc -k max -s gpg | xclip -sel c -l 1
-gpg2 -d -q "$HOME/sns/password.gpg" | mpwc -k max -s ssh -S 2>/dev/null | xclip -sel c -l 1
+name=$(cat "$HOME/sns/mpwname")
+mpwc -k max -n "$name" -s gpg | xclip -sel c -l 1
+gpg2 -d -q "$HOME/sns/password.gpg" | mpwc -k max -n "$name" -s ssh -S 2>/dev/null | xclip -sel c -l 1
 ssh-add

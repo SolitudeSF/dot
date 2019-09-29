@@ -28,6 +28,7 @@ kak (kakoune)
 mpv
 mpd
 ncmpcpp
+xonotic
 ranger
 zathura
 neofetch
@@ -129,6 +130,8 @@ for arg; do
 			_install $arg/daemon.conf "$CONF/pulse/daemon.conf";;
 		fontconfig)
 			_install $arg "$CONF/fontconfig/fonts.conf";;
+		xonotic)
+			_install $arg.cfg "$HOME/.xonotic/autoexec.cfg";;
 		*)
 			echo "Not recognized argument: $arg";;
 	esac
