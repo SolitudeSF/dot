@@ -1,8 +1,32 @@
+set window-title-home-tilde true
+set statusbar-basename true
 set selection-clipboard clipboard
-set window-title-basename true
-set statusbar-bg "<{color.bg}>"
-set statusbar-fg "<{color.fg}>"
-set recolor-lightcolor "<{color.fg}>"
-set recolor-darkcolor "<{color.bg}>"
+
 set recolor-keephue
 set recolor true
+
+set completion-bg "<{color.bg}>"
+set completion-fg "<{color.fg}>"
+set completion-group-bg "<{color.bg}>"
+set completion-group-fg "<{color2}>"
+set completion-highlight-bg "<{color.fg}>"
+set completion-highlight-fg "<{color.bg}>"
+set recolor-lightcolor "<{color.bg}>"
+set recolor-darkcolor "<{color.fg}>"
+set default-bg "<{color.bg}>"
+set inputbar-bg "<{color.bg}>"
+set inputbar-fg "<{color.fg}>"
+set notification-bg "<{color.bg}>"
+set notification-fg "<{color.fg}>"
+set notification-error-bg "<{color1}>"
+set notification-error-fg "<{color.fg}>"
+set notification-warning-bg "<{color1}>"
+set notification-warning-fg "<{color.fg}>"
+set statusbar-bg "<{color.bg}>"
+set statusbar-fg "<{color.fg}>"
+set index-bg "<{color.bg}>"
+set index-fg "<{color.fg}>"
+set index-active-bg "<{color.fg}>"
+set index-active-fg "<{color.bg}>"
+set render-loading-bg "<{color.bg}>"
+set render-loading-fg "<{color.fg}>"

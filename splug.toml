@@ -8,8 +8,14 @@ files = ["rc/auto-pairs.kak"]
 ["https://github.com/alexherbo2/search-highlighter.kak"]
 files = ["rc/search-highlighter.kak"]
 
-["https://gitlab.com/fsub/kakoune-mark"]
-files = ["mark.kak"]
+["https://github.com/alexherbo2/replace.kak"]
+files = ["rc/replace-mode.kak"]
+
+["https://github.com/alexherbo2/word-movement.kak"]
+files = ["rc/word-movement.kak"]
+
+["https://github.com/alexherbo2/explore.kak"]
+files = ["rc/explore/files.kak", "rc/explore/buffers.kak"]
 
 ["https://github.com/lenormf/kakoune-extra"]
 files = ["widgets/git-branch.kak", "vcs.kak"]
@@ -48,13 +54,10 @@ files = ["sudo-write.kak"]
 files = ["find.kak"]
 
 ["https://github.com/occivink/kakoune-gdb"]
-files = ["gdb.kak"]
+files = ["gdb.kak", "gdb-output-handler.perl"]
 
 ["https://github.com/occivink/kakoune-vertical-selection"]
 files = ["vertical-selection.kak"]
-
-["https://github.com/occivink/kakoune-phantom-selection"]
-files = ["phantom-selection.kak"]
 
 ["https://github.com/occivink/kakoune-sort-selections"]
 files = ["sort-selections.kak"]
@@ -62,19 +65,23 @@ files = ["sort-selections.kak"]
 ["https://gitlab.com/notramo/elvish.kak"]
 files = ["elvish.kak"]
 
-["https://github.com/TeddyDD/kakoune-edit-or-dir"]
-files = ["rc/edit-or-dir.kak"]
-
 ["https://github.com/andreyorst/smarttab.kak"]
 files = ["rc/smarttab.kak"]
 
-["https://github.com/andreyorst/tagbar.kak"]
-files = ["rc/tagbar.kak"]
-
-["https://github.com/andreyorst/fzf.kak"]
-
 ["https://github.com/chambln/kakoune-readline"]
 files = ["readline.kak"]
+
+["https://github.com/laelath/kakoune-show-matching-insert"]
+files = ["matching-insert.kak"]
+
+["https://gitlab.com/Screwtapello/kakoune-state-save"]
+files = ["state-save.kak"]
+
+["https://github.com/JJK96/kakoune-repl-send"]
+files = ["repl.kak"]
+
+["https://github.com/JJK96/kakoune-rainbow"]
+files = ["rainbow.kak"]
 
 # mpv plugins
 

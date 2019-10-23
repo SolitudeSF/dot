@@ -1,9 +1,11 @@
+THREADS=6
+
 GRAPHITE="-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
-CFLAGS="-flto=6 ${GRAPHITE} -ftree-vectorize"
+CFLAGS="-flto=${THREADS} ${GRAPHITE} -ftree-vectorize"
 CXXFLAGS="${CFLAGS}"
 LDFLAGS="${CFLAGS} -fuse-linker-plugin"
 
-XBPS_MAKEJOBS=6
+XBPS_MAKEJOBS="${THREADS}"
 XBPS_CCACHE=yes
 XBPS_ALLOW_RESTRICTED=yes
 

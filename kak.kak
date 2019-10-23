@@ -16,11 +16,6 @@ set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
 
-set global connect_source "%val{config}/autoload/splug"
-set global connect_shell elvish
-
-unalias global e edit
-alias global e edit-or-dir
 alias global bd delete-buffer
 alias global bf buffer-first
 alias global bl buffer-last
@@ -30,7 +25,6 @@ alias global sw sudo-write
 alias global cdb change-directory-current-buffer
 alias global f find
 alias global s sort-selections
-alias global c connect-terminal
 
 face global LineNumbersWrapped black
 
@@ -51,6 +45,8 @@ map global normal -docstring 'comment line' '#' ': comment-line<ret>'
 map global normal -docstring 'comment block' '<a-#>' ': comment-block<ret>'
 map global normal -docstring 'delete to end of line' D <a-l>d
 map global normal -docstring 'yank to end of line' Y <a-l>
+map global user -docstring 'replay macro' . q
+map global user -docstring 'record macro' <a-.> Q
 
 map global user -docstring 'add phantom selection' <a-f> ': phantom-selection-add-selection<ret>'
 map global user -docstring 'clear all phantom selections' <a-F> ': phantom-selection-select-all<ret>: phantom-selection-clear<ret>'
@@ -73,11 +69,15 @@ map global normal <a-space> ': fzf-mode<ret>'
 map global user -docstring 'expand selection' e ': expand<ret>'
 map global user -docstring 'expand repeat' E ': expand-repeat<ret>'
 
-map global user -docstring 'buffers…' b ': enter-buffers-mode<ret>'
-map global user -docstring 'buffers (lock)…' B ': enter-user-mode -lock buffers<ret>'
+map global normal -docstring 'buffers…' b ': enter-buffers-mode<ret>'
+map global normal -docstring 'buffers (lock)…' B ': enter-user-mode -lock buffers<ret>'
 
 map global user -docstring "next error" l ': lint-next-error<ret>'
 map global user -docstring "previous error" L ': lint-previous-error<ret>'
+
+word-movement-map previous q
+word-movement-map next w
+word-movement-map skip e
 
 declare-user-mode surround
 map global user -docstring 'surround mode' s ': enter-user-mode surround<ret>'
@@ -154,6 +154,18 @@ def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
 
 # Hooks
 
+hook global KakBegin .* %{
+    state-save-reg-sync colon
+    state-save-reg-sync pipe
+    state-save-reg-sync slash
+}
+
+hook global KakEnd .* %{
+    state-save-reg-sync colon
+    state-save-reg-sync pipe
+    state-save-reg-sync slash
+}
+
 hook global ModuleLoaded kitty %{
     set global kitty_window_type kitty
 }
@@ -167,8 +179,11 @@ hook global ModuleLoaded fzf %{
 
 hook global WinDisplay .* info-buffers
 hook global NormalIdle .* %{ try %{ exec -draft '<a-i>w: palette-status<ret>' } }
-hook global BufWritePost .* %{ git show-diff }
-hook global BufReload .* %{ git show-diff }
+
+eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf %s "
+    hook global BufWritePost .* %{ git show-diff }
+    hook global BufReload .* %{ git show-diff }
+"}
 
 hook global WinCreate .* %{
     auto-pairs-enable
@@ -241,6 +256,9 @@ hook global WinSetOption filetype=scss %{
 
 hook global WinSetOption filetype=markdown %{
     set buffer formatcmd 'prettier --parser markdown'
+    def -docstring 'render current buffer' render %{
+        exec ": connect-terminal glow -s dark %val{buffile} | ${PAGER}<ret>"
+    }
 }
 
 hook global WinSetOption filetype=python %{
@@ -252,8 +270,6 @@ hook global WinSetOption filetype=nim %{
     set buffer gdb_program 'nim-gdb'
     set buffer formatcmd 'nimprettify'
     set buffer makecmd 'nimble build'
-    set buffer lintcmd 'nimlint'
     no-tabs 2
-    lint-on-write
     lsp-engage
 }

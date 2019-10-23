@@ -5,7 +5,7 @@ use timer
 
 edit:rprompt-persistent = $true
 edit:prompt-stale-threshold = 0.1
-edit:rprompt-stale-transform = { put ⏳ }
+edit:rprompt-stale-transform = [x]{ put ⏳$x }
 edit:-prompt-eagerness = 5
 pwd-limit = 20
 max-dir-len = 1
@@ -60,6 +60,6 @@ edit:rprompt = {
   if (not-eq $num-bg-jobs 0) {
     put ' '$num-bg-jobs
   }
-  put $timer:composed
+  timer:display
   git
 }

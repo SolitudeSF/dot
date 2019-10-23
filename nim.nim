@@ -2,6 +2,8 @@ from macros import error
 
 type Compiler = enum gcc = "gcc", clang = "clang"
 
+var cross = false
+
 proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   let c = findExe s
   let cpp = (if cpp: ".cpp" else: "")
@@ -10,7 +12,23 @@ proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   switch $compiler & cpp & ".exe", c
   switch $compiler & cpp & ".linkerexe", c
 
-when defined(wasm):
+when defined(musl):
+  setCompiler "x86_64-linux-musl-gcc"
+  switch "passL", "-static"
+
+elif defined(x86):
+  cross = true
+  setCompiler "i686-pc-linux-gnu-gcc"
+  switch "cpu", "i386"
+  switch "passL", "--sysroot=/usr/i686-pc-linux-gnu/"
+
+elif defined(arm):
+  cross = true
+  switch "cpu", "arm"
+  switch "passL", "--sysroot=/usr/arm-linux-gnueabihf/"
+
+elif defined(wasm):
+  cross = true
   let linkerOptions = "-nostdlib -Wl,--no-entry,--allow-undefined,--gc-sections,--strip-all"
   switch "o", projectName() & ".wasm"
   switch "cpu", "i386"
@@ -28,13 +46,10 @@ when defined(wasm):
   switch "clang.options.linker", linkerOptions
   switch "clang.cpp.options.linker", linkerOptions
 
-when defined(musl):
-  setCompiler "x86_64-linux-musl-gcc"
-  switch "passL", "-static"
-
 when defined(release) or defined(danger):
   switch "excessiveStackTrace", "off"
-  switch "passC", "-march=native -O3"
+  if not cross:
+    switch "passC", "-march=native"
   switch "passC", "-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
   switch "passC", "-flto=8"
   switch "passC", "-ftree-vectorize"
@@ -51,4 +66,4 @@ else:
   switch "nimcache", "/tmp/nim/" & projectName()
 
 switch "styleCheck", "hint"
-switch "parallelBuild", "0"
+switch "verbosity", "2"

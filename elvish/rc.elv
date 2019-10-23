@@ -13,10 +13,13 @@ fn r [@a]{
 fn alias [cmd @a]{ put [@b]{ (external $cmd) (explode $a) $@b } }
 
 ls~ = (alias lc)
-cat~ = (alias bat)
+cat~ = (alias bat --paging=never)
 xr~ = (alias sudo xbps-remove -R)
+o~ = (alias gio open)
 
 -exports- = [&]
+
+edit:insert:binding[Ctrl-X] = { edit:-instant:start }
 
 {
   use github.com/xiaq/edit.elv/smart-matcher
@@ -30,13 +33,11 @@ xr~ = (alias sudo xbps-remove -R)
     util:set-title (tilde-abbr $pwd) >/dev/tty
   }
   util:add-after-readline [a]{
-    if (eq $a '') { print "\r" >/dev/tty; ls >/dev/tty; echo >/dev/tty }
+    if (eq $a '') { ls } >/dev/tty
     util:set-title (splits ' ' $a | take 1)' '(tilde-abbr $pwd) >/dev/tty
   }
 }
 
 -override-wcwidth 🦀 2
 set-env GPG_TTY (tty)
-set-env PAGER kakpager
-set-env MANPAGER less
-set-env LESSHISTFILE -
+set-env NIMPH_TOKEN (cat ~/sns/github.key)

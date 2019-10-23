@@ -107,7 +107,7 @@ edit:completion:arg-completer[nimble] = [@cmd]{
       nimble tasks 2>/dev/null | eawk [_ a @_]{ put $a }
     }
   } elif (eq $cmd[-2] install) {
-    for x (cat ~/.nimble/packages_official.json | from-json) { put $x[name] }
+    for x (from-json <~/.nimble/packages_official.json) { put $x[name] }
   } elif (eq $cmd[-2] uninstall) {
     pkgs = [&]
     nimble list -i | eawk [_ n @v]{
