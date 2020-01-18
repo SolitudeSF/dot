@@ -1,5 +1,5 @@
 fn abort [&code=1 a]{
-  echo (styled $a red)
+  echo (styled $a red) >&2
   exit $code
 }
 
@@ -7,22 +7,18 @@ fn set-title [a]{
   print "\e]0;"$a"\e\\"
 }
 
-fn merge-list [a b]{
-  for c $b { a = [$@a $c] }
-  put $a
-}
-
 fn merge-map [a b]{
-  for k $b { a[$k] = $b[$k] }
+  keys $b | each [k]{ a[$k] = $b[$k] }
   put $a
 }
 
-fn if-not-zero [a b]{
-  if (not-eq $a 0) { $b }
-}
-
-fn switch [a b]{
-  $b[$a]
+fn index-of [a b]{
+  r = 0
+  for val $a {
+    if (eq $val $b) { put $r; return }
+    r = (+ $r 1)
+  }
+  float64 -1
 }
 
 fn pad [a b &with=' ' &left=$true]{
@@ -51,17 +47,8 @@ fn add-after-readline [@hooks]{
   }
 }
 
-fn fold [a b]{
-  s = $a[0]
-  for i [(range 1 (count $a))] {
-    s = ($b $s $a[$i])
-  }
-  put $s
-}
+fn is-upper-ascii [a]{ and (< (ord $a) 91) (> (ord $a) 64) }
+fn is-lower-ascii [a]{ and (< (ord $a) 123) (> (ord $a) 96) }
 
-fn randselect [a]{
-  put $a[(randint 0 (count $a))]
-}
-
-fn to-upper-ascii [a]{ if (and (< (ord $a) 123) (> (ord $a) 96)) { chr (- (ord $a) 32) } else { put $a } }
-fn to-lower-ascii [a]{ if (and (< (ord $a) 91 ) (> (ord $a) 64)) { chr (+ (ord $a) 32) } else { put $a } }
+fn to-upper-ascii [a]{ if (is-lower-ascii $a) { chr (- (ord $a) 32) } else { put $a } }
+fn to-lower-ascii [a]{ if (is-upper-ascii $a) { chr (+ (ord $a) 32) } else { put $a } }

@@ -30,7 +30,7 @@ fn complete-directory [a]{
   } else {
     dir = ''
   }
-  for x [(put $dir*[match-hidden][nomatch-ok]$a*[match-hidden][nomatch-ok])] {
+  for x [$dir*[match-hidden][nomatch-ok]$a*[match-hidden][nomatch-ok]] {
     if (-is-dir $x) { edit:complex-candidate &code-suffix=/ &style='blue;bold' $x }
   }
 }
@@ -62,11 +62,11 @@ edit:completion:arg-completer[waifu2x-converter-cpp] = [@cmd]{
   }
 }
 
-kitty-cmds = []
-kitty-kittens = []
+kitty-cmds = $nil
+kitty-kittens = $nil
 
 edit:completion:arg-completer[kitty] = [@cmd]{
-  if (== (count $kitty-cmds) 0) {
+  if (not $kitty-cmds) {
     @kitty-cmds = (kitty @ --help | peach [x]{ if (re:match '^  \w' $x) { put $x[2:] } })
     @kitty-kittens = (pwd=/usr/lib/kitty/kittens fd main.py | peach [x]{ path-dir $x })
   }
@@ -109,17 +109,21 @@ edit:completion:arg-completer[nimble] = [@cmd]{
   } elif (eq $cmd[-2] install) {
     for x (from-json <~/.nimble/packages_official.json) { put $x[name] }
   } elif (eq $cmd[-2] uninstall) {
-    pkgs = [&]
-    nimble list -i | eawk [_ n @v]{
-      @ver = $@v[:-1]
-      ver[0] = $ver[0][1:]
-      pkgs[$n] = $ver
-    }
-    if (has-suffix $cmd[-1] '@') {
-      for v $pkgs[$cmd[-1][:-1]] {
-        put $cmd[-1]$v
+    idx = (util:index-of $cmd[-1] '@')
+    if (== $idx -1) {
+      nimble list -i | eawk [_ n @_]{ put $n }
+    } else {
+      pkgs = [&]
+      nimble list -i | eawk [_ n @v]{
+        @ver = $@v[:-1]
+        ver[0] = $ver[0][1:]
+        pkgs[$n] = $ver
       }
-    } else { keys $pkgs }
+      pkg = $cmd[-1][:$idx]
+      if (has-key $pkgs $pkg) {
+        for v $pkgs[$pkg] { put $pkg@$v }
+      }
+    }
   }
 }
 
@@ -134,10 +138,10 @@ edit:completion:arg-completer[pijul] = [@cmd]{
 }
 
 neofetch-img = [ascii caca iterm2 jp2a kitty pixterm sixel termpix tycat w3m off]
-neofetch-opts = []
+neofetch-opts = $nil
 
 edit:completion:arg-completer[neofetch] = [@cmd]{
-  if (== (count $neofetch-opts) 0) {
+  if (not $neofetch-opts) {
     neofetch-opts = [(_ = ?(neofetch --help | each [x]{
       if (has-prefix $x '    --') {
         put $x | eawk [_ a @_]{ put $a }
@@ -180,11 +184,11 @@ edit:completion:arg-completer[xi] = [@cmd]{
   pwd=$E:XBPS_DISTDIR/srcpkgs put *
 }
 
-xbps-src-cmds = []
-xbps-src-arch = []
+xbps-src-cmds = $nil
+xbps-src-arch = $nil
 
 edit:completion:arg-completer[xbps-src] = [@cmd]{
-  if (== (count $xbps-src-cmds) 0) {
+  if (not $xbps-src-cmds) {
     @xbps-src-cmds = (xbps-src -h | take 129 | drop 4 | each [x]{ put (re:find &max=1 '^\w+(\-\w+)*' $x)[text] })
     @xbps-src-arch = (xbps-src -h | take 162 | drop 136)[1:]
   }
@@ -209,10 +213,10 @@ edit:completion:arg-completer[strat] = [@cmd]{
   }
 }
 
-brl-cmds = []
+brl-cmds = $nil
 
 edit:completion:arg-completer[brl] = [@cmd]{
-  if (== (count $brl-cmds) 0) {
+  if (not $brl-cmds) {
     @brl-cmds = (brl -h | take 35 | drop 5 | each [x]{ put (re:find &max=1 '^  \w+' $x)[text][2:] })
   }
   len = (count $cmd)

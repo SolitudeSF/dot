@@ -19,6 +19,13 @@ color13 <{color13}>
 color14 <{color14}>
 color15 <{color15}>
 
+mark1_foreground black
+mark1_background #98d3cb
+mark2_foreground black
+mark2_background #f2dcd3
+mark3_foreground black
+mark3_background #f274bc
+
 selection_foreground <{color.bg}>
 selection_background <{color.fg}>
 

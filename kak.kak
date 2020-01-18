@@ -1,4 +1,5 @@
-# Manually merge and source plugins
+# External plugins
+
 eval %sh{
     kak-lsp --kakoune -s $kak_session
     colorcol
@@ -16,11 +17,6 @@ set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
 
-alias global bd delete-buffer
-alias global bf buffer-first
-alias global bl buffer-last
-alias global bo buffer-only
-alias global bo! buffer-only-force
 alias global sw sudo-write
 alias global cdb change-directory-current-buffer
 alias global f find
@@ -48,6 +44,13 @@ map global normal -docstring 'yank to end of line' Y <a-l>
 map global user -docstring 'replay macro' . q
 map global user -docstring 'record macro' <a-.> Q
 
+map global normal w ': word-select-next-word<ret>'
+map global normal <a-w> ': word-select-next-big-word<ret>'
+map global normal q ': word-select-previous-word<ret>'
+map global normal <a-q> ': word-select-previous-big-word<ret>'
+map global normal Q B
+map global normal <a-Q> <a-B>
+
 map global user -docstring 'add phantom selection' <a-f> ': phantom-selection-add-selection<ret>'
 map global user -docstring 'clear all phantom selections' <a-F> ': phantom-selection-select-all<ret>: phantom-selection-clear<ret>'
 map global user -docstring 'next phantom selection' f ': phantom-selection-iterate-next<ret>'
@@ -56,15 +59,10 @@ map global user -docstring 'previous phantom selection' F ': phantom-selection-i
 map global normal -docstring 'select view' <a-%> ': select-view<ret>'
 map global view   -docstring 'select view' s '<esc>: select-view<ret>'
 
-map global user -docstring 'select selection on each line' <a-s> ': keep-selection-each-line<ret>'
-map global user -docstring 'drop selection on each line' S ': drop-selection-each-line<ret>'
-
 map global user -docstring 'add mark' m ': mark-word<ret>'
 map global user -docstring 'clear marks' M ': mark-clear<ret>'
 
 map global user -docstring 'replace mode' r ': replace<ret>'
-
-map global normal <a-space> ': fzf-mode<ret>'
 
 map global user -docstring 'expand selection' e ': expand<ret>'
 map global user -docstring 'expand repeat' E ': expand-repeat<ret>'
@@ -74,22 +72,6 @@ map global normal -docstring 'buffers (lock)…' B ': enter-user-mode -lock buff
 
 map global user -docstring "next error" l ': lint-next-error<ret>'
 map global user -docstring "previous error" L ': lint-previous-error<ret>'
-
-word-movement-map previous q
-word-movement-map next w
-word-movement-map skip e
-
-declare-user-mode surround
-map global user -docstring 'surround mode' s ': enter-user-mode surround<ret>'
-map global surround -docstring 'surround' s ': surround<ret>'
-map global surround -docstring 'change' c ': change-surround<ret>'
-map global surround -docstring 'delete' d ': delete-surround<ret>'
-map global surround -docstring 'select surround' <a-s> ': select-surround<ret>'
-map global surround -docstring 'surround tag' S ': surrounding-tag<ret>'
-map global surround -docstring 'change tag' C ': change-surrounding-tag<ret>'
-map global surround -docstring 'delete tag' D ': delete-surrounding-tag<ret>'
-map global surround -docstring 'select surrounding tag' <a-S> ': select-surrounding-tag<ret>'
-map global surround -docstring 'auto-pairs surround' a ': auto-pairs-surround<ret>'
 
 declare-user-mode anchor
 map global normal ';' ': enter-user-mode anchor<ret>'
@@ -106,19 +88,10 @@ map global clipboard -docstring 'clip-paste after' p '<a-!>xsel -b -o<ret>'
 map global clipboard -docstring 'clip-paste before' P '!xsel -b -o<ret>'
 map global clipboard -docstring 'clip-paste replace' R '|xsel -b -o<ret>'
 map global clipboard -docstring 'clip-yank' y '<a-|>xclip -i -f -sel c<ret>'
+map global clipboard -docstring 'clip-cut' d '<a-|>xclip -i -f -sel c<ret><a-d>'
 map global clipboard -docstring 'clip-cut -> insert mode' c '<a-|>xclip -i -f -sel c<ret><a-c>'
 
 # Functions
-
-def toggle-highlighter -params .. -docstring 'Toggle highlighter' %{
-    try %{
-        addhl window/%arg{@} %arg{@}
-        echo -markup {green} %arg{@}
-    } catch %{
-        rmhl window/%arg{@}
-        echo -markup {red} %arg{@}
-    }
-}
 
 def type -params 1 -docstring 'Set buffer filetype' %{
     set buffer filetype %arg{1}
@@ -135,17 +108,13 @@ def lsp-engage -docstring 'Enable language server' %{
     map global user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
 }
 
-def no-tabs -params 0..1 -docstring 'Indent with spaces' %{
+def no-tabs -params 1 -docstring 'Indent with spaces' %{
     expandtab
-    eval %sh{ [ -n "$1" ] && printf %s "
-        set buffer indentwidth $1
-        set buffer tabstop $1
-        set buffer softtabstop $1
-    " }
+    set buffer indentwidth %arg{1}
     hook buffer InsertKey <space> %{ try %{
         exec -draft h<a-i><space><a-k>^\h+<ret>
         exec -with-hooks <tab>
-    } }
+    }}
 }
 
 def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
@@ -153,6 +122,14 @@ def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
 }
 
 # Hooks
+
+hook global WinCreate .* %{
+    smarttab
+    readline-enable
+    colorcol-enable
+    colorcol-auto-refresh
+    discord-presence-enable
+}
 
 hook global KakBegin .* %{
     state-save-reg-sync colon
@@ -166,31 +143,11 @@ hook global KakEnd .* %{
     state-save-reg-sync slash
 }
 
-hook global ModuleLoaded kitty %{
-    set global kitty_window_type kitty
-}
-
-hook global ModuleLoaded fzf %{
-    set global fzf_implementation sk
-    set global fzf_file_command fd
-    set global fzf_highlight_command bat
-    set global fzf_sk_grep_command 'rg -LHn'
-}
-
 hook global WinDisplay .* info-buffers
 hook global NormalIdle .* %{ try %{ exec -draft '<a-i>w: palette-status<ret>' } }
 
-eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf %s "
-    hook global BufWritePost .* %{ git show-diff }
-    hook global BufReload .* %{ git show-diff }
-"}
-
-hook global WinCreate .* %{
-    auto-pairs-enable
-    search-highlighter-enable
-    colorcol-enable
-    colorcol-auto-refresh
-    discord-presence-enable
+hook global BufCreate .* %{
+    set buffer tabstop %opt{indentwidth}
 }
 
 hook global BufWritePre .* %{ nop %sh{
@@ -203,7 +160,22 @@ hook global NormalIdle .* %{
         set buffer curword "\b\Q%val{selection}\E\b"
     } catch %{
         set buffer curword ''
-    } }
+    }}
+}
+
+eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf %s "
+    hook global BufWritePost .* %{ git show-diff }
+    hook global BufReload .* %{ git show-diff }
+"}
+
+hook global ModuleLoaded kitty %{
+    set global kitty_window_type kitty
+}
+
+hook global ModuleLoaded smarttab %{
+	hook global BufCreate .* %{
+		set buffer softtabstop %opt{indentwidth}
+	}
 }
 
 # Filetype detection
@@ -230,27 +202,6 @@ hook global WinSetOption filetype=elvish %{
 }
 
 hook global WinSetOption filetype=(go|rust|c|cpp) %{
-    lsp-engage
-}
-
-hook global WinSetOption filetype=html %{
-    set buffer formatcmd 'prettier --parser html'
-    set buffer lintcmd 'htmlhint -f unix'
-    lint-on-write
-    lsp-engage
-}
-
-hook global WinSetOption filetype=css %{
-    set buffer formatcmd 'prettier --parser css'
-    set buffer lintcmd 'stylelint -f unix'
-    lint-on-write
-    lsp-engage
-}
-
-hook global WinSetOption filetype=scss %{
-    set buffer formatcmd 'prettier --parser scss'
-    set buffer lintcmd 'stylelint -f unix'
-    lint-on-write
     lsp-engage
 }
 
