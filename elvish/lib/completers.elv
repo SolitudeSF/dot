@@ -16,7 +16,7 @@ fn prefix-completer [p a]{
     if (eq (count $cmd) 2) {
       $a $@cmd
     } elif (has-key $edit:completion:arg-completer $cmd[1]) {
-      $edit:completion:arg-completer[$cmd[1]] (explode $cmd[1:])
+      $edit:completion:arg-completer[$cmd[1]] (all $cmd[1:])
     } else {
       edit:complete-filename $cmd[-1]
     }
@@ -71,9 +71,9 @@ edit:completion:arg-completer[kitty] = [@cmd]{
     @kitty-kittens = (pwd=/usr/lib/kitty/kittens fd main.py | peach [x]{ path-dir $x })
   }
   if (has-value [kitten '+kitten'] $cmd[-2]) {
-    explode $kitty-kittens
+    all $kitty-kittens
   } elif (eq $cmd[-2] '@') {
-    explode $kitty-cmds
+    all $kitty-cmds
   } else {
     edit:complete-filename $cmd[-1]
   }
@@ -89,8 +89,8 @@ edit:completion:arg-completer[sv] = [@cmd]{
 }
 
 edit:completion:arg-completer[man] = [@cmd]{
-  pwd=/usr/share/man put man*/* | peach [a]{
-    re:replace &literal=$true '\.\dp?$' '' (path-base $a)
+  pwd=/bedrock/cross/man put man*/* | each [a]{
+    re:replace &literal=$true '(\.\dp?)?(\.gz)?$' '' (path-base $a)
   }
 }
 
@@ -104,7 +104,7 @@ edit:completion:arg-completer[nimble] = [@cmd]{
     put {un,}install develop check init publish build c cc js test doc{,2} \
       refresh search list tasks path dump
     if ?(isnimbleproject) {
-      nimble tasks 2>/dev/null | eawk [_ a @_]{ put $a }
+      nimble tasks 2>&- | eawk [_ a @_]{ put $a }
     }
   } elif (eq $cmd[-2] install) {
     for x (from-json <~/.nimble/packages_official.json) { put $x[name] }
@@ -133,7 +133,7 @@ pijul-cmds = [add apply branches checkout clone credit delete-branch diff dist\
 
 edit:completion:arg-completer[pijul] = [@cmd]{
   if (eq (count $cmd) 2) {
-    explode $pijul-cmds
+    all $pijul-cmds
   }
 }
 
@@ -148,7 +148,7 @@ edit:completion:arg-completer[neofetch] = [@cmd]{
       }
     })) --logo -L -v -vv]
   }
-  explode $neofetch-opts
+  all $neofetch-opts
 }
 
 edit:completion:arg-completer[bspc] = [@cmd]{
@@ -193,10 +193,10 @@ edit:completion:arg-completer[xbps-src] = [@cmd]{
     @xbps-src-arch = (xbps-src -h | take 162 | drop 136)[1:]
   }
   if (eq $cmd[-2] '-a') {
-    explode $xbps-src-arch
+    all $xbps-src-arch
   } else {
     if (not (overlap-at $xbps-src-cmds $cmd)) {
-      explode $xbps-src-cmds
+      all $xbps-src-cmds
     } else {
       pwd=$E:XBPS_DISTDIR/srcpkgs put *
     }
@@ -207,9 +207,9 @@ edit:completion:arg-completer[strat] = [@cmd]{
   @strata = (brl list)
   has-strat = (overlap-at $strata $cmd)
   if (not $has-strat) {
-    explode $strata
+    all $strata
   } else {
-    # edit:complete-sudo (explode $cmd[(+ $has-strat 1):])
+    edit:complete-sudo (all $cmd[(put $has-strat):])
   }
 }
 
@@ -217,11 +217,11 @@ brl-cmds = $nil
 
 edit:completion:arg-completer[brl] = [@cmd]{
   if (not $brl-cmds) {
-    @brl-cmds = (brl -h | take 35 | drop 5 | each [x]{ put (re:find &max=1 '^  \w+' $x)[text][2:] })
+    @brl-cmds = (brl -h | take 36 | drop 5 | each [x]{ put (re:find &max=1 '^  \w+' $x)[text][2:] })
   }
   len = (count $cmd)
   if (== $len 2) {
-    explode $brl-cmds
+    all $brl-cmds
   } else {
     c = $cmd[1]
     if (has-value [status enable disable hide show] $c) {

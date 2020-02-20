@@ -5,6 +5,8 @@ CFLAGS="-flto=${THREADS} ${GRAPHITE} -ftree-vectorize"
 CXXFLAGS="${CFLAGS}"
 LDFLAGS="${CFLAGS} -fuse-linker-plugin"
 
+RUSTFLAGS="-C target-cpu=native"
+
 XBPS_MAKEJOBS="${THREADS}"
 XBPS_CCACHE=yes
 XBPS_ALLOW_RESTRICTED=yes

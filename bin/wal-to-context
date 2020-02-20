@@ -6,7 +6,7 @@ col    = $data[colors]
 spec   = $data[special]
 wall   = $data[wallpaper]
 name   = (re:replace '(\..+)?$' '' (path-base $wall))
-author = (get-env USER)
+author = $E:USER
 
 if (> (count $args) 0) {
   name = $args[0]

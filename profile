@@ -46,6 +46,6 @@ fi
 
 # Start X or shell
 if [ "$GPG_TTY" = /dev/tty1 ]; then
-	exec dbus-launch sx
+	exec sx
 fi
 exec elvish

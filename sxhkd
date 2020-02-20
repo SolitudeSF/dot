@@ -3,33 +3,28 @@
 #
 
 # power operations
-super + End ; {s,S,alt + s}
-	loginctl {suspend,hibernate,hybrid-sleep}
+super + End ; {s,S,alt + s,r,p}
+	loginctl {suspend,hibernate,hybrid-sleep,reboot,poweroff}
 
-super + End ; {r,p}
-	loginctl {reboot,poweroff}
+super + End ; b
+	xset dpms force off
 
-super + End ; {l,b}
-	{lockscreen,xset dpms force off}
-
-alt + Tab
-	rofi-windowswitcher
-
+# rofi
 super + shift + {End,Insert,Return}
 	exec {rofi-powermenu,rofi-bspwm-unhide,rofi -modi emoji -show emoji}
-
-super + {_,shift + }Print
-	exec {peek -t, peek}
-
-# applications
-super + Return
-	exec kitty -1
 
 super + Home
 	exec rofi -modi calc -show calc
 
 super + space
 	exec rofi -show drun
+
+alt + Tab
+	rofi-windowswitcher
+
+# applications
+super + Return
+	exec kitty -1
 
 super + shift + m
 	exec mpv "$(xclip -sel c -o)"
@@ -41,20 +36,18 @@ super + shift + {n,p}
 super + Insert
 	carpalx-helper
 
-# sxhkd reload
 super + Escape
 	pkill -USR1 -x sxhkd
 
-# brightness
 XF86MonBrightness{Up,Down}
 	xbacklight {+,-}5
 
-#
-# screencap
-#
-
 {_,ctrl} + Print
 	screenshot {-s -u,-u}
+
+super + {_,shift + }Print
+	exec {peek -t, peek}
+
 
 #
 # bspwm hotkeys

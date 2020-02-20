@@ -7,7 +7,10 @@ eval %sh{
 
 # Initialization
 
+require-module connect-skim
+
 decl -hidden regex curword
+decl -hidden regex curword_word_class
 
 set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
@@ -20,9 +23,13 @@ set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
 alias global sw sudo-write
 alias global cdb change-directory-current-buffer
 alias global f find
+alias global g grep
 alias global s sort-selections
+alias global explore-files skim-files
+alias global explore-buffers skim-buffers
 
 face global LineNumbersWrapped black
+face global CurWord +b
 
 addhl global/number-lines number-lines -hlcursor -separator ' '
 addhl global/ruler column 80 default,rgb:303030
@@ -30,7 +37,7 @@ addhl global/trailing-whitespace regex '\h+$' 0:default,red
 addhl global/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
 addhl global/matching-brackets show-matching
 addhl global/wrap wrap -word -indent -marker ''
-addhl global/current-word dynregex '%opt{curword}' 0:+b
+addhl global/current-word dynregex '%opt{curword}' 0:CurWord
 
 # Keybinds
 
@@ -51,17 +58,6 @@ map global normal <a-q> ': word-select-previous-big-word<ret>'
 map global normal Q B
 map global normal <a-Q> <a-B>
 
-map global user -docstring 'add phantom selection' <a-f> ': phantom-selection-add-selection<ret>'
-map global user -docstring 'clear all phantom selections' <a-F> ': phantom-selection-select-all<ret>: phantom-selection-clear<ret>'
-map global user -docstring 'next phantom selection' f ': phantom-selection-iterate-next<ret>'
-map global user -docstring 'previous phantom selection' F ': phantom-selection-iterate-prev<ret>'
-
-map global normal -docstring 'select view' <a-%> ': select-view<ret>'
-map global view   -docstring 'select view' s '<esc>: select-view<ret>'
-
-map global user -docstring 'add mark' m ': mark-word<ret>'
-map global user -docstring 'clear marks' M ': mark-clear<ret>'
-
 map global user -docstring 'replace mode' r ': replace<ret>'
 
 map global user -docstring 'expand selection' e ': expand<ret>'
@@ -69,9 +65,7 @@ map global user -docstring 'expand repeat' E ': expand-repeat<ret>'
 
 map global normal -docstring 'buffers…' b ': enter-buffers-mode<ret>'
 map global normal -docstring 'buffers (lock)…' B ': enter-user-mode -lock buffers<ret>'
-
-map global user -docstring "next error" l ': lint-next-error<ret>'
-map global user -docstring "previous error" L ': lint-previous-error<ret>'
+map global normal -docstring 'select buffer' <a-b> ': explore-buffers<ret>'
 
 declare-user-mode anchor
 map global normal ';' ': enter-user-mode anchor<ret>'
@@ -97,9 +91,10 @@ def type -params 1 -docstring 'Set buffer filetype' %{
     set buffer filetype %arg{1}
 }
 
-def lint-on-write -docstring 'Activate linting on buffer write' %{
-    lint-enable
-    hook buffer BufWritePost .* lint
+def lint-engage -docstring 'Enable linting' %{
+	lint-enable
+	map global user -docstring "next error" l ': lint-next-error<ret>'
+	map global user -docstring "previous error" L ': lint-previous-error<ret>'
 }
 
 def lsp-engage -docstring 'Enable language server' %{
@@ -108,9 +103,20 @@ def lsp-engage -docstring 'Enable language server' %{
     map global user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
 }
 
+def lint-on-write -docstring 'Activate linting on buffer write' %{
+    lint-engage
+    hook buffer BufWritePost .* lint
+}
+
+def set-indent -params 1 -docstring 'Set indentation width' %{
+    set buffer indentwidth %arg{1}
+    set buffer tabstop %arg{1}
+    set buffer softtabstop %arg{1}
+}
+
 def no-tabs -params 1 -docstring 'Indent with spaces' %{
     expandtab
-    set buffer indentwidth %arg{1}
+    set-indent %arg{1}
     hook buffer InsertKey <space> %{ try %{
         exec -draft h<a-i><space><a-k>^\h+<ret>
         exec -with-hooks <tab>
@@ -120,6 +126,7 @@ def no-tabs -params 1 -docstring 'Indent with spaces' %{
 def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
     try %{ exec -draft '%s\h+$<ret>d' }
 }
+
 
 # Hooks
 
@@ -132,35 +139,59 @@ hook global WinCreate .* %{
 }
 
 hook global KakBegin .* %{
-    state-save-reg-sync colon
-    state-save-reg-sync pipe
-    state-save-reg-sync slash
+    state-save-reg-load colon
+    state-save-reg-load pipe
+    state-save-reg-load slash
 }
 
 hook global KakEnd .* %{
-    state-save-reg-sync colon
-    state-save-reg-sync pipe
-    state-save-reg-sync slash
+    state-save-reg-save colon
+    state-save-reg-save pipe
+    state-save-reg-save slash
 }
 
 hook global WinDisplay .* info-buffers
 hook global NormalIdle .* %{ try %{ exec -draft '<a-i>w: palette-status<ret>' } }
-
-hook global BufCreate .* %{
-    set buffer tabstop %opt{indentwidth}
-}
 
 hook global BufWritePre .* %{ nop %sh{
     mkdir -p "$(dirname "$kak_buffile")"
 }}
 
 hook global NormalIdle .* %{
-    eval -draft %{ try %{
-        exec <space><a-i>w <a-k>\A\w+\z<ret>
-        set buffer curword "\b\Q%val{selection}\E\b"
-    } catch %{
-        set buffer curword ''
-    }}
+    eval -draft %{
+        try %{
+            exec <space><a-i>w
+            set buffer curword "(?<!%opt{curword_word_class})\Q%val{selection}\E(?!%opt{curword_word_class})"
+        } catch %{
+            set buffer curword ''
+        }
+    }
+}
+
+hook global WinSetOption extra_word_chars=.* %{
+    eval %sh{
+        eval set -- "$kak_quoted_opt_extra_word_chars"
+        word_class='['
+        while [ $# -ne 0 ]; do
+            case "$1" in
+                -) word_class="$word_class-";;
+            esac
+            shift
+        done
+        word_class="$word_class"'\w'
+        eval set -- "$kak_quoted_opt_extra_word_chars"
+        while [ $# -ne 0 ]; do
+            case "$1" in
+                "-") ;;
+                "]") word_class="$word_class"'\]';;
+                "'") word_class="$word_class''";;
+                *)   word_class="$word_class$1";;
+            esac
+            shift
+        done
+        word_class="$word_class]"
+        printf "set window curword_word_class '%s'\\n" "$word_class"
+    }
 }
 
 eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf %s "
@@ -170,12 +201,6 @@ eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf 
 
 hook global ModuleLoaded kitty %{
     set global kitty_window_type kitty
-}
-
-hook global ModuleLoaded smarttab %{
-	hook global BufCreate .* %{
-		set buffer softtabstop %opt{indentwidth}
-	}
 }
 
 # Filetype detection

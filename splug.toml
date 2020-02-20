@@ -17,9 +17,6 @@ files = ["rc/word-select.kak"]
 ["https://github.com/alexherbo2/explore.kak"]
 files = ["rc/explore/files.kak", "rc/explore/buffers.kak"]
 
-["https://github.com/lenormf/kakoune-extra"]
-files = ["widgets/git-branch.kak", "vcs.kak"]
-
 ["https://github.com/Delapouite/kakoune-auto-percent"]
 files = ["auto-percent.kak"]
 
@@ -31,9 +28,6 @@ files = ["cd.kak"]
 
 ["https://github.com/Delapouite/kakoune-buffers"]
 files = ["buffers.kak"]
-
-["https://github.com/Delapouite/kakoune-select-view"]
-files = ["select-view.kak"]
 
 ["https://github.com/Delapouite/kakoune-palette"]
 files = ["palette.kak"]
@@ -61,6 +55,9 @@ files = ["rc/smarttab.kak"]
 
 ["https://github.com/chambln/kakoune-readline"]
 files = ["readline.kak"]
+
+["https://github.com/lenormf/kakoune-extra"]
+files = ["widgets/git-branch.kak", "vcs.kak"]
 
 ["https://gitlab.com/Screwtapello/kakoune-state-save"]
 files = ["state-save.kak"]

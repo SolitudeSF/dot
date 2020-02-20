@@ -14,11 +14,11 @@ fn refresh-status {
   behind    = 0
 
   _ = ?(
-    @data = (git --no-optional-locks status --ignore-submodules --porcelain=v2 -b 2>/dev/null)
+    @data = (git --no-optional-locks status --ignore-submodules --porcelain=v2 -b 2>&-)
     branch = [(splits ' ' $data[1])][2]
 
     if (and (> (count $data) 3) (has-prefix $data[3] '# branch.ab')) {
-      ahead behind = (explode [(splits ' ' $data[3])][2:])[1:]
+      ahead behind = (all [(splits ' ' $data[3])][2:])[1:]
     }
 
     for i $data {

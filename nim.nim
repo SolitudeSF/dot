@@ -2,7 +2,7 @@ from macros import error
 
 type Compiler = enum gcc = "gcc", clang = "clang"
 
-var cross = false
+var cross {.used.} = false
 
 proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   let c = findExe s

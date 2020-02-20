@@ -46,9 +46,3 @@ fn add-after-readline [@hooks]{
     }
   }
 }
-
-fn is-upper-ascii [a]{ and (< (ord $a) 91) (> (ord $a) 64) }
-fn is-lower-ascii [a]{ and (< (ord $a) 123) (> (ord $a) 96) }
-
-fn to-upper-ascii [a]{ if (is-lower-ascii $a) { chr (- (ord $a) 32) } else { put $a } }
-fn to-lower-ascii [a]{ if (is-upper-ascii $a) { chr (+ (ord $a) 32) } else { put $a } }

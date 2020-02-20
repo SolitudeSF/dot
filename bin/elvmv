@@ -27,9 +27,9 @@ for i $items {
 
 editor = vi
 if (has-env VISUAL) {
-  editor = (get-env VISUAL)
+  editor = $E:VISUAL
 } elif (has-env EDITOR) {
-  editor = (get-env EDITOR)
+  editor = $E:EDITOR
 }
 
 fn abort [&code=1 a]{
