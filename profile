@@ -37,12 +37,9 @@ export \
  _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS NO_AT_BRIDGE
 
 # Init sharable {ssh,gpg}-agent
-if [ -z "$SSH_AUTH_SOCK" ]; then
-	if ! pgrep -xu "$(id -u)" gpg-agent >/dev/null; then
-		gpg-agent -q --daemon >"$XDG_CACHE_HOME/ssh-env"
-	fi
-	. "$XDG_CACHE_HOME/ssh-env"
-fi
+pgrep -xu "$(id -u)" gpg-agent || gpg-agent -q --daemon
+pgrep -xu "$(id -u)" ssh-agent || ssh-agent >"$XDG_CACHE_HOME/ssh-env"
+. "$XDG_CACHE_HOME/ssh-env"
 
 # Start X or shell
 if [ "$GPG_TTY" = /dev/tty1 ]; then

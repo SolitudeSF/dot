@@ -1,11 +1,11 @@
 #!/bin/sh
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit
 
 OP="ln -s"
 DIR="$(pwd)"
 CONF=${XDG_CONFIG_HOME:-$HOME/.config/}
-CONTEXT=${COLORSCHEME:-$(ls "$DIR/ntr/contexts" | sort -R | head -1)}
+CONTEXT=${COLORSCHEME:-$(find "$DIR/ntr/contexts" | sort -R | head -1)}
 
 _help() {
 	echo 'Available targets:
@@ -58,80 +58,82 @@ for arg; do
 		-c)
 			OP="cp -r";;
 		nim)
-			_install $arg.nim "$CONF/nim/config.nims";;
+			_install nim.nim "$CONF/nim/config.nims";;
 		bspwm)
-			_install $arg "$CONF/bspwm/bspwmrc";;
+			_install bspwm "$CONF/bspwm/bspwmrc";;
 		sxhkd)
-			_install $arg "$CONF/sxhkd/sxhkdrc";;
+			_install sxhkd "$CONF/sxhkd/sxhkdrc";;
 		dunst)
-			_render $arg "$CONF/dunst/dunstrc";;
+			_render dunst "$CONF/dunst/dunstrc";;
 		polybar)
-			_render $arg "$CONF/polybar/config";;
+			_render polybar "$CONF/polybar/config";;
 		rofi)
-			_install $arg.rasi "$CONF/rofi/config.rasi";;
+			_install rofi.rasi "$CONF/rofi/config.rasi";;
 		mpv)
-			_install $arg/mpv.conf "$CONF/mpv/mpv.conf";;
+			_install mpv/mpv.conf "$CONF/mpv/mpv.conf"
+			_install mpv/input.conf "$CONF/mpv/input.conf"
+			_install mpv/script-opts "$CONF/mpv/script-opts";;
 		mpd)
-			_install $arg "$CONF/mpd/mpd.conf";;
+			_install mpd "$CONF/mpd/mpd.conf";;
 		ncmpcpp)
-			_install $arg "$CONF/ncmpcpp/config";;
+			_install ncmpcpp "$CONF/ncmpcpp/config";;
 		lc)
-			_install $arg "$CONF/lc/config";;
+			_install lc "$CONF/lc/config";;
 		kak)
-			_install $arg.kak "$CONF/kak/kakrc";;
+			_install kak.kak "$CONF/kak/kakrc";;
 		zathura)
-			_render $arg "$CONF/zathura/zathurarc";;
+			_render zathura "$CONF/zathura/zathurarc";;
 		ranger)
-			_install $arg/commands.py "$CONF/ranger/commands.py"
-			_install $arg/rc.conf "$CONF/ranger/rc.conf"
-			_install $arg/rifle.conf "$CONF/ranger/rifle.conf"
-			_install $arg/scope.sh "$CONF/ranger/scope.sh";;
+			_install ranger/commands.py "$CONF/ranger/commands.py"
+			_install ranger/rc.conf "$CONF/ranger/rc.conf"
+			_install ranger/rifle.conf "$CONF/ranger/rifle.conf"
+			_install ranger/scope.sh "$CONF/ranger/scope.sh";;
 		kitty)
-			_install $arg/kitty.conf "$CONF/kitty/kitty.conf"
-			_install $arg/diff.conf "$CONF/kitty/diff.conf"
+			_install kitty/kitty.conf "$CONF/kitty/kitty.conf"
+			_install kitty/diff.conf "$CONF/kitty/diff.conf"
 			_render kitty-colors "$CONF/kitty/colors.conf";;
 		firefox)
-			FF_DIR=$HOME/.mozilla/firefox/$(ls -tr "$HOME/.mozilla/firefox/" | grep -v profiles.ini | tail -1)
+			FF_DIR=$HOME/.mozilla/firefox/$(ls -t "$HOME/.mozilla/firefox/" | grep -v profiles.ini | head -1)
 			FF_CHROME=$FF_DIR/chrome
-			_install $arg/user.js "$FF_DIR/user.js"
-			_install $arg/userChrome.css "$FF_CHROME/userChrome.css";;
+			_install firefox/user.js "$FF_DIR/user.js"
+			_install firefox/userChrome.css "$FF_CHROME/userChrome.css";;
 		elvish)
-			_install $arg/rc.elv "$HOME/.elvish/rc.elv"
-			for i in "$arg"/lib/* ; do
+			_install elvish/rc.elv "$HOME/.elvish/rc.elv"
+			for i in elvish/lib/* ; do
 				_install "$i" "$HOME/.elvish/lib/$(basename "$i")"
 			done;;
 		neofetch)
-			_install $arg.sh "$CONF/neofetch/config.conf";;
+			_install neofetch.sh "$CONF/neofetch/config.conf";;
 		gitconfig)
-			_install $arg.ini "$CONF/git/config";;
+			_install gitconfig.ini "$CONF/git/config";;
 		xbps-src)
-			_install $arg "$XBPS_DISTDIR/etc/conf";;
+			_install xbps-src "$XBPS_DISTDIR/etc/conf";;
 		profile)
-			_install $arg "$HOME/.profile";;
+			_install profile "$HOME/.profile";;
 		Xresources)
-			_render $arg "$HOME/.Xresources";;
+			_render Xresources "$HOME/.Xresources";;
 		XCompose)
-			_install $arg "$HOME/.XCompose";;
+			_install XCompose "$HOME/.XCompose";;
 		xinit)
 			_install sx.sh "$HOME/.xinitrc";;
 		sx)
-			_install $arg.sh "$CONF/sx/sxrc";;
+			_install sx.sh "$CONF/sx/sxrc";;
 		ntr)
-			_install $arg "$CONF/ntr";;
+			_install ntr "$CONF/ntr";;
 		splug)
-			_install $arg.toml "$CONF/splug/config.toml";;
+			_install splug.toml "$CONF/splug/config.toml";;
 		gtk)
-			_install $arg/gtkrc "${GTK2_RC_FILES:-$HOME/.gtkrc}"
-			_install $arg/settings.ini "$CONF/gtk-3.0/settings.ini";;
+			_install gtk/gtkrc "${GTK2_RC_FILES:-$HOME/.gtkrc}"
+			_install gtk/settings.ini "$CONF/gtk-3.0/settings.ini";;
 		user-dirs)
-			_install $arg "$CONF/user-dirs.dirs";;
+			_install user-dirs "$CONF/user-dirs.dirs";;
 		pulse)
-			_install $arg/default.pa "$CONF/pulse/default.pa"
-			_install $arg/daemon.conf "$CONF/pulse/daemon.conf";;
+			_install pulse/default.pa "$CONF/pulse/default.pa"
+			_install pulse/daemon.conf "$CONF/pulse/daemon.conf";;
 		fontconfig)
-			_install $arg "$CONF/fontconfig/fonts.conf";;
+			_install fontconfig "$CONF/fontconfig/fonts.conf";;
 		xonotic)
-			_install $arg.cfg "$HOME/.xonotic/autoexec.cfg";;
+			_install xonotic.cfg "$HOME/.xonotic/autoexec.cfg";;
 		*)
 			echo "Not recognized argument: $arg";;
 	esac

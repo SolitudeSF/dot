@@ -7,4 +7,4 @@ if (eq 0 (count $args)) {
 } else {
   t=$args[0]
 }
-gpg2 -d -q ~/sns/password.gpg | mpwc -S -k max -n $name -s $t 2>&- | xclip -sel c -r -l 1
+gpg2 -d -q ~/sns/password.gpg | mpwc -S -k max -n $name -s $t 2>/dev/null | xclip -sel c -r -l 1

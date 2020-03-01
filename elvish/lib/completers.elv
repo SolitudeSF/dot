@@ -171,6 +171,20 @@ edit:completion:arg-completer[ntr] = [@cmd]{
   }
 }
 
+edit:completion:arg-completer[mpv] = [@cmd]{
+  if (and (> (count $cmd[-1]) 0) (eq $cmd[-1][0] '-')) {
+    mpv --list-options | drop 2 | take 872 | eawk [_ a @b]{
+      if (eq (count $b) 0) {
+        put $a
+      } else {
+        edit:complex-candidate $a &display-suffix=' '(joins ' ' $b)
+      }
+    }
+  } else {
+    edit:complete-filename $cmd[-1]
+  }
+}
+
 edit:completion:arg-completer[update] = [@cmd]{
   update | each [x]{ if (has-prefix $x "    ") { put $x[4:] } }
 }

@@ -92,9 +92,9 @@ def type -params 1 -docstring 'Set buffer filetype' %{
 }
 
 def lint-engage -docstring 'Enable linting' %{
-	lint-enable
-	map global user -docstring "next error" l ': lint-next-error<ret>'
-	map global user -docstring "previous error" L ': lint-previous-error<ret>'
+    lint-enable
+    map global user -docstring "next error" l ': lint-next-error<ret>'
+    map global user -docstring "previous error" L ': lint-previous-error<ret>'
 }
 
 def lsp-engage -docstring 'Enable language server' %{
@@ -135,7 +135,6 @@ hook global WinCreate .* %{
     readline-enable
     colorcol-enable
     colorcol-auto-refresh
-    discord-presence-enable
 }
 
 hook global KakBegin .* %{

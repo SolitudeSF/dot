@@ -11,7 +11,7 @@ XBPS_MAKEJOBS="${THREADS}"
 XBPS_CCACHE=yes
 XBPS_ALLOW_RESTRICTED=yes
 
-XBPS_PKG_OPTIONS_mpv=~jack,~sndio,~alsa,~wayland
+XBPS_PKG_OPTIONS_mpv=~jack,~sndio,~alsa,~wayland,vapoursynth
 XBPS_PKG_OPTIONS_mpd=~sndio
 XBPS_PKG_OPTIONS_SDL2=~sndio
 XBPS_PKG_OPTIONS_mediainfo=~GUI
