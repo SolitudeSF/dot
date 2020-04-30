@@ -26,8 +26,8 @@ alt + Tab
 super + Return
 	exec kitty -1
 
-super + shift + m
-	exec mpv "$(xclip -sel c -o)"
+super + shift + {m,v}
+	exec {mpv "$(xclip -sel c -o)",pavucontrol-qt}
 
 super + shift + {n,p}
 	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \
@@ -35,12 +35,6 @@ super + shift + {n,p}
 
 super + Insert
 	carpalx-helper
-
-super + Escape
-	pkill -USR1 -x sxhkd
-
-XF86MonBrightness{Up,Down}
-	xbacklight {+,-}5
 
 {_,ctrl} + Print
 	screenshot {-s -u,-u}
@@ -57,7 +51,7 @@ super + {_,shift + }Print
 super + {_,shift + }w
 	bspc node -{c,k}
 
-#alternate between the tiled and monocle layout
+# alternate between the tiled and monocle layout
 super + m
 	bspc desktop -l next
 
@@ -95,7 +89,7 @@ super + ctrl + shift + w
 super {_,+ shift} + r
 	bspc node @/ -R {90,270}
 
-# Rotate leaves of tree
+# rotate leaves of tree
 super + shift + {comma,period}
 	bspc desktop -R {90,270}
 

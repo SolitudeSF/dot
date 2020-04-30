@@ -1,9 +1,0 @@
-#!/bin/sh
-exec mpv \
- --wid="${XSCREENSAVER_WINDOW}" \
- --no-input-terminal \
- --really-quiet \
- --no-stop-screensaver \
- --no-audio \
- --pause \
- "$(cat ~/.wallpaper)"

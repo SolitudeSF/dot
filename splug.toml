@@ -5,6 +5,9 @@ files = ["rc/auto-pairs.kak"]
 
 ["https://github.com/alexherbo2/connect.kak"]
 
+["https://github.com/alexherbo2/prelude.kak"]
+files = ["rc/prelude.kak", "rc/prelude.sh"]
+
 ["https://github.com/alexherbo2/search-highlighter.kak"]
 files = ["rc/search-highlighter.kak"]
 

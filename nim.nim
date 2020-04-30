@@ -33,7 +33,7 @@ elif defined(wasm):
   switch "o", projectName() & ".wasm"
   switch "cpu", "i386"
   switch "cc", "clang"
-  switch "d", "release"
+  switch "d", "danger"
   switch "opt", "size"
   switch "stackTrace", "off"
   switch "nomain"
@@ -51,8 +51,8 @@ when defined(release) or defined(danger):
   if not cross:
     switch "passC", "-march=native"
   switch "passC", "-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
-  switch "passC", "-flto=8"
   switch "passC", "-ftree-vectorize"
+  switch "passC", "-flto"
   switch "passL", "-fuse-linker-plugin"
   switch "passL", "-s"
 

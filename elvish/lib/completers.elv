@@ -1,4 +1,5 @@
 use re
+use str
 use util
 
 use github.com/xiaq/edit.elv/compl/git
@@ -26,7 +27,7 @@ fn prefix-completer [p a]{
 fn complete-directory [a]{
   dir = (path-dir $a)/
   if (has-prefix $a $dir) {
-    a = (replaces &max=1 $dir '' $a)
+    a = (str:replace &max=1 $dir '' $a)
   } else {
     dir = ''
   }
@@ -96,7 +97,7 @@ edit:completion:arg-completer[man] = [@cmd]{
 
 edit:completion:arg-completer[kill] = [@cmd]{
   ps -u (whoami) --no-headers -o pid,command |\
-    eawk [_ p @c]{ edit:complex-candidate &display-suffix=(print ' '$@c) $p }
+    eawk [_ p @c]{ edit:complex-candidate &display=(print ' '$@c) $p }
 }
 
 edit:completion:arg-completer[nimble] = [@cmd]{
@@ -177,7 +178,7 @@ edit:completion:arg-completer[mpv] = [@cmd]{
       if (eq (count $b) 0) {
         put $a
       } else {
-        edit:complex-candidate $a &display-suffix=' '(joins ' ' $b)
+        edit:complex-candidate $a &display=' '(str:join ' ' $b)
       }
     }
   } else {

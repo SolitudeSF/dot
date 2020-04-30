@@ -1,4 +1,5 @@
 use epm
+use str
 use util
 use config
 
@@ -35,7 +36,7 @@ edit:abbr = [
   }
   util:add-after-readline [a]{
     if (eq $a '') { ls }
-    util:set-title (splits ' ' $a | take 1)' '(tilde-abbr $pwd)
+    util:set-title (str:split ' ' $a | take 1)' '(tilde-abbr $pwd)
   }
 }
 

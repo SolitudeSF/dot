@@ -103,6 +103,15 @@ def lsp-engage -docstring 'Enable language server' %{
     map global user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
 }
 
+def lsp-semantic-highlighting -docstring 'Enable semantic highlighting' %{
+    hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+    hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+    hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+    hook -once -always window WinSetOption filetype=.* %{
+        remove-hooks window semantic-tokens
+    }
+}
+
 def lint-on-write -docstring 'Activate linting on buffer write' %{
     lint-engage
     hook buffer BufWritePost .* lint
@@ -225,8 +234,18 @@ hook global WinSetOption filetype=elvish %{
     no-tabs 2
 }
 
-hook global WinSetOption filetype=(go|rust|c|cpp) %{
+hook global WinSetOption filetype=(go|c|cpp) %{
     lsp-engage
+}
+
+hook global WinSetOption filetype=rust %{
+    lsp-engage
+    hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
+    hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
+    hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
+    hook -once -always window WinSetOption filetype=.* %{
+        remove-hooks window rust-inlay-hints
+    }
 }
 
 hook global WinSetOption filetype=markdown %{

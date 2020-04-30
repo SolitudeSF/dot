@@ -15,5 +15,4 @@ disown devmon -s \
  --exec-on-drive 'notify-send -a udevil -i media-removable "$l" "$f mounted at $d"' \
  --exec-on-unmount 'notify-send -a udevil -i media-removable "$l" "$f unmounted from $d"' \
  --exec-on-remove 'notify-send -a udevil -i media-removable "$l" "$f removed from $d"' &
-export MANGOHUD=1
-exec dbus-launch bspwm
+exec bspwm

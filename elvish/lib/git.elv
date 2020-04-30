@@ -1,3 +1,5 @@
+use str
+
 branch    = ''
 dirty     = 0
 staged    = 0
@@ -15,10 +17,10 @@ fn refresh-status {
 
   _ = ?(
     @data = (git --no-optional-locks status --ignore-submodules --porcelain=v2 -b 2>&-)
-    branch = [(splits ' ' $data[1])][2]
+    branch = [(str:split ' ' $data[1])][2]
 
     if (and (> (count $data) 3) (has-prefix $data[3] '# branch.ab')) {
-      ahead behind = (all [(splits ' ' $data[3])][2:])[1:]
+      ahead behind = (all [(str:split ' ' $data[3])][2:])[1:]
     }
 
     for i $data {

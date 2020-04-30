@@ -18,3 +18,4 @@ XBPS_PKG_OPTIONS_mediainfo=~GUI
 XBPS_PKG_OPTIONS_polybar=~i3,~alsa
 XBPS_PKG_OPTIONS_retroarch=~jack
 XBPS_PKG_OPTIONS_zenity=~webkit
+XBPS_PKG_OPTIONS_emacs=dbus,imagemagick

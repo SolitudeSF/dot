@@ -1,3 +1,5 @@
+use str
+
 fn abort [&code=1 a]{
   echo (styled $a red) >&2
   exit $code
@@ -23,7 +25,7 @@ fn index-of [a b]{
 
 fn pad [a b &with=' ' &left=$true]{
   a = (to-string $a)
-  p = (repeat (- $b (count $a)) $with | joins '')
+  p = (repeat (- $b (count $a)) $with | str:join '')
   if $left {
     put $p$a
   } else {
