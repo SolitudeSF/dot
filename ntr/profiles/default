@@ -5,3 +5,4 @@ dunst: <{$XDG_CONFIG_HOME}>/dunst/dunstrc
 zathura: <{$XDG_CONFIG_HOME}>/zathura/zathurarc
 polybar: <{$XDG_CONFIG_HOME}>/polybar/config
 rofi-theme: <{$XDG_CONFIG_HOME}>/rofi/theme.rasi
+homepage.css: <{$HOME}>/.mozilla/firefox/homepage.css

@@ -96,7 +96,9 @@ for arg; do
 			FF_DIR=$HOME/.mozilla/firefox/$(ls -t "$HOME/.mozilla/firefox/" | grep -v profiles.ini | head -1)
 			FF_CHROME=$FF_DIR/chrome
 			_install firefox/user.js "$FF_DIR/user.js"
-			_install firefox/userChrome.css "$FF_CHROME/userChrome.css";;
+			_install firefox/userChrome.css "$FF_CHROME/userChrome.css"
+			nim e firefox/homepage.nims >"$HOME/.mozilla/firefox/homepage.html"
+			_render homepage.css "$HOME/.mozilla/firefox/homepage.css";;
 		elvish)
 			_install elvish/rc.elv "$HOME/.elvish/rc.elv"
 			for i in elvish/lib/* ; do
