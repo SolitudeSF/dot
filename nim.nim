@@ -56,6 +56,9 @@ when defined(release) or defined(danger):
   switch "passL", "-fuse-linker-plugin"
   switch "passL", "-s"
 
+when defined(danger):
+  switch "panics", "on"
+
 when defined(hotcodereloading):
   switch "nimcache", "nimcache"
 elif defined(danger):
@@ -66,4 +69,3 @@ else:
   switch "nimcache", "/tmp/nim/" & projectName()
 
 switch "styleCheck", "hint"
-switch "verbosity", "2"

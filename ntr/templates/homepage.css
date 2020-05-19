@@ -2,30 +2,30 @@ body {
   height: 100%;
   background: <{color.bg}>;
   color: <{color.fg}>;
+  font-family: monospace;
 }
 
-.categories {
+main {
   display: flex;
   flex-direction: row;
   width: 100%;
   margin-top: 10%;
-  align-items: top;
   justify-content: center;
 }
 
-.category {
+section {
   display: flex;
   flex-direction: column;
   width: 20%;
   margin: 2%;
   padding: 2%;
-  align-items: top;
-  justify-content: top;
 }
 
-.header {
-  font-size: 32px;
+header {
+  color: <{color4}>;
+  font-size: 2rem;
   font-weight: bold;
+  margin-bottom: 5%;
 }
 
 .item:hover {
@@ -36,14 +36,11 @@ body {
   color: <{color.bg}>;
 }
 
-a, p {
-  font-family: monospace;
-  color: <{color.fg}>;
-}
-
 a:link {
+  display: block;
   text-decoration: none;
-  font-size: 24px;
+  color: <{color.fg}>;
+  font-size: 1.5rem;
 }
 
 a:visited {

@@ -40,4 +40,4 @@ fn mpv { edit $conf/mpv/mpv.conf }
 fn mpwc { edit $conf/mpwc/(cat ~/sns/mpwname).mpsites }
 fn ncmpcpp { edit &type=ini $conf/ncmpcpp/config }
 fn bedrock { edit /bedrock/etc/bedrock.conf; sudo brl apply }
-fn homepage { edit $dot/firefox/homepage.nims; e:nim e $dot/firefox/homepage.nims >~/.mozilla/firefox/homepage.html }
+fn homepage { edit $dot/firefox/homepage.nims; e:nim e -p:$E:HOME/sns/ $dot/firefox/homepage.nims >~/.mozilla/firefox/homepage.html }

@@ -97,7 +97,7 @@ for arg; do
 			FF_CHROME=$FF_DIR/chrome
 			_install firefox/user.js "$FF_DIR/user.js"
 			_install firefox/userChrome.css "$FF_CHROME/userChrome.css"
-			nim e firefox/homepage.nims >"$HOME/.mozilla/firefox/homepage.html"
+			nim e -p:$HOME/sns/ firefox/homepage.nims >"$HOME/.mozilla/firefox/homepage.html"
 			_render homepage.css "$HOME/.mozilla/firefox/homepage.css";;
 		elvish)
 			_install elvish/rc.elv "$HOME/.elvish/rc.elv"

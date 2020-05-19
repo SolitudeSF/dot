@@ -32,9 +32,6 @@ files = ["cd.kak"]
 ["https://github.com/Delapouite/kakoune-buffers"]
 files = ["buffers.kak"]
 
-["https://github.com/Delapouite/kakoune-palette"]
-files = ["palette.kak"]
-
 ["https://github.com/occivink/kakoune-expand"]
 files = ["expand.kak"]
 

@@ -1,5 +1,5 @@
 import karax/[karaxdsl, vdom]
-from ../../sns/homepageData import links
+import homepageData
 
 func homepage: VNode =
   result = buildHtml(html(lang = "en")):
@@ -8,16 +8,17 @@ func homepage: VNode =
       meta(name = "viewport", content = "width=device-width, initial-scale=1")
       title:
         text "New Tab"
+      link(rel = "stylesheet", `type` = "text/css", href = "destyle.css")
       link(rel = "stylesheet", `type` = "text/css", href = "homepage.css")
     body:
-      tdiv(class = "categories"):
+      main:
         for (category, items) in links:
-          tdiv(class = "category"):
-            p(class = "header"):
+          section:
+            header:
               text category
             for (l, t) in items:
               tdiv(class = "item"):
                 a(href = l):
                   text t
 
-echo "<!DOCTYPE html>", homepage()
+echo "<!DOCTYPE html>\n", homepage()

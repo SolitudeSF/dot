@@ -143,7 +143,7 @@ hook global WinCreate .* %{
     smarttab
     readline-enable
     colorcol-enable
-    colorcol-auto-refresh
+    colorcol-refresh-continuous
 }
 
 hook global KakBegin .* %{
@@ -159,7 +159,6 @@ hook global KakEnd .* %{
 }
 
 hook global WinDisplay .* info-buffers
-hook global NormalIdle .* %{ try %{ exec -draft '<a-i>w: palette-status<ret>' } }
 
 hook global BufWritePre .* %{ nop %sh{
     mkdir -p "$(dirname "$kak_buffile")"
@@ -234,7 +233,12 @@ hook global WinSetOption filetype=elvish %{
     no-tabs 2
 }
 
-hook global WinSetOption filetype=(go|c|cpp) %{
+hook global WinSetOption filetype=go %{
+    lsp-engage
+}
+
+hook global WinSetOption filetype=(c|cpp) %{
+    set buffer formatcmd clang-format
     lsp-engage
 }
 
@@ -250,7 +254,7 @@ hook global WinSetOption filetype=rust %{
 
 hook global WinSetOption filetype=markdown %{
     set buffer formatcmd 'prettier --parser markdown'
-    def -docstring 'render current buffer' render %{
+    def render -docstring 'render current buffer' %{
         exec ": connect-terminal glow -s dark %val{buffile} | ${PAGER}<ret>"
     }
 }
