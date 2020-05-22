@@ -21,8 +21,8 @@ padding-right = 1
 module-margin = 1
 modules-left = bspwm xwindow
 modules-center = mpd
-modules-right = github wlan memory cpu temperature date
-font-0 = Sarasa UI J:size=10;2
+modules-right = net memory cpu temperature date
+font-0 = Sarasa UI J:size=10;3
 font-1 = 3270Medium Nerd Font Mono:size=15;4
 background = ${color.background}
 foreground = ${color.foreground}
@@ -75,19 +75,9 @@ label-song-maxlen = 45
 label-song-ellipsis = true
 format-online = <label-song> <toggle><icon-prev><icon-next>
 
-[module/github]
-type = internal/github
-token = ${file:<{$HOME}>/sns/github.key}
-empty-notifications = false
-interval = 10
-format = <label>
-format-prefix = " "
-format-prefix-foreground = ${color.fg-bright}
-label = %notifications%
-
-[module/wlan]
+[module/net]
 type = internal/network
-interface = wlan0
+interface = eno1
 format-connected = <label-connected>
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${color.fg-bright}

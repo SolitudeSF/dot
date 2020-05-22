@@ -32,7 +32,7 @@ face global LineNumbersWrapped black
 face global CurWord +b
 
 addhl global/number-lines number-lines -hlcursor -separator ' '
-addhl global/ruler column 80 default,rgb:303030
+addhl global/ruler column 100 default,rgb:303030
 addhl global/trailing-whitespace regex '\h+$' 0:default,red
 addhl global/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
 addhl global/matching-brackets show-matching
@@ -136,7 +136,6 @@ def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
     try %{ exec -draft '%s\h+$<ret>d' }
 }
 
-
 # Hooks
 
 hook global WinCreate .* %{
@@ -221,6 +220,7 @@ hook global BufCreate .*/\.?((sx|xinit)(rc)?|profile) %{ set buffer filetype sh 
 hook global BufCreate .*\.ino %{ set buffer filetype cpp }
 hook global BufCreate .*\.cs %{ addhl buffer/java }
 hook global BufCreate .*\.rasi %{ set buffer filetype css }
+hook global BufCreate .*\.sccprofile %{ set buffer filetype json }
 
 # Filetype settings
 

@@ -69,3 +69,5 @@ else:
   switch "nimcache", "/tmp/nim/" & projectName()
 
 switch "styleCheck", "hint"
+switch "hint", "Processing:off"
+switch "hint", "Dependency:on"

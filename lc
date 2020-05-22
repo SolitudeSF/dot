@@ -15,58 +15,60 @@ kind = "dot      PFX ."                 #classic Unix dot file/dir/ln/etc.
 kind = "onOutErr PFX o. e."             #outputs from cb's "on hosts cmd" system
 kind = "core     PFX core"
 
-colors = "fhot- = black"
-colors = "fhot0 = PURPLE"
-colors = "fhot1 = BLUE"
-colors = "fhot2 = CYAN"
-colors = "fhot3 = GREEN"
-colors = "fhot4 = YELLOW"
-colors = "fhot5 = RED"
-colors = "fhot+ = WHITE"
+colors = "fhue- = BLACK"
+colors = "fhue0 = PURPLE"
+colors = "fhue1 = BLUE"
+colors = "fhue2 = CYAN"
+colors = "fhue3 = GREEN"
+colors = "fhue4 = YELLOW"
+colors = "fhue5 = RED"
+colors = "fhue+ = WHITE"
 
-colors = "FHOT- = BLACK"
-colors = "FHOT0 = purple"
-colors = "FHOT1 = blue"
-colors = "FHOT2 = cyan"
-colors = "FHOT3 = green"
-colors = "FHOT4 = yellow"
-colors = "FHOT5 = red"
-colors = "FHOT+ = white"
+colors = "FHUE- = black"
+colors = "FHUE0 = purple"
+colors = "FHUE1 = blue"
+colors = "FHUE2 = cyan"
+colors = "FHUE3 = green"
+colors = "FHUE4 = yellow"
+colors = "FHUE5 = red"
+colors = "FHUE+ = white"
 
-colors = "bhot- = on_black"
-colors = "bhot0 = on_PURPLE"
-colors = "bhot1 = on_BLUE"
-colors = "bhot2 = on_CYAN"
-colors = "bhot3 = on_GREEN"
-colors = "bhot4 = on_YELLOW"
-colors = "bhot5 = on_RED"
-colors = "bhot+ = on_WHITE"
+colors = "bhue- = on_BLACK"
+colors = "bhue0 = on_PURPLE"
+colors = "bhue1 = on_BLUE"
+colors = "bhue2 = on_CYAN"
+colors = "bhue3 = on_GREEN"
+colors = "bhue4 = on_YELLOW"
+colors = "bhue5 = on_RED"
+colors = "bhue+ = on_WHITE"
 
-colors = "BHOT- = on_BLACK"
-colors = "BHOT0 = on_purple"
-colors = "BHOT1 = on_blue"
-colors = "BHOT2 = on_cyan"
-colors = "BHOT3 = on_green"
-colors = "BHOT4 = on_yellow"
-colors = "BHOT5 = on_red"
-colors = "BHOT+ = on_white"
+colors = "BHUE- = on_black"
+colors = "BHUE0 = on_purple"
+colors = "BHUE1 = on_blue"
+colors = "BHUE2 = on_cyan"
+colors = "BHUE3 = on_green"
+colors = "BHUE4 = on_yellow"
+colors = "BHUE5 = on_red"
+colors = "BHUE+ = on_white"
 
 color="dot:0x04:1       NONE"
-color="onOutErr:0xF0:0  FHOT-"
-color="compress:0x3D:0  fhot1"
-color="tarchive:0x3E:0  fhot1"
-color="archive:0x3F:0   fhot1"
-color="audio:0x70:0     fhot0"
-color="image:0x71:0     fhot0"
-color="video:0x72:0     fhot0"
-color="script:0x40:0    fhot4"
-color="pointer:0x50:0:ɷ FHOT0"
-color="header:0x58:0    fhot2"
-color="source:0x60:0    fhot3"
-color="object:0x68:0    fhot5"
-color="core:0x68:0      fhot5"
-color="backup:0x80:0    FHOT4"
-color="document:0x24:0  fhot+"
+color="onOutErr:0xF0:0  fhue-"
+color="compress:0x3D:0  fhue1"
+color="tarchive:0x3E:0  fhue1"
+color="archive:0x3F:0   fhue1"
+color="audio:0x70:0     fhue0"
+color="image:0x71:0     fhue0"
+color="video:0x72:0     fhue0"
+color="script:0x40:0    fhue4"
+color="pointer:0x50:0:ɷ FHUE0"
+color="header:0x58:0    fhue2"
+color="source:0x60:0    fhue3"
+color="object:0x68:0    fhue5"
+color="core:0x68:0      fhue5"
+color="backup:0x80:0    FHUE4"
+color="document:0x24:0  fhue+"
+color="backup:0x80:0    FHUE4"
+color="document:0x24:0  FHUE+"
 
 color="symlink:0x10:1  italic"
 color="dir:0x20:0      BLUE   bold"
@@ -95,34 +97,35 @@ color="exec:0x70:6:¶   bold"
 
 color="unknown:0x22:0  NONE"              #Added if missing;Here to set ord
 
-color = "sizeB   fhot1"                 #Value-conditional fields besides paths
-color = "sizeK   fhot2"
-color = "sizeM   fhot3"
-color = "sizeG   fhot4"
-color = "sizeT   fhot5 inverse"    #TB-scl individual files are likely a problem
+color = "sizeB   fhue1"                 #Value-conditional fields besides paths
+color = "sizeK   fhue2"
+color = "sizeM   fhue3"
+color = "sizeG   fhue4"
+color = "sizeT   fhue5 inverse"    #TB-scl individual files are likely a problem
 color = "sizeS   italic"           #Additive text attr for sparse files (u<75%)
 #Color all 4 octal digs as how only one affects invoking process (dep on owners)
 color = "perm0   WHITE on_purple"  #000: ---  #Not so rare, but very restrictive
-color = "perm1   fhot1"            #001: --x  #rare, but happens w/eg. suid
+color = "perm1   fhue1"            #001: --x  #rare, but happens w/eg. suid
 color = "perm2   CYAN on_red"      #010: -w-  #unlikely to be correct
 color = "perm3   GREEN on_red"     #011: -wx  #unlikely to be correct
-color = "perm4   fhot2"            #100: r--  #RO: pretty normal.
-color = "perm5   fhot3"            #101: r-x  #color like 'exec' is colored.
-color = "perm6   fhot4"            #110: rw-  #RW: even more normal
-color = "perm7   fhot5"            #111: rwx  #Only so many yellows..Orange?
+color = "perm4   fhue2"            #100: r--  #RO: pretty normal.
+color = "perm5   fhue3"            #101: r-x  #color like 'exec' is colored.
+color = "perm6   fhue4"            #110: rw-  #RW: even more normal
+color = "perm7   fhue5"            #111: rwx  #Only so many yellows..Orange?
 
-ageFmt = "86400@%{fhot0}y%{fhot1}m%{fhot2}d"
-ageFmt = "0@%{fhot3}H%{fhot4}M%{fhot5}S"
+ageFmt = "86400@%{fhue0}y%{fhue1}m%{fhue2}d"
+ageFmt = "0@%{fhue3}H%{fhue4}M%{fhue5}S"
 ageFmt = "FUTURE@%{red}Y%{white}m"
 
 ageFmt = "-ANYTIME@%y/%m/%d:%H:%M:%S.%3"
 
-ageFmt = "+31556952@/31556952   <y fhot0"
-ageFmt =  "+2678400@/604800     <w fhot1"
-ageFmt =    "+86400@/86400      <d fhot2"
-ageFmt =     "+6000@/3600       <h fhot3"
-ageFmt =      "+100@/60         <m fhot4"
-ageFmt =        "+0@/1          <s fhot5"
+ageFmt = "+31556952@/31556952   <y fhue0"
+ageFmt =  "+2678400@/604800     <w fhue1"
+ageFmt =    "+86400@/86400      <d fhue2"
+ageFmt =     "+6000@/3600       <h fhue3"
+ageFmt =      "+100@/60         <m fhue4"
+ageFmt =        "+0@/1          <s fhue5"
+ageFmt =   "+FUTURE@/3600       <h FHUE+"
 
 #LISTING STYLES/ALIASES; Increasing "L-ness" gives increasing detail. NOTE: Use
 #%r if you worry about automounters/NFS hanging on link tgts.  Also, -f below
@@ -170,9 +173,11 @@ Style = r"""LLi = -HsLLai -xdot"""
 Style = r"""debug = -H "-f%0%1%2%3%4%5%6%7%8%9%.%/ %f%R"""
 #Almost exactly GNU ls -lA --no-color
 Style = r"""gls = "-tp1g -> " --ageFmt,= --ageFmt,= "-a-15778476@%b %e  %Y" "-a-0@%b %e %H:%M" -of "-f%l%p%Q %n %U %G %S %m %f%r"""
-Style = r"""c4 = "-Fm-4,,,*,?[](){} ';!$#^`~"""
-Style = r"""c5 = "-Fm-5,,,*,?[](){} ';!$#^`~"""
-Style = r"""c6 = "-Fm-6,,,*,?[](){} ';!$#^`~"""
+#These are of "add-on" styles; Cn=compr-patQuoted; cn=same+reFit;q=easy compr pQ
+Style = r"""C4 =  "-m-4,,,*,?[](){} ';!$#^`~"""
+Style = r"""C5 =  "-m-5,,,*,?[](){} ';!$#^`~"""
+Style = r"""C6 =  "-m-6,,,*,?[](){} ';!$#^`~"""
+Style = r"""q =    "-ma,,,*,?[](){} ';!$#^`~"""
 
 glyph  = "▶ "
 order  = 0134EN   #Default sort order: kind-order0,1; fmtKindNum0,1; longExt,Nm

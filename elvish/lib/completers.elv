@@ -247,6 +247,23 @@ edit:completion:arg-completer[brl] = [@cmd]{
   }
 }
 
+edit:completion:arg-completer[tam] = [@cmd]{
+  if (== (count $cmd) 2) {
+    put install uninstall enable disable update list query search
+  } else {
+    c = $cmd[1]
+    if (has-value [uninstall update query] $c) {
+      tam list -s
+    } elif (eq $c enable) {
+      tam list -s -d
+    } elif (eq $c disable) {
+      tam list -s -e
+    } elif (eq $c list) {
+      put '--short' '--enabled' '--disabled'
+    }
+  }
+}
+
 edit:completion:arg-completer[promotescript] = [@cmd]{
   pwd=~/.local/bin fd -t f
 }
