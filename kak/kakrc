@@ -7,16 +7,11 @@ eval %sh{
 
 # Initialization
 
-require-module connect-skim
-
-decl -hidden regex curword
-decl -hidden regex curword_word_class
-
 set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
 set global autoreload yes
 set global grepcmd 'rg -iHL --column'
-set global modelinefmt '%opt{modeline_git_branch} %val{bufname}
+set global modelinefmt '%opt{git_branch} %val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
 
@@ -24,12 +19,8 @@ alias global sw sudo-write
 alias global cdb change-directory-current-buffer
 alias global f find
 alias global g grep
-alias global s sort-selections
-alias global explore-files skim-files
-alias global explore-buffers skim-buffers
 
 face global LineNumbersWrapped black
-face global CurWord +b
 
 addhl global/number-lines number-lines -hlcursor -separator ' '
 addhl global/ruler column 100 default,rgb:303030
@@ -37,7 +28,6 @@ addhl global/trailing-whitespace regex '\h+$' 0:default,red
 addhl global/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
 addhl global/matching-brackets show-matching
 addhl global/wrap wrap -word -indent -marker ''
-addhl global/current-word dynregex '%opt{curword}' 0:CurWord
 
 # Keybinds
 
@@ -58,7 +48,9 @@ map global normal <a-q> ': word-select-previous-big-word<ret>'
 map global normal Q B
 map global normal <a-Q> <a-B>
 
-map global user -docstring 'replace mode' r ': replace<ret>'
+map global user -docstring 'replace mode' r ': enter-replace-mode<ret>'
+
+map global user -docstring 'change directory' c ': enter-user-mode cd<ret>'
 
 map global user -docstring 'expand selection' e ': expand<ret>'
 map global user -docstring 'expand repeat' E ': expand-repeat<ret>'
@@ -163,43 +155,6 @@ hook global BufWritePre .* %{ nop %sh{
     mkdir -p "$(dirname "$kak_buffile")"
 }}
 
-hook global NormalIdle .* %{
-    eval -draft %{
-        try %{
-            exec <space><a-i>w
-            set buffer curword "(?<!%opt{curword_word_class})\Q%val{selection}\E(?!%opt{curword_word_class})"
-        } catch %{
-            set buffer curword ''
-        }
-    }
-}
-
-hook global WinSetOption extra_word_chars=.* %{
-    eval %sh{
-        eval set -- "$kak_quoted_opt_extra_word_chars"
-        word_class='['
-        while [ $# -ne 0 ]; do
-            case "$1" in
-                -) word_class="$word_class-";;
-            esac
-            shift
-        done
-        word_class="$word_class"'\w'
-        eval set -- "$kak_quoted_opt_extra_word_chars"
-        while [ $# -ne 0 ]; do
-            case "$1" in
-                "-") ;;
-                "]") word_class="$word_class"'\]';;
-                "'") word_class="$word_class''";;
-                *)   word_class="$word_class$1";;
-            esac
-            shift
-        done
-        word_class="$word_class]"
-        printf "set window curword_word_class '%s'\\n" "$word_class"
-    }
-}
-
 eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf %s "
     hook global BufWritePost .* %{ git show-diff }
     hook global BufReload .* %{ git show-diff }
@@ -243,20 +198,17 @@ hook global WinSetOption filetype=(c|cpp) %{
 }
 
 hook global WinSetOption filetype=rust %{
-    lsp-engage
     hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
     hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
     hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
     hook -once -always window WinSetOption filetype=.* %{
         remove-hooks window rust-inlay-hints
     }
+    lsp-engage
 }
 
 hook global WinSetOption filetype=markdown %{
     set buffer formatcmd 'prettier --parser markdown'
-    def render -docstring 'render current buffer' %{
-        exec ": connect-terminal glow -s dark %val{buffile} | ${PAGER}<ret>"
-    }
 }
 
 hook global WinSetOption filetype=python %{

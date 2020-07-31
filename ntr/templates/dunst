@@ -67,18 +67,12 @@ force_xinerama = false
 
 ### Mouse
 
-mouse_left_click = close_current
-mouse_middle_click = do_action
-mouse_right_click = close_all
+mouse_left_click = do_action
+mouse_middle_click = close_all
+mouse_right_click = close_current
 
 [experimental]
 per_monitor_dpi = false
-
-[shortcuts]
-close = ctrl+space
-close_all = ctrl+shift+space
-history = ctrl+shift+grave
-context = ctrl+shift+period
 
 [urgency_low]
 background = "<{color.bg}>"

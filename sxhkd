@@ -13,7 +13,7 @@ super + End ; b
 super + shift + {End,Insert,Return}
 	exec {rofi-powermenu,rofi-bspwm-unhide,rofi -modi emoji -show emoji}
 
-super + Home
+super + shift + space
 	exec rofi -modi calc -show calc
 
 super + space
@@ -41,6 +41,9 @@ super + Insert
 
 super + {_,shift + }Print
 	exec {peek -t, peek}
+
+{shift,shift + alt,ctrl,ctrl + alt,alt} + Home
+	dunstctl {close,close-all,history-pop,context,action 0}
 
 
 #

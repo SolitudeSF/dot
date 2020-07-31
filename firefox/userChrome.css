@@ -6,6 +6,7 @@
 #sidebar {
   max-width: none !important;
   min-width: 0px !important;
+  width: 20em !important;
 }
 
 /* Hide sidebar header and outline */
@@ -14,5 +15,5 @@
 }
 
 #sidebar-box #sidebar-header {
-  display: none;
+  display: none !important;
 }

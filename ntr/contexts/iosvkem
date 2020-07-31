@@ -1,6 +1,6 @@
 meta
-  name*:  iosvkem
-  author: neutaaaaan
+  name*:  iosvkem modified
+  author: neutaaaaan + solitudesf
   source: https://github.com/neutaaaaan/iosvkem
 
 color
@@ -12,22 +12,22 @@ color0:   #1b1d1e
 color8:   #808080
 
 color1:   #d01b61
-color9:   #d01b61
+color9:   #a3154c
 
 color2:   #60aa00
-color10:  #60aa00
+color10:  #437700
 
 color3:   #d08928
-color11:  #d08928
+color11:  #a56d20
 
 color4:   #6c9ef8
-color12:  #6c9ef8
+color12:  #3b7ef6
 
 color5:   #b77fdb
-color13:  #b77fdb
+color13:  #a157d0
 
 color6:   #00aa80
-color14:  #00aa80
+color14:  #00775a
 
 color7:   #dddddd
-color15:  #ffffff
+color15:  #aaaaaa

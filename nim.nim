@@ -14,7 +14,6 @@ proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
 
 when defined(musl):
   setCompiler "x86_64-linux-musl-gcc"
-  switch "passL", "-static"
 
 elif defined(x86):
   cross = true
@@ -53,6 +52,7 @@ when defined(release) or defined(danger):
   switch "passC", "-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
   switch "passC", "-ftree-vectorize"
   switch "passC", "-flto"
+  switch "passL", "-flto"
   switch "passL", "-fuse-linker-plugin"
   switch "passL", "-s"
 

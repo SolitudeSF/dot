@@ -78,9 +78,12 @@ for arg; do
 		ncmpcpp)
 			_install ncmpcpp "$CONF/ncmpcpp/config";;
 		lc)
-			_install lc "$CONF/lc/config";;
+			_install lc.ini "$CONF/lc/config";;
 		kak)
-			_install kak.kak "$CONF/kak/kakrc";;
+			_install kak/kakrc "$CONF/kak/kakrc"
+			for i in kak/autoload/* ; do
+				_install "$i" "$CONF/kak/autoload/$(basename "$i")"
+			done;;
 		zathura)
 			_render zathura "$CONF/zathura/zathurarc";;
 		ranger)

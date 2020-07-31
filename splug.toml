@@ -3,11 +3,6 @@
 ["https://github.com/alexherbo2/auto-pairs.kak"]
 files = ["rc/auto-pairs.kak"]
 
-["https://github.com/alexherbo2/connect.kak"]
-
-["https://github.com/alexherbo2/prelude.kak"]
-files = ["rc/prelude.kak", "rc/prelude.sh"]
-
 ["https://github.com/alexherbo2/search-highlighter.kak"]
 files = ["rc/search-highlighter.kak"]
 
@@ -17,8 +12,8 @@ files = ["rc/replace-mode.kak"]
 ["https://github.com/alexherbo2/word-select.kak"]
 files = ["rc/word-select.kak"]
 
-["https://github.com/alexherbo2/explore.kak"]
-files = ["rc/explore/files.kak", "rc/explore/buffers.kak"]
+["https://github.com/alexherbo2/prelude.kak"]
+files = ["rc/prelude.kak", "rc/prelude.sh" ]
 
 ["https://github.com/Delapouite/kakoune-auto-percent"]
 files = ["auto-percent.kak"]
@@ -31,9 +26,6 @@ files = ["cd.kak"]
 
 ["https://github.com/Delapouite/kakoune-buffers"]
 files = ["buffers.kak"]
-
-["https://github.com/occivink/kakoune-expand"]
-files = ["expand.kak"]
 
 ["https://github.com/occivink/kakoune-sudo-write"]
 files = ["sudo-write.kak"]
@@ -59,14 +51,8 @@ files = ["rc/smarttab.kak"]
 ["https://github.com/chambln/kakoune-readline"]
 files = ["readline.kak"]
 
-["https://github.com/lenormf/kakoune-extra"]
-files = ["widgets/git-branch.kak", "vcs.kak"]
-
 ["https://gitlab.com/Screwtapello/kakoune-state-save"]
 files = ["state-save.kak"]
-
-["https://github.com/JJK96/kakoune-repl-send"]
-files = ["repl.kak"]
 
 # mpv plugins
 
