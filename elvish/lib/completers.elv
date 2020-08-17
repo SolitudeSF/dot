@@ -2,8 +2,7 @@ use re
 use str
 use util
 
-use github.com/xiaq/edit.elv/compl/git
-git:apply
+use github.com/zzamboni/elvish-completions/git
 
 fn overlap-at [a b]{
   for i [(range 1 (- (count $b) 1))] {
@@ -17,7 +16,7 @@ fn prefix-completer [p a]{
     if (eq (count $cmd) 2) {
       $a $@cmd
     } elif (has-key $edit:completion:arg-completer $cmd[1]) {
-      $edit:completion:arg-completer[$cmd[1]] (all $cmd[1:])
+      $edit:completion:arg-completer[$cmd[1]] (all $cmd[1..])
     } else {
       edit:complete-filename $cmd[-1]
     }
@@ -58,7 +57,7 @@ edit:completion:arg-completer[waifu2x-converter-cpp] = [@cmd]{
   } elif (eq $cmd[-2] --noise-level) {
     put 0 1 2 3
   } else {
-    put --scale-ratio --noise-level --mode --jobs --png-compression \
+    put --scale-ratio --noise-level --mode --jobs --png-compression ^
       --image-quality --silent -i -o
   }
 }
@@ -68,7 +67,7 @@ kitty-kittens = $nil
 
 edit:completion:arg-completer[kitty] = [@cmd]{
   if (not $kitty-cmds) {
-    @kitty-cmds = (kitty @ --help | peach [x]{ if (re:match '^  \w' $x) { put $x[2:] } })
+    @kitty-cmds = (kitty @ --help | peach [x]{ if (re:match '^  \w' $x) { put $x[2..] } })
     @kitty-kittens = (pwd=/usr/lib/kitty/kittens fd main.py | peach [x]{ path-dir $x })
   }
   if (has-value [kitten '+kitten'] $cmd[-2]) {
@@ -82,7 +81,7 @@ edit:completion:arg-completer[kitty] = [@cmd]{
 
 edit:completion:arg-completer[sv] = [@cmd]{
   if (eq (count $cmd) 2) {
-    put status up down once pause cont hup alarm interrupt quit kill term 1 2 \
+    put status up down once pause cont hup alarm interrupt quit kill term 1 2 ^
       exit start try-restart check {force-,}{stop,reload,restart,shutdown}
   } else {
     pwd=/var/service put *
@@ -96,13 +95,13 @@ edit:completion:arg-completer[man] = [@cmd]{
 }
 
 edit:completion:arg-completer[kill] = [@cmd]{
-  ps -u (whoami) --no-headers -o pid,command |\
+  ps -u (whoami) --no-headers -o pid,command |^
     eawk [_ p @c]{ edit:complex-candidate &display=(print ' '$@c) $p }
 }
 
 edit:completion:arg-completer[nimble] = [@cmd]{
   if (eq (count $cmd) 2) {
-    put {un,}install develop check init publish build c cc js test doc{,2} \
+    put {un,}install develop check init publish build c cc js test doc{,2} ^
       refresh search list tasks path dump
     if ?(isnimbleproject) {
       nimble tasks 2>&- | eawk [_ a @_]{ put $a }
@@ -116,11 +115,11 @@ edit:completion:arg-completer[nimble] = [@cmd]{
     } else {
       pkgs = [&]
       nimble list -i | eawk [_ n @v]{
-        @ver = $@v[:-1]
-        ver[0] = $ver[0][1:]
+        @ver = $@v[..-1]
+        ver[0] = $ver[0][1..]
         pkgs[$n] = $ver
       }
-      pkg = $cmd[-1][:$idx]
+      pkg = $cmd[-1][..$idx]
       if (has-key $pkgs $pkg) {
         for v $pkgs[$pkg] { put $pkg@$v }
       }
@@ -128,8 +127,8 @@ edit:completion:arg-completer[nimble] = [@cmd]{
   }
 }
 
-pijul-cmds = [add apply branches checkout clone credit delete-branch diff dist\
-            generate-completions help init key log ls mv patch pull push\
+pijul-cmds = [add apply branches checkout clone credit delete-branch diff dist^
+            generate-completions help init key log ls mv patch pull push^
             record remove revert rollback show-dependencies sign status tag unrecord]
 
 edit:completion:arg-completer[pijul] = [@cmd]{
@@ -187,12 +186,13 @@ edit:completion:arg-completer[mpv] = [@cmd]{
 }
 
 edit:completion:arg-completer[update] = [@cmd]{
-  update | each [x]{ if (has-prefix $x "    ") { put $x[4:] } }
+  update | each [x]{ if (has-prefix $x "    ") { put $x[4..] } }
 }
 
 edit:completion:arg-completer[xr] = [@cmd]{
   xpkg -m
-  xpkg -O | peach [x]{ edit:complex-candidate &style='red;inverse' $x }
+  xpkg -O | peach [x]{ edit:complex-candidate $x }
+  # xpkg -O | peach [x]{ edit:complex-candidate &style='red;inverse' $x }
 }
 
 edit:completion:arg-completer[xi] = [@cmd]{
@@ -205,7 +205,7 @@ xbps-src-arch = $nil
 edit:completion:arg-completer[xbps-src] = [@cmd]{
   if (not $xbps-src-cmds) {
     @xbps-src-cmds = (xbps-src -h | take 129 | drop 4 | each [x]{ put (re:find &max=1 '^\w+(\-\w+)*' $x)[text] })
-    @xbps-src-arch = (xbps-src -h | take 162 | drop 136)[1:]
+    @xbps-src-arch = (xbps-src -h | take 162 | drop 136)[1..]
   }
   if (eq $cmd[-2] '-a') {
     all $xbps-src-arch

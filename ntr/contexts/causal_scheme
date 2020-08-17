@@ -1,0 +1,33 @@
+meta
+  name*:  scheme
+  author: causal agent
+  source: https://causal.agency/bin/scheme.html
+
+color
+  bg:     #14130E
+  fg:     #B7A980
+  cursor: #72694F
+
+color0:   #161510
+color8:   #4C4635
+
+color1:   #A32810
+color9:   #CC3214
+
+color2:   #727A18
+color10:  #8E991E
+
+color3:   #A37720
+color11:  #CC9528
+
+color4:   #3D6266
+color12:  #4C7B7F
+
+color5:   #7A4955
+color13:  #995B6B
+
+color6:   #557A55
+color14:  #6B996B
+
+color7:   #8E8463
+color15:  #CCBC8E

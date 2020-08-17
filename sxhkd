@@ -62,9 +62,9 @@ super + m
 super + y
 	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
-# swap the current node and the biggest node
+# swap the current node and the biggest local window
 super + g
-	bspc node -s biggest.local
+	bspc node -s biggest.local.window
 
 # toggle pointer focus
 super + alt + p
@@ -104,9 +104,9 @@ super + {_,shift + }{h,j,k,l}
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next/previous node in the current desktop
+# focus the next/previous window in the current desktop
 super + {_,shift + }c
-	bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.local.!local.window
 
 # focus the next/previous desktop
 super + bracket{left,right}
@@ -123,8 +123,15 @@ super + {o,i}
 	bspc wm -h on
 
 # focus/send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+{_,shift + }{super,mode_switch} + {1-9,0}
+	bspc {desktop -f,node -d} {DisplayPort,HDMI-A}-3:'^{1-9,10}'
+
+# focus/send to another monitor
+super + minus
+	bspc monitor -f last
+
+super + underscore
+	bspc node -m last --follow
 
 #
 # preselect

@@ -173,7 +173,7 @@ hook global BufCreate .*srcpkgs/.+/template$ %{
 
 hook global BufCreate .*/\.?((sx|xinit)(rc)?|profile) %{ set buffer filetype sh }
 hook global BufCreate .*\.ino %{ set buffer filetype cpp }
-hook global BufCreate .*\.cs %{ addhl buffer/java }
+hook global BufCreate .*\.cs %{ addhl buffer/java ref java }
 hook global BufCreate .*\.rasi %{ set buffer filetype css }
 hook global BufCreate .*\.sccprofile %{ set buffer filetype json }
 

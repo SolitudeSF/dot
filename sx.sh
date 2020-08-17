@@ -10,6 +10,7 @@ disown unclutter &
 disown /usr/libexec/xfce-polkit &
 disown syncthing -no-browser &
 disown polybar -q main &
+disown polybar -q secondary &
 disown devmon -s \
  --exec-on-drive 'notify-send -a udevil -i media-removable "$l" "$f mounted at $d"' \
  --exec-on-unmount 'notify-send -a udevil -i media-removable "$l" "$f unmounted from $d"' \

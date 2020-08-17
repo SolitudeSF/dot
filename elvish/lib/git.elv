@@ -20,7 +20,7 @@ fn refresh-status {
     branch = [(str:split ' ' $data[1])][2]
 
     if (and (> (count $data) 3) (has-prefix $data[3] '# branch.ab')) {
-      ahead behind = (all [(str:split ' ' $data[3])][2:])[1:]
+      ahead behind = (all [(str:split ' ' $data[3])][2..])[1..]
     }
 
     for i $data {

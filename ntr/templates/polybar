@@ -13,6 +13,7 @@ green = <{color2}>
 fg-bright = <{darken:<{color.fg}>:0.3}>
 
 [bar/main]
+monitor = DisplayPort-3
 width = 1914
 height = 24
 offset-x = 3
@@ -20,7 +21,7 @@ offset-y = 3
 padding-right = 1
 module-margin = 1
 modules-left = bspwm xwindow
-modules-center = mpd
+modules-center =
 modules-right = net memory cpu temperature date
 font-0 = Sarasa UI J:size=10;3
 font-1 = 3270Medium Nerd Font Mono:size=15;4
@@ -35,6 +36,27 @@ tray-position = right
 tray-detached = false
 tray-padding = 1
 
+[bar/secondary]
+monitor = HDMI-A-3
+width = 1914
+height = 24
+offset-x = 3
+offset-y = 3
+padding-right = 1
+module-margin = 1
+modules-left = bspwm
+modules-center = mpd
+modules-right = date
+font-0 = Sarasa UI J:size=10;3
+font-1 = 3270Medium Nerd Font Mono:size=15;4
+background = ${color.background}
+foreground = ${color.foreground}
+border-size = 1
+border-color = ${color.fg-bright}
+wm-restack = bspwm
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
 [module/bspwm]
 type = internal/bspwm
 ws-icon-0 = 0;一
@@ -47,6 +69,16 @@ ws-icon-6 = 6;七
 ws-icon-7 = 7;八
 ws-icon-8 = 8;九
 ws-icon-9 = 9;十
+ws-icon-10 = 10;一
+ws-icon-11 = 11;二
+ws-icon-12 = 12;三
+ws-icon-13 = 13;四
+ws-icon-14 = 14;五
+ws-icon-15 = 15;六
+ws-icon-16 = 16;七
+ws-icon-17 = 17;八
+ws-icon-18 = 18;九
+ws-icon-19 = 19;十
 format = <label-state>
 label-focused = %icon%
 label-focused-background = #444
@@ -63,7 +95,7 @@ label-empty =
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:80:…%
+label = %title:0:150:…%
 
 [module/mpd]
 type = internal/mpd

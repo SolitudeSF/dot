@@ -1,8 +1,5 @@
 # Kakoune plugins
 
-["https://github.com/alexherbo2/auto-pairs.kak"]
-files = ["rc/auto-pairs.kak"]
-
 ["https://github.com/alexherbo2/search-highlighter.kak"]
 files = ["rc/search-highlighter.kak"]
 
@@ -11,9 +8,6 @@ files = ["rc/replace-mode.kak"]
 
 ["https://github.com/alexherbo2/word-select.kak"]
 files = ["rc/word-select.kak"]
-
-["https://github.com/alexherbo2/prelude.kak"]
-files = ["rc/prelude.kak", "rc/prelude.sh" ]
 
 ["https://github.com/Delapouite/kakoune-auto-percent"]
 files = ["auto-percent.kak"]
@@ -53,6 +47,9 @@ files = ["readline.kak"]
 
 ["https://gitlab.com/Screwtapello/kakoune-state-save"]
 files = ["state-save.kak"]
+
+["https://github.com/kakoune-editor/kakoune-extra-filetypes"]
+files = ["rc/glsl.kak"]
 
 # mpv plugins
 
