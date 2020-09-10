@@ -2,7 +2,8 @@ use re
 use str
 use util
 
-use github.com/zzamboni/elvish-completions/git
+use github.com/xiaq/edit.elv/compl/git
+git:apply
 
 fn overlap-at [a b]{
   for i [(range 1 (- (count $b) 1))] {

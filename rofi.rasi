@@ -10,8 +10,9 @@ configuration {
         ssh-command: "{terminal} {ssh-client} {host}";
         run-command: "{cmd}";
         run-shell-command: "{terminal} {cmd}";
-        drun-match-fields: "name,generic,exec,categories,comment";
+        drun-match-fields: "name,generic,exec,categories,comment,keywords";
         drun-display-format: "{name} [({comment})]";
+        drun-use-desktop-cache: true;
         matching: "normal";
         theme: "theme";
         display-window: "▣";

@@ -2,6 +2,11 @@ user_pref("general.warnOnAboutConfig", false);
 
 user_pref("browser.chrome.errorReporter.enabled", false);
 
+user_pref("media.ffmpeg.vaapi.enabled", true);
+user_pref("layers.acceleration.force-enabled", true);
+user_pref("gfx.webrender.all", true);
+user_pref("svg.context-properties.content.enabled", true);
+
 user_pref("browser.newtabpage.activity-stream.feeds.section.highlights", false);
 user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);

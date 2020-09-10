@@ -7,6 +7,11 @@ eval %sh{
 
 # Initialization
 
+require-module prelude
+require-module search-highlighter
+require-module word-select
+require-module replace-mode
+
 set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
 set global autoreload yes
@@ -135,6 +140,7 @@ hook global WinCreate .* %{
     readline-enable
     colorcol-enable
     colorcol-refresh-continuous
+    search-highlighter-enable
 }
 
 hook global KakBegin .* %{
@@ -219,7 +225,6 @@ hook global WinSetOption filetype=python %{
 hook global WinSetOption filetype=nim %{
     set buffer gdb_program 'nim-gdb'
     set buffer formatcmd 'nimprettify'
-    set buffer makecmd 'nimble build'
     no-tabs 2
     lsp-engage
 }
