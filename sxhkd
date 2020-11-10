@@ -45,6 +45,11 @@ super + {_,shift + }Print
 {shift,shift + alt,ctrl,ctrl + alt,alt} + Home
 	dunstctl {close,close-all,history-pop,context,action 0}
 
+# Media
+
+XF86Audio{Play,Pause,Prev,Next}
+	mpc {toggle,pause,prev,next}
+
 
 #
 # bspwm hotkeys

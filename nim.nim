@@ -2,7 +2,9 @@ from macros import error
 
 type Compiler = enum gcc = "gcc", clang = "clang"
 
-var cross {.used.} = false
+var cross = block:
+  const cross {.booldefine.} = false
+  cross
 
 proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   let c = findExe s
@@ -12,7 +14,7 @@ proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   switch $compiler & cpp & ".exe", c
   switch $compiler & cpp & ".linkerexe", c
 
-when defined(musl):
+if defined(musl):
   setCompiler "x86_64-linux-musl-gcc"
 
 elif defined(x86):
@@ -45,7 +47,7 @@ elif defined(wasm):
   switch "clang.options.linker", linkerOptions
   switch "clang.cpp.options.linker", linkerOptions
 
-when defined(release) or defined(danger):
+if defined(release) or defined(danger):
   switch "excessiveStackTrace", "off"
   if not cross:
     switch "passC", "-march=native"
@@ -56,10 +58,10 @@ when defined(release) or defined(danger):
   switch "passL", "-fuse-linker-plugin"
   switch "passL", "-s"
 
-when defined(danger):
+if defined(danger):
   switch "panics", "on"
 
-when defined(hotcodereloading):
+if defined(hotcodereloading):
   switch "nimcache", "nimcache"
 elif defined(danger):
   switch "nimcache", "/tmp/nim/" & projectName() & "_d"

@@ -1,4 +1,5 @@
 use str
+use math
 
 fn abort [&code=1 a]{
   echo (styled $a red) >&2
@@ -7,6 +8,13 @@ fn abort [&code=1 a]{
 
 fn set-title [a]{
   print "\e]0;"$a"\e\\"
+}
+
+fn path-abbr [a &len=1]{
+  put (str:split / (dirname $a) | each [x]{
+    l = (count $x)
+    if (eq 0 $l) { put '' } else { put $x[0..(math:min $len $l)] }
+  } | str:join /)/(basename $a)
 }
 
 fn merge-map [a b]{

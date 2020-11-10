@@ -38,12 +38,11 @@ if [ "$GPG_TTY" = /dev/tty1 ]; then
 	GTK2_RC_FILES=$XDG_CONFIG_HOME/gtk-2.0/gtkrc
 	QT_QPA_PLATFORMTHEME=gtk2
 	TERMINAL='kitty -1'
-	MANGOHUD=1
 	_JAVA_AWT_WM_NONREPARENTING=1
 	_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 	export \
 	 _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS QT_QPA_PLATFORMTHEME \
-	 GTK2_RC_FILES TERMINAL MANGOHUD
+	 GTK2_RC_FILES TERMINAL
 
 	exec dbus-launch sx
 fi

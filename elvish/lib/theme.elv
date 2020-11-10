@@ -25,7 +25,7 @@ fn pwd {
   if (or (< (count $tmp) $pwd-limit) (< $max-dir-len 1)) {
     put $tmp
   } else {
-    re:replace '(\.?[^/]{'$max-dir-len'})[^/]*/' '$1/' $tmp
+    util:path-abbr $tmp &len=$max-dir-len
   }
 }
 

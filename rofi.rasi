@@ -12,7 +12,7 @@ configuration {
         run-shell-command: "{terminal} {cmd}";
         drun-match-fields: "name,generic,exec,categories,comment,keywords";
         drun-display-format: "{name} [({comment})]";
-        drun-use-desktop-cache: true;
+        drun-use-desktop-cache: false;
         matching: "normal";
         theme: "theme";
         display-window: "▣";

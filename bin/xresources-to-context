@@ -1,10 +1,10 @@
 #!/usr/bin/env elvish
 use re
 c = [&]
-for l [(all)] {
+all | each [l]{
   if (re:match '^(\*\.?|URxvt\*)' $l) {
-     echo $l | eawk [_ k v]{
-       c[(re:replace '(^\*\.?|^URxvt\*|:$)' '' $k)] = $v
+     put $l | eawk [_ k @v]{
+       if (eq (count $v) 1) { c[(re:replace '(^\*\.?|^URxvt\*|:$)' '' $k)] = $v[0] }
      }
   }
 }

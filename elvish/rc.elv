@@ -11,14 +11,22 @@ fn r [@a]{
   rm -f $f
 }
 
+fn edit-current-command {
+  print $edit:current-command > /tmp/elvish-edit-command-$pid.elv
+  e /tmp/elvish-edit-command-$pid.elv </dev/tty >/dev/tty 2>&1
+  edit:current-command = (slurp </tmp/elvish-edit-command-$pid.elv)[0..-1]
+}
+
 fn alias [cmd @a]{ put [@b]{ (external $cmd) $@a $@b } }
 
 ls~ = (alias lc)
 cat~ = (alias bat --paging=never)
 xr~ = (alias sudo xbps-remove -R)
 o~ = (alias gio open)
+g~ = (alias kitty +kitten hyperlinked_grep)
 
 edit:insert:binding[Ctrl-X] = { edit:-instant:start }
+edit:insert:binding[Alt-E] = { edit-current-command }
 
 edit:abbr = [
   &'.etc'='.local/etc/'

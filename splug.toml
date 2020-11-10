@@ -54,6 +54,9 @@ files = ["state-save.kak"]
 ["https://github.com/kakoune-editor/kakoune-extra-filetypes"]
 files = ["rc/glsl.kak"]
 
+["https://github.com/listentolist/kakoune-fandt"]
+files = ["fandt.kak"]
+
 # mpv plugins
 
 ["https://github.com/ekisu/mpv-webm"]

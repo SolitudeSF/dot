@@ -11,6 +11,7 @@ require-module prelude
 require-module search-highlighter
 require-module word-select
 require-module replace-mode
+require-module fandt
 
 set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
