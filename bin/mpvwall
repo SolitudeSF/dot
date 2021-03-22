@@ -1,5 +1,5 @@
 #!/bin/sh
 pkill xwinwrap
 exec xwinwrap -ni -fs -s -nf -b -un -argb -fdt -- \
-mpv --wid WID --no-terminal --no-audio --no-config --no-border \
+mpv --wid=WID --no-terminal --no-audio --no-config --no-border \
 --x11-bypass-compositor=no --keepaspect=no --loop "$@"

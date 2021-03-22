@@ -19,18 +19,18 @@ fn refresh-status {
     @data = (git --no-optional-locks status --ignore-submodules --porcelain=v2 -b 2>&-)
     branch = [(str:split ' ' $data[1])][2]
 
-    if (and (> (count $data) 3) (has-prefix $data[3] '# branch.ab')) {
+    if (and (> (count $data) 3) (str:has-prefix $data[3] '# branch.ab')) {
       ahead behind = (all [(str:split ' ' $data[3])][2..])[1..]
     }
 
     for i $data {
-      if (or (has-prefix $i 1) (has-prefix $i 2)) {
+      if (or (str:has-prefix $i 1) (str:has-prefix $i 2)) {
         if (eq $i[2] '.') {
           dirty = (+ $dirty 1)
         } else {
           staged = (+ $staged 1)
         }
-      } elif (has-prefix $i '?') {
+      } elif (str:has-prefix $i '?') {
         untracked = (+ $untracked 1)
       }
     }

@@ -6,6 +6,8 @@ var cross = block:
   const cross {.booldefine.} = false
   cross
 
+const strip {.booldefine.} = true
+
 proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
   let c = findExe s
   let cpp = (if cpp: ".cpp" else: "")
@@ -56,7 +58,8 @@ if defined(release) or defined(danger):
   switch "passC", "-flto"
   switch "passL", "-flto"
   switch "passL", "-fuse-linker-plugin"
-  switch "passL", "-s"
+  if strip:
+    switch "passL", "-s"
 
 if defined(danger):
   switch "panics", "on"
@@ -70,5 +73,6 @@ elif defined(release):
 else:
   switch "nimcache", "/tmp/nim/" & projectName()
 
+switch "spellsuggest"
 switch "styleCheck", "hint"
 switch "hint", "Dependency:on"

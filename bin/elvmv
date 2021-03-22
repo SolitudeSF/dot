@@ -1,7 +1,9 @@
 #!/usr/bin/env elvish
 
+use path
+
 fn list-items [a]{
-  if (-is-dir $a) { put $a/* } else { put $a }
+  if (path:is-dir $a) { put $a/* } else { put $a }
 }
 
 items = []
@@ -49,7 +51,7 @@ cat $file | each [l]{
   if (eq $l '') {
     rm $items[$i]
   } elif (not-eq $l $items[$i]) {
-    mkdir -p (path-dir $l)
+    mkdir -p (path:dir $l)
     mv $items[$i] $l
   }
   i = (+ $i 1)

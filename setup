@@ -34,7 +34,6 @@ zathura
 neofetch
 gtk
 user-dirs
-pulse
 fontconfig'
 }
 
@@ -132,9 +131,6 @@ for arg; do
 			_install gtk/settings.ini "$CONF/gtk-3.0/settings.ini";;
 		user-dirs)
 			_install user-dirs "$CONF/user-dirs.dirs";;
-		pulse)
-			_install pulse/default.pa "$CONF/pulse/default.pa"
-			_install pulse/daemon.conf "$CONF/pulse/daemon.conf";;
 		fontconfig)
 			_install fontconfig "$CONF/fontconfig/fonts.conf";;
 		xonotic)

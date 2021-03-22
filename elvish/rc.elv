@@ -36,9 +36,7 @@ edit:abbr = [
   use github.com/xiaq/edit.elv/smart-matcher
   use theme
   use completers
-  use autopairs
   smart-matcher:apply
-  autopairs:enable
   util:add-before-readline {
     util:set-title (tilde-abbr $pwd)
   }
@@ -50,4 +48,3 @@ edit:abbr = [
 
 -override-wcwidth 🦀 2
 E:GPG_TTY = (tty)
-E:NIMPH_TOKEN = (cat ~/sns/github.key)

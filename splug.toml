@@ -1,8 +1,5 @@
 # Kakoune plugins
 
-["https://github.com/alexherbo2/prelude.kak"]
-files = ["rc/prelude.kak", "rc/prelude.sh"]
-
 ["https://github.com/alexherbo2/search-highlighter.kak"]
 files = ["rc/search-highlighter.kak"]
 
@@ -30,6 +27,9 @@ files = ["sudo-write.kak"]
 ["https://github.com/occivink/kakoune-find"]
 files = ["find.kak"]
 
+["https://github.com/occivink/kakoune-buffer-switcher"]
+files = ["buffer-switcher.kak"]
+
 ["https://github.com/occivink/kakoune-gdb"]
 files = ["gdb.kak", "gdb-output-handler.perl"]
 
@@ -39,8 +39,8 @@ files = ["vertical-selection.kak"]
 ["https://github.com/occivink/kakoune-sort-selections"]
 files = ["sort-selections.kak"]
 
-["https://gitlab.com/notramo/elvish.kak"]
-files = ["elvish.kak"]
+# ["https://gitlab.com/notramo/elvish.kak"]
+# files = ["elvish.kak"]
 
 ["https://github.com/andreyorst/smarttab.kak"]
 files = ["rc/smarttab.kak"]
@@ -50,6 +50,9 @@ files = ["readline.kak"]
 
 ["https://gitlab.com/Screwtapello/kakoune-state-save"]
 files = ["state-save.kak"]
+
+["https://gitlab.com/Screwtapello/kakoune-repl-buffer"]
+files = ["repl-buffer.kak", "repl-buffer-input"]
 
 ["https://github.com/kakoune-editor/kakoune-extra-filetypes"]
 files = ["rc/glsl.kak"]

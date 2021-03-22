@@ -1,5 +1,6 @@
 use re
 use str
+use path
 use util
 
 use github.com/xiaq/edit.elv/compl/git
@@ -10,6 +11,10 @@ fn overlap-at [a b]{
     if (has-value $a $b[$i]) { put $i; return }
   }
   put $false
+}
+
+fn at-command [cmd]{
+  == (count $cmd) 2
 }
 
 fn prefix-completer [p a]{
@@ -25,14 +30,14 @@ fn prefix-completer [p a]{
 }
 
 fn complete-directory [a]{
-  dir = (path-dir $a)/
-  if (has-prefix $a $dir) {
+  dir = (path:dir $a)/
+  if (str:has-prefix $a $dir) {
     a = (str:replace &max=1 $dir '' $a)
   } else {
     dir = ''
   }
   for x [$dir*[match-hidden][nomatch-ok]$a*[match-hidden][nomatch-ok]] {
-    if (-is-dir $x) { edit:complex-candidate &code-suffix=/ &style='blue;bold' $x }
+    if (path:is-dir $x) { edit:complex-candidate &code-suffix=/ $x }
   }
 }
 
@@ -44,7 +49,7 @@ edit:completion:arg-completer[cd] = [@cmd]{
 
 edit:completion:arg-completer[kak] = [@cmd]{
   if (eq $cmd[-2] -c) {
-    kak -l
+    kak -l | each [x]{ if (not-eq $x[-1] ')') { put $x } }
   } else {
     edit:complete-filename $cmd[-1]
   }
@@ -69,7 +74,7 @@ kitty-kittens = $nil
 edit:completion:arg-completer[kitty] = [@cmd]{
   if (not $kitty-cmds) {
     @kitty-cmds = (kitty @ --help | peach [x]{ if (re:match '^  \w' $x) { put $x[2..] } })
-    @kitty-kittens = (pwd=/usr/lib/kitty/kittens fd main.py | peach [x]{ path-dir $x })
+    @kitty-kittens = (pwd=/usr/lib/kitty/kittens fd main.py | peach [x]{ path:dir $x })
   }
   if (has-value [kitten '+kitten'] $cmd[-2]) {
     all $kitty-kittens
@@ -91,7 +96,7 @@ edit:completion:arg-completer[sv] = [@cmd]{
 
 edit:completion:arg-completer[man] = [@cmd]{
   pwd=/bedrock/cross/man put man*/* | each [a]{
-    re:replace &literal=$true '(\.\dp?)?(\.gz)?$' '' (path-base $a)
+    re:replace &literal=$true '(\.\dp?)?(\.gz)?$' '' (path:base $a)
   }
 }
 
@@ -144,7 +149,7 @@ neofetch-opts = $nil
 edit:completion:arg-completer[neofetch] = [@cmd]{
   if (not $neofetch-opts) {
     neofetch-opts = [(_ = ?(neofetch --help | each [x]{
-      if (has-prefix $x '    --') {
+      if (str:has-prefix $x '    --') {
         put $x | eawk [_ a @_]{ put $a }
       }
     })) --logo -L -v -vv]
@@ -167,7 +172,7 @@ edit:completion:arg-completer[bspc] = [@cmd]{
 }
 
 edit:completion:arg-completer[ntr] = [@cmd]{
-  if (not (has-prefix $cmd[-1] '-')) {
+  if (not (str:has-prefix $cmd[-1] '-')) {
     pwd=$E:XDG_CONFIG_HOME/ntr/contexts put **
   }
 }
@@ -187,13 +192,12 @@ edit:completion:arg-completer[mpv] = [@cmd]{
 }
 
 edit:completion:arg-completer[update] = [@cmd]{
-  update | each [x]{ if (has-prefix $x "    ") { put $x[4..] } }
+  update | each [x]{ if (str:has-prefix $x "    ") { put $x[4..] } }
 }
 
 edit:completion:arg-completer[xr] = [@cmd]{
   xpkg -m
   xpkg -O | peach [x]{ edit:complex-candidate $x }
-  # xpkg -O | peach [x]{ edit:complex-candidate &style='red;inverse' $x }
 }
 
 edit:completion:arg-completer[xi] = [@cmd]{
@@ -225,7 +229,7 @@ edit:completion:arg-completer[strat] = [@cmd]{
   if (not $has-strat) {
     all $strata
   } else {
-    edit:complete-sudo (all $cmd[(put $has-strat):])
+    edit:complete-sudo (all $cmd[$has-strat..])
   }
 }
 
@@ -233,10 +237,9 @@ brl-cmds = $nil
 
 edit:completion:arg-completer[brl] = [@cmd]{
   if (not $brl-cmds) {
-    @brl-cmds = (brl -h | take 36 | drop 5 | each [x]{ put (re:find &max=1 '^  \w+' $x)[text][2:] })
+    @brl-cmds = (brl -h | take 36 | drop 5 | each [x]{ put (re:find &max=1 '^  \w+' $x)[text][2..] })
   }
-  len = (count $cmd)
-  if (== $len 2) {
+  if (at-command $cmd) {
     all $brl-cmds
   } else {
     c = $cmd[1]
@@ -249,7 +252,7 @@ edit:completion:arg-completer[brl] = [@cmd]{
 }
 
 edit:completion:arg-completer[tam] = [@cmd]{
-  if (== (count $cmd) 2) {
+  if (at-command $cmd) {
     put install uninstall enable disable update list query search
   } else {
     c = $cmd[1]
@@ -264,6 +267,23 @@ edit:completion:arg-completer[tam] = [@cmd]{
     }
   }
 }
+
+edit:completion:arg-completer[handlr] = [@cmd]{
+  if (at-command $cmd) {
+    put get set add unset launch open list
+  } elif (and (== (count $cmd) 3) (has-value [get set add unset launch] $cmd[-2])) {
+    handlr autocomplete -m
+  } elif (and (== (count $cmd) 4) (has-value [set add] $cmd[-3])) {
+    handlr autocomplete -d | each [x]{
+      desktop name = (str:split "\t" $x)
+      edit:complex-candidate $desktop &display=$desktop' '$name
+    }
+  } else {
+    edit:complete-filename $@cmd
+  }
+}
+
+
 
 edit:completion:arg-completer[promotescript] = [@cmd]{
   pwd=~/.local/bin fd -t f

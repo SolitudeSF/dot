@@ -7,7 +7,6 @@ eval %sh{
 
 # Initialization
 
-require-module prelude
 require-module search-highlighter
 require-module word-select
 require-module replace-mode
@@ -17,7 +16,7 @@ set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
 set global autoreload yes
 set global grepcmd 'rg -iHL --column'
-set global modelinefmt '%opt{git_branch} %val{bufname}
+set global modelinefmt '%opt{git_branch_str}%val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
 
@@ -28,13 +27,6 @@ alias global g grep
 
 face global LineNumbersWrapped black
 
-addhl global/number-lines number-lines -hlcursor -separator ' '
-addhl global/ruler column 100 default,rgb:303030
-addhl global/trailing-whitespace regex '\h+$' 0:default,red
-addhl global/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
-addhl global/matching-brackets show-matching
-addhl global/wrap wrap -word -indent -marker ''
-
 # Keybinds
 
 map global normal <space> ,
@@ -44,8 +36,8 @@ map global normal -docstring 'comment line' '#' ': comment-line<ret>'
 map global normal -docstring 'comment block' '<a-#>' ': comment-block<ret>'
 map global normal -docstring 'delete to end of line' D <a-l>d
 map global normal -docstring 'yank to end of line' Y <a-l>
-map global user -docstring 'replay macro' . q
-map global user -docstring 'record macro' <a-.> Q
+map global normal -docstring 'replay macro' , q
+map global normal -docstring 'record macro' <a-,> Q
 
 map global normal w ': word-select-next-word<ret>'
 map global normal <a-w> ': word-select-next-big-word<ret>'
@@ -54,16 +46,15 @@ map global normal <a-q> ': word-select-previous-big-word<ret>'
 map global normal Q B
 map global normal <a-Q> <a-B>
 
-map global user -docstring 'replace mode' r ': enter-replace-mode<ret>'
-
-map global user -docstring 'change directory' c ': enter-user-mode cd<ret>'
+map global user -docstring 'replace mode' <a-r> ': enter-replace-mode<ret>'
+map global user -docstring 'change directory' <a-c> ': enter-user-mode cd<ret>'
 
 map global user -docstring 'expand selection' e ': expand<ret>'
 map global user -docstring 'expand repeat' E ': expand-repeat<ret>'
 
 map global normal -docstring 'buffers…' b ': enter-buffers-mode<ret>'
-map global normal -docstring 'buffers (lock)…' B ': enter-user-mode -lock buffers<ret>'
-map global normal -docstring 'select buffer' <a-b> ': explore-buffers<ret>'
+map global normal -docstring 'buffers (lock)…' <a-b> ': enter-user-mode -lock buffers<ret>'
+map global normal -docstring 'buffer switcher' B ': buffer-switcher<ret>'
 
 declare-user-mode anchor
 map global normal ';' ': enter-user-mode anchor<ret>'
@@ -74,14 +65,12 @@ map global anchor -docstring 'reduce to anchor' a '<a-;>;'
 map global anchor -docstring 'reduce to cursor' c ';'
 map global anchor -docstring 'select cursor and anchor' s '<a-S>'
 
-declare-user-mode clipboard
-map global normal ',' ': enter-user-mode clipboard<ret>'
-map global clipboard -docstring 'clip-paste after' p '<a-!>xsel -b -o<ret>'
-map global clipboard -docstring 'clip-paste before' P '!xsel -b -o<ret>'
-map global clipboard -docstring 'clip-paste replace' R '|xsel -b -o<ret>'
-map global clipboard -docstring 'clip-yank' y '<a-|>xclip -i -f -sel c<ret>'
-map global clipboard -docstring 'clip-cut' d '<a-|>xclip -i -f -sel c<ret><a-d>'
-map global clipboard -docstring 'clip-cut -> insert mode' c '<a-|>xclip -i -f -sel c<ret><a-c>'
+map global user -docstring 'clip-paste after' p '<a-!>xsel -b -o<ret>'
+map global user -docstring 'clip-paste before' P '!xsel -b -o<ret>'
+map global user -docstring 'clip-paste replace' R '|xsel -b -o<ret>'
+map global user -docstring 'clip-yank' y '<a-|>xclip -i -f -sel c<ret>'
+map global user -docstring 'clip-cut' d '<a-|>xclip -i -f -sel c<ret><a-d>'
+map global user -docstring 'clip-cut -> insert mode' c '<a-|>xclip -i -f -sel c<ret><a-c>'
 
 # Functions
 
@@ -91,14 +80,14 @@ def type -params 1 -docstring 'Set buffer filetype' %{
 
 def lint-engage -docstring 'Enable linting' %{
     lint-enable
-    map global user -docstring "next error" l ': lint-next-error<ret>'
-    map global user -docstring "previous error" L ': lint-previous-error<ret>'
+    map buffer user -docstring "next error" l ': lint-next-error<ret>'
+    map buffer user -docstring "previous error" L ': lint-previous-error<ret>'
 }
 
 def lsp-engage -docstring 'Enable language server' %{
     lsp-enable
     lsp-auto-hover-enable
-    map global user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
+    map buffer user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
 }
 
 def lsp-semantic-highlighting -docstring 'Enable semantic highlighting' %{
@@ -134,14 +123,33 @@ def clean-trailing-whitespace -docstring 'Remove trailing whitespace' %{
     try %{ exec -draft '%s\h+$<ret>d' }
 }
 
+def -hidden -docstring \
+'select a word under cursor, or add cursor on next occurrence of current selection' \
+select-or-add-cursor %{
+    try %{
+        exec "<a-k>\A.\z<ret>"
+        exec -save-regs '' "_<a-i>w*"
+    } catch %{
+        exec -save-regs '' "_*<s-n>"
+    } catch nop
+}
+
 # Hooks
 
 hook global WinCreate .* %{
+    addhl buffer/number-lines number-lines -hlcursor -separator ' '
+    addhl buffer/ruler column 100 default,rgb:303030
+    addhl buffer/trailing-whitespace regex '\h+$' 0:default,red
+    addhl buffer/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
+    addhl buffer/matching-brackets show-matching
+    addhl buffer/wrap wrap -word -indent -marker ''
+
     smarttab
     readline-enable
     colorcol-enable
     colorcol-refresh-continuous
-    search-highlighter-enable
+
+    hook window NormalIdle .* refresh-git-branch
 }
 
 hook global KakBegin .* %{
@@ -185,6 +193,10 @@ hook global BufCreate .*\.rasi %{ set buffer filetype css }
 hook global BufCreate .*\.sccprofile %{ set buffer filetype json }
 
 # Filetype settings
+
+hook global WinSetOption filetype=kak %{
+    no-tabs 2
+}
 
 hook global WinSetOption filetype=sh %{
     set buffer lintcmd 'shellcheck --norc -x -f gcc'

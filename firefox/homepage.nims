@@ -1,7 +1,11 @@
 import karax/[karaxdsl, vdom]
 import homepageData
 
-func homepage: VNode =
+type
+  Link = tuple[url, label: string]
+  Category = tuple[name: string, items: seq[Link]]
+
+func homepage(categories: openArray[Category]): VNode =
   result = buildHtml(html(lang = "en")):
     head:
       meta(charset = "UTF-8")
@@ -12,13 +16,13 @@ func homepage: VNode =
       link(rel = "stylesheet", `type` = "text/css", href = "homepage.css")
     body:
       main:
-        for (category, items) in links:
+        for (name, items) in categories:
           section:
             header:
-              text category
-            for (l, t) in items:
+              text name
+            for (url, label) in items:
               tdiv(class = "item"):
-                a(href = l):
-                  text t
+                a(href = url):
+                  text label
 
-echo "<!DOCTYPE html>\n", homepage()
+echo "<!DOCTYPE html>\n", homepage(links)

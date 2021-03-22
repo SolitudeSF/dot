@@ -27,7 +27,7 @@ super + Return
 	exec kitty -1
 
 super + shift + {m,v}
-	exec {mpv "$(xclip -sel c -o)",pavucontrol-qt}
+	exec {mpv "$(xclip -sel c -o)",pavucontrol}
 
 super + shift + {n,p}
 	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \

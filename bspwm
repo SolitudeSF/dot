@@ -16,10 +16,7 @@ bspc rule -a Firefox desktop=^2
 bspc rule -a mpv state=floating
 bspc rule -a Peek state=floating
 bspc rule -a kittyfloat state=floating
-bspc rule -a TelegramDesktop desktop=^3
-bspc rule -a Hexchat desktop=^3
-bspc rule -a discord desktop=^13
-bspc rule -a Ripcord desktop=^13
-bspc rule -a Element desktop=^13
-bspc rule -a mirage desktop=^13
 bspc rule -a Steam desktop=^4 state=floating
+
+disown polybar -q main &
+disown polybar -q secondary &
