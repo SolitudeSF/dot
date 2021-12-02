@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
 
@@ -85,11 +85,25 @@
 			<string>monospace</string>
 		</test>
 		<edit name="family">
-			<string>Iosevka SS04</string>
+			<string>Iosevka</string>
 		</edit>
 		<edit name="hintstyle" mode="assign">
 			<const>hintslight</const>
 		</edit>
+	</match>
+
+	<match target="font">
+	<test name="family" compare="eq" ignore-blanks="true">
+		<string>Iosevka</string>
+	</test>
+	<edit name="fontfeatures" mode="append">
+		<string>cv75 1</string>
+		<string>cv77 1</string>
+		<string>cv80 1</string>
+		<string>cv82 6</string>
+		<string>cv87 1</string>
+		<string>cv93 3</string>
+	</edit>
 	</match>
 
 </fontconfig>

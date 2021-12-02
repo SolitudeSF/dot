@@ -102,9 +102,9 @@ for arg; do
 			nim e -p:$HOME/sns/ firefox/homepage.nims >"$HOME/.mozilla/firefox/homepage.html"
 			_render homepage.css "$HOME/.mozilla/firefox/homepage.css";;
 		elvish)
-			_install elvish/rc.elv "$HOME/.elvish/rc.elv"
+			_install elvish/rc.elv "$CONF/elvish/rc.elv"
 			for i in elvish/lib/* ; do
-				_install "$i" "$HOME/.elvish/lib/$(basename "$i")"
+				_install "$i" "$CONF/elvish/lib/$(basename "$i")"
 			done;;
 		neofetch)
 			_install neofetch.sh "$CONF/neofetch/config.conf";;

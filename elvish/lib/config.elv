@@ -1,15 +1,15 @@
-conf = $E:XDG_CONFIG_HOME
-dot = $E:DOTS_DIR
-ntrtmp = $conf/ntr/templates
+var conf = $E:XDG_CONFIG_HOME
+var dot = $E:DOTS_DIR
+var ntrtmp = $conf/ntr/templates
 
-fn select [@a]{
+fn select {|@a|
   fd . -L -t f $@a | sk --height=35% --layout=reverse -m
 }
 
-fn edit [&type='' @a]{
-  settype = []
+fn edit {|&type='' @a|
+  var settype = []
   if (not-eq $type '') {
-    settype = ['-e' 'set buffer filetype '$type]
+    set settype = ['-e' 'set buffer filetype '$type]
   }
   kak $@settype $@a
 }

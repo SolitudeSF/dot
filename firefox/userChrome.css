@@ -1,6 +1,6 @@
 /* Hide tabbar */
 #TabsToolbar {
-  visibility: collapse !important;
+  display: none !important;
 }
 
 #sidebar {

@@ -18,6 +18,8 @@ user_pref("browser.safebrowsing.phishing.enabled", false);
 
 user_pref("browser.search.suggest.enabled", false);
 
+user_pref("browser.compactmode.show", true);
+
 user_pref("extensions.formautofill.addresses.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 
@@ -28,6 +30,6 @@ user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.pocket.api", "");
 user_pref("extensions.pocket.site", "");
 
-user_pref("font.name.monospace.x-western", "Iosevka SS04");
+user_pref("font.name.monospace.x-western", "Iosevka");
 user_pref("font.name.sans-serif.x-western", "Inter UI");
 user_pref("font.name.serif.x-western", "Inter UI");

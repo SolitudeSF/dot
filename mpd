@@ -6,12 +6,10 @@ state_file              "~/.local/share/mpd/state"
 sticker_file            "~/.local/share/mpd/sticker.sql"
 playlist_directory      "~/.local/share/mpd/playlists"
 log_level               "default"
-password                "password@read,add,control,admin"
-default_permissions     "read,add,control,admin"
-user                    "solitude"
+default_permissions     "read,add,control,player,admin"
 bind_to_address         "127.0.0.1"
+bind_to_address         "192.168.1.111"
 bind_to_address         "~/.local/share/mpd/socket"
-port                    "6600"
 auto_update             "yes"
 # replaygain              "album"
 # replaygain_preamp       "0"
@@ -32,20 +30,20 @@ input {
 }
 
 audio_output {
-    type "pulse"
-    name "mpd pulse"
+    type "pipewire"
+    name "pipewire"
 }
 
 audio_output {
     type   "fifo"
-    name   "mpd fifo"
+    name   "fifo"
     path   "/tmp/mpd.fifo"
     format "48000:16:2"
 }
 
 audio_output {
     type        "httpd"
-    name        "mpd soryegeton"
+    name        "soryegeton"
     encoder     "opus"
     port        "8000"
     quality     "0"

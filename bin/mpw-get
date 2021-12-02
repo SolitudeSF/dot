@@ -1,7 +1,7 @@
 #!/usr/bin/env elvish
 name = (cat ~/sns/mpwname)
 t = ""
-if (eq 0 (count $args)) {
+if (== 0 (count $args)) {
   @sites = (cat $E:XDG_CONFIG_HOME/mpwc/$name.mpsites)
   t = (echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 20 -columns 1)
 } else {

@@ -1,6 +1,7 @@
-cursor     <{color.cursor}>
 foreground <{color.fg}>
 background <{color.bg}>
+cursor     <{color.cursor}>
+cursor_text_color <{color.bg}>
 
 color0  <{color0}>
 color1  <{color1}>
@@ -19,12 +20,12 @@ color13 <{color13}>
 color14 <{color14}>
 color15 <{color15}>
 
-mark1_foreground black
-mark1_background #98d3cb
-mark2_foreground black
-mark2_background #f2dcd3
-mark3_foreground black
-mark3_background #f274bc
+mark1_foreground <{color.bg}>
+mark1_background <{color1}>
+mark2_foreground <{color.bg}>
+mark2_background <{color4}>
+mark3_foreground <{color.bg}>
+mark3_background <{color5}>
 
 selection_foreground <{color.bg}>
 selection_background <{color.fg}>
@@ -38,4 +39,4 @@ inactive_tab_background #999
 url_color #0087BD
 active_border_color #30302f
 inactive_border_color #30302f
-bell_border_color #ff5a00
+bell_border_color <{color1}>

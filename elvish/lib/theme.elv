@@ -1,31 +1,57 @@
-use re
 use git
+use math
 use util
-use timer
 
-edit:rprompt-persistent = $true
-edit:prompt-stale-threshold = 0.1
-edit:rprompt-stale-transform = [x]{ put ⏳$x }
-edit:-prompt-eagerness = 5
-pwd-limit = 20
-max-dir-len = 1
-basesym = ▲
+set edit:rprompt-persistent = $true
+set edit:prompt-stale-threshold = 0.1
+set edit:rprompt-stale-transform = {|x| put ⏳$x }
+set edit:-prompt-eagerness = 5
+
+var pwd-limit = 20
+var max-dir-len = 1
+var basesym = ▲
 
 if (or (has-env SSH_CLIENT) (has-env SSH_TTY)) {
-  basesym = ◆
+  set basesym = ◆
 }
 
 fn sym {
-  o = (e = ?(getprojecticon))
+  var o = (var e = ?(getprojecticon))
   if $e { put $o } else { put $basesym }
 }
 
 fn pwd {
-  tmp = (tilde-abbr $pwd)
+  var tmp = (tilde-abbr $pwd)
   if (or (< (count $tmp) $pwd-limit) (< $max-dir-len 1)) {
     put $tmp
   } else {
     util:path-abbr $tmp &len=$max-dir-len
+  }
+}
+
+fn duration {
+  var delta = (exact-num (math:round $edit:command-duration))
+  var s = 0
+  var m = 0
+  var h = 0
+
+  if (> $delta 3600) {
+    set s = (% $delta 60)
+    set m = (/ (- (% $delta 3600) $s) 60)
+    set h = (/ (- $delta (* $m 60) $s) 3600)
+  } elif (> $delta 60) {
+    set s = (% $delta 60)
+    set m = (/ (- $delta $s) 60)
+  } else {
+    set s = $delta
+  }
+
+  if (> $h 0) {
+    styled ' ⏱'$h':'(util:pad $m 2 &with=0)':'(util:pad $s 2 &with=0) bold
+  } elif (> $m 0) {
+    styled ' ⏱'$m':'(util:pad $s 2 &with=0) bold
+  } elif (> $s 5) {
+    styled ' ⏱'$s bold
   }
 }
 
@@ -51,15 +77,15 @@ fn git {
   }
 }
 
-edit:prompt = {
+set edit:prompt = {
   put "\n "(sym)' '
   styled (pwd)'  ' cyan
 }
 
-edit:rprompt = {
+set edit:rprompt = {
   if (not-eq $num-bg-jobs 0) {
     put ' '$num-bg-jobs
   }
-  timer:display
+  duration
   git
 }

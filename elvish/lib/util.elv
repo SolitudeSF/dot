@@ -1,39 +1,39 @@
 use str
 use math
 
-fn abort [&code=1 a]{
+fn abort {|&code=1 a|
   echo (styled $a red) >&2
   exit $code
 }
 
-fn set-title [a]{
+fn set-title {|a|
   print "\e]0;"$a"\e\\"
 }
 
-fn path-abbr [a &len=1]{
-  put (str:split / (dirname $a) | each [x]{
-    l = (count $x)
+fn path-abbr {|a &len=1|
+  put (str:split / (dirname $a) | each {|x|
+    var l = (count $x)
     if (eq 0 $l) { put '' } else { put $x[0..(math:min $len $l)] }
   } | str:join /)/(basename $a)
 }
 
-fn merge-map [a b]{
-  keys $b | each [k]{ a[$k] = $b[$k] }
+fn merge-map {|a b|
+  keys $b | each {|k| set a[$k] = $b[$k] }
   put $a
 }
 
-fn index-of [a b]{
-  r = 0
+fn index-of {|a b|
+  var r = 0
   for val $a {
     if (eq $val $b) { put $r; return }
-    r = (+ $r 1)
+    set r = (+ $r 1)
   }
   float64 -1
 }
 
-fn pad [a b &with=' ' &left=$true]{
-  a = (to-string $a)
-  p = (repeat (- $b (count $a)) $with | str:join '')
+fn pad {|a b &with=' ' &left=$true|
+  set a = (to-string $a)
+  var p = (repeat (- $b (count $a)) $with | str:join '')
   if $left {
     put $p$a
   } else {
@@ -41,18 +41,18 @@ fn pad [a b &with=' ' &left=$true]{
   }
 }
 
-fn add-before-readline [@hooks]{
+fn add-before-readline {|@hooks|
   for hook $hooks {
     if (not (has-value $edit:before-readline $hook)) {
-      edit:before-readline = [ $@edit:before-readline $hook ]
+      set edit:before-readline = [ $@edit:before-readline $hook ]
     }
   }
 }
 
-fn add-after-readline [@hooks]{
+fn add-after-readline {|@hooks|
   for hook $hooks {
     if (not (has-value $edit:after-readline $hook)) {
-      edit:after-readline = [ $@edit:after-readline $hook ]
+      set edit:after-readline = [ $@edit:after-readline $hook ]
     }
   }
 }

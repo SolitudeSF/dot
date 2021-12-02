@@ -3,6 +3,7 @@
 eval %sh{
     kak-lsp --kakoune -s $kak_session
     colorcol
+    indentguide
 }
 
 # Initialization
@@ -148,6 +149,9 @@ hook global WinCreate .* %{
     readline-enable
     colorcol-enable
     colorcol-refresh-continuous
+    indentguide-enable
+    indentguide-refresh-continuous
+    mark-show-enable
 
     hook window NormalIdle .* refresh-git-branch
 }

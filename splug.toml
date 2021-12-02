@@ -1,14 +1,5 @@
 # Kakoune plugins
 
-["https://github.com/alexherbo2/search-highlighter.kak"]
-files = ["rc/search-highlighter.kak"]
-
-["https://github.com/alexherbo2/replace.kak"]
-files = ["rc/replace-mode.kak"]
-
-["https://github.com/alexherbo2/word-select.kak"]
-files = ["rc/word-select.kak"]
-
 ["https://github.com/Delapouite/kakoune-auto-percent"]
 files = ["auto-percent.kak"]
 
@@ -51,6 +42,10 @@ files = ["readline.kak"]
 ["https://gitlab.com/Screwtapello/kakoune-state-save"]
 files = ["state-save.kak"]
 
+["https://gitlab.com/Screwtapello/kakoune-mark-show"]
+branch = "main"
+files = ["mark-show.kak"]
+
 ["https://gitlab.com/Screwtapello/kakoune-repl-buffer"]
 files = ["repl-buffer.kak", "repl-buffer-input"]
 
@@ -62,14 +57,11 @@ files = ["fandt.kak"]
 
 # mpv plugins
 
-["https://github.com/ekisu/mpv-webm"]
-files = ["build/webm.lua"]
-
-["https://github.com/mpv-player/mpv"]
-files = ["TOOLS/lua/autoload.lua"]
-
 ["https://github.com/rossy/mpv-repl"]
 files = ["repl.lua"]
+
+["https://github.com/davidde/mpv-autosub"]
+files = ["autosub.lua"]
 
 ["https://github.com/mfcc64/mpv-scripts"]
 files = ["visualizer.lua"]

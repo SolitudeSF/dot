@@ -76,3 +76,13 @@ else:
 switch "spellsuggest"
 switch "styleCheck", "hint"
 switch "hint", "Dependency:on"
+switch "processing", "filenames"
+
+# Way of Nim
+# --gc:orc
+# --experimental:strictEffects
+--experimental:unicodeOperators
+--experimental:overloadableEnums
+--define:nimPreviewDotLikeOps
+--define:nimPreviewFloatRoundtrip
+--define:nimStrictDelete

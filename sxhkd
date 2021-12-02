@@ -26,12 +26,12 @@ alt + Tab
 super + Return
 	exec kitty -1
 
-super + shift + {m,v}
-	exec {mpv "$(xclip -sel c -o)",pavucontrol}
+super + shift + {m,v,p,e}
+	exec {mpv "$(xclip -sel c -o)",pavucontrol,gnome-system-monitor,pcmanfm}
 
-super + shift + {n,p}
+super + shift + n
 	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \
-		{ncmpcpp,htop}
+		ncmpcpp
 
 super + Insert
 	carpalx-helper
@@ -47,8 +47,11 @@ super + {_,shift + }Print
 
 # Media
 
-XF86Audio{Play,Pause,Prev,Next}
-	mpc {toggle,pause,prev,next}
+XF86Tools
+	mpc toggle
+
+XF86Audio{LowerVolume,RaiseVolume,Mute}
+	mpc {prev,next,stop}
 
 
 #

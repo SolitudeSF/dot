@@ -1,9 +1,6 @@
 configuration {
         modi: "run,drun";
-        width: 55;
-        lines: 25;
-        columns: 2;
-        font: "Iosevka SS04 12";
+        font: "Iosevka 12";
         show-icons: true;
         terminal: "kitty -1";
         ssh-client: "ssh";
@@ -12,11 +9,12 @@ configuration {
         run-shell-command: "{terminal} {cmd}";
         drun-match-fields: "name,generic,exec,categories,comment,keywords";
         drun-display-format: "{name} [({comment})]";
-        drun-use-desktop-cache: false;
+        drun-use-desktop-cache: true;
         matching: "normal";
-        theme: "theme";
         display-window: "▣";
         display-run: "▲";
         display-ssh: "◆";
         display-drun: "▶";
 }
+
+@theme "theme"
