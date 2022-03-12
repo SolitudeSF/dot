@@ -36,6 +36,7 @@ set edit:abbr = [
 {
   use theme
   use completers
+  use smart-matcher
   util:add-before-readline {
     util:set-title (tilde-abbr $pwd)
   }

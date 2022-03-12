@@ -10,5 +10,4 @@ disown sxhkd &
 disown unclutter &
 disown /usr/libexec/xfce-polkit &
 disown syncthing -no-browser &
-disown devmon -s &
 exec bspwm

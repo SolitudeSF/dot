@@ -175,8 +175,8 @@ hook global BufWritePre .* %{ nop %sh{
 }}
 
 eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf %s "
-    hook global BufWritePost .* %{ git show-diff }
-    hook global BufReload .* %{ git show-diff }
+    hook global BufWritePost .* %{ diff-git }
+    hook global BufReload .* %{ diff-git }
 "}
 
 hook global ModuleLoaded kitty %{

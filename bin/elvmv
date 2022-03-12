@@ -2,59 +2,62 @@
 
 use path
 
-fn list-items [a]{
+fn list-items {|a|
   if (path:is-dir $a) { put $a/* } else { put $a }
 }
 
-items = []
+fn get-editor {
+  if (has-env VISUAL) {
+    put $E:VISUAL
+  } elif (has-env EDITOR) {
+    put $E:EDITOR
+  } else {
+    put vi
+  }
+}
+
+var items = []
 
 if (== (count $args) 0) {
-  items = [./*]
+  set items = [./*]
 } else {
   for i $args {
     if (eq $i '-') {
-      each [x]{ items = [$@items (list-items $x)] }
+      each {|x| set items = [$@items (list-items $x)] }
     } else {
-      items = [$@items (list-items $i)]
+      set items = [$@items (list-items $i)]
     }
   }
 }
 
-file = (mktemp -p /tmp elvmvXXXXX)
+var file = (mktemp -p /tmp elvmvXXXXX)
 print > $file
 
 for i $items {
   echo $i >> $file
 }
 
-editor = vi
-if (has-env VISUAL) {
-  editor = $E:VISUAL
-} elif (has-env EDITOR) {
-  editor = $E:EDITOR
-}
-
-fn abort [&code=1 a]{
+fn abort {|&code=1 a|
   echo $a >&2
   rm $file
   exit $code
 }
 
 try {
-  (external $editor) $file
+  (external (get-editor)) $file
 } except {
   abort 'Editor exited with error. Aborting...'
 }
 
-i = 0
-cat $file | each [l]{
+var i = 0
+cat $file | each {|l|
   if (eq $l '') {
     rm $items[$i]
   } elif (not-eq $l $items[$i]) {
     mkdir -p (path:dir $l)
     mv $items[$i] $l
   }
-  i = (+ $i 1)
+  set i = (+ $i 1)
 }
 
 rm $file

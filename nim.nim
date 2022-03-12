@@ -74,7 +74,7 @@ else:
   switch "nimcache", "/tmp/nim/" & projectName()
 
 switch "spellsuggest"
-switch "styleCheck", "hint"
+switch "styleCheck", "usages"
 switch "hint", "Dependency:on"
 switch "processing", "filenames"
 

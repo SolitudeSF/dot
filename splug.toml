@@ -30,9 +30,6 @@ files = ["vertical-selection.kak"]
 ["https://github.com/occivink/kakoune-sort-selections"]
 files = ["sort-selections.kak"]
 
-# ["https://gitlab.com/notramo/elvish.kak"]
-# files = ["elvish.kak"]
-
 ["https://github.com/andreyorst/smarttab.kak"]
 files = ["rc/smarttab.kak"]
 
@@ -54,6 +51,10 @@ files = ["rc/glsl.kak"]
 
 ["https://github.com/listentolist/kakoune-fandt"]
 files = ["fandt.kak"]
+
+["https://github.com/harryoooooooooo/diff.kak"]
+branch = "main"
+files = ["rc/diff.kak"]
 
 # mpv plugins
 

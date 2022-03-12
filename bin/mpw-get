@@ -1,10 +1,10 @@
 #!/usr/bin/env elvish
-name = (cat ~/sns/mpwname)
-t = ""
+var name = (cat ~/sns/mpwname)
+var t = ""
 if (== 0 (count $args)) {
-  @sites = (cat $E:XDG_CONFIG_HOME/mpwc/$name.mpsites)
-  t = (echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 20 -columns 1)
+  var @sites = (cat $E:XDG_CONFIG_HOME/mpwc/$name.mpsites)
+  set t = (echo &sep="\n" $@sites | rofi -dmenu -p 'Enter site: ' -width 20 -columns 1)
 } else {
-  t = $args[0]
+  set t = $args[0]
 }
 gpg2 -d -q ~/sns/password.gpg | mpwc -S -k max -n $name -s $t 2>/dev/null | xclip -sel c -r -l 1

@@ -1370,7 +1370,7 @@ xkb_symbols "pc+us+ru(ruu):2+inet(evdev)+group(shift_caps_toggle)+level3(ralt_sw
     key <TLDE> {
         type[group2]= "FOUR_LEVEL",
         symbols[Group1]= [           grave,      asciitilde ],
-        symbols[Group2]= [           U2019,      apostrophe,           U0301,      asciitilde ]
+        symbols[Group2]= [           U02BC,      apostrophe,           U0301,      asciitilde ]
     };
     key <LFSH> {         [         Shift_L ] };
     key <BKSL> {

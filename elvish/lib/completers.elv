@@ -262,7 +262,15 @@ set edit:completion:arg-completer[handlr] = {|@cmd|
   }
 }
 
-
+set edit:completion:arg-completer[flatpak] = {|@cmd|
+  if (at-command $cmd) {
+    flatpak --help | peach {|x| put (re:find '^  ([a-z-]+)' $x)[groups][1][text] }
+  } elif (and (== (count $cmd) 3) (has-value [run uninstall] $cmd[-2])) {
+    flatpak list --columns=application,name | drop 1 | eawk {|_ id @name|
+      edit:complex-candidate $id &display=(styled (str:join ' ' $name)' ')(styled $id blue)
+    }
+  }
+}
 
 set edit:completion:arg-completer[promotescript] = {|@cmd|
   pwd=~/.local/bin fd -t f
