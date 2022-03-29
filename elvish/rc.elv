@@ -1,8 +1,11 @@
+set-env ASDF_DIR $E:XDG_DATA_HOME/asdf
+
 use epm
 use str
 use util
 use path
 use config
+use asdf
 
 fn xqt {|a| e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
@@ -25,6 +28,7 @@ var cat~ = (alias bat --paging=never)
 var xr~ = (alias sudo xbps-remove -R)
 var o~ = (alias gio open)
 var g~ = (alias kitty +kitten hyperlinked_grep)
+var asdf~ = $asdf:asdf~
 
 set edit:insert:binding[Ctrl-X] = { edit:-instant:start }
 set edit:insert:binding[Alt-E] = { edit-current-command }

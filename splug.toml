@@ -61,8 +61,8 @@ files = ["rc/diff.kak"]
 ["https://github.com/rossy/mpv-repl"]
 files = ["repl.lua"]
 
-["https://github.com/davidde/mpv-autosub"]
-files = ["autosub.lua"]
-
 ["https://github.com/mfcc64/mpv-scripts"]
 files = ["visualizer.lua"]
+
+["https://github.com/Eisa01/mpv-scripts"]
+files = ["scripts/UndoRedo.lua", "scripts/SmartCopyPaste.lua"]

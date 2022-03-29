@@ -12,7 +12,7 @@ bspc config focus_follows_pointer true
 bspc config pointer_follows_monitor true
 bspc config click_to_focus        button1
 
-bspc rule -a Firefox desktop=^2
+bspc rule -a firefox-default desktop=^2
 bspc rule -a mpv state=floating
 bspc rule -a Peek state=floating
 bspc rule -a kittyfloat state=floating

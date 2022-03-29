@@ -2,6 +2,7 @@ use re
 use str
 use path
 use util
+use asdf
 
 fn overlap-at {|a b|
   for i [(range 1 (- (count $b) 1))] {
@@ -16,7 +17,7 @@ fn at-command {|cmd|
 
 fn prefix-completer {|p a|
   set edit:completion:arg-completer[$p] = {|@cmd|
-    if (eq (count $cmd) 2) {
+    if (== (count $cmd) 2) {
       $a $@cmd
     } elif (has-key $edit:completion:arg-completer $cmd[1]) {
       $edit:completion:arg-completer[$cmd[1]] (all $cmd[1..])
@@ -53,7 +54,7 @@ var kitty-kittens = $nil
 set edit:completion:arg-completer[kitty] = {|@cmd|
   if (not $kitty-cmds) {
     set @kitty-cmds = (kitty @ --help | peach {|x| if (re:match '^  \w' $x) { put $x[2..] } })
-    set @kitty-kittens = (pwd=/usr/lib/kitty/kittens fd main.py | peach {|x| path:dir $x })
+    set @kitty-kittens = (tmp pwd = /usr/lib/kitty/kittens; fd main.py | peach {|x| path:dir $x })
   }
   if (has-value [kitten '+kitten'] $cmd[-2]) {
     all $kitty-kittens
@@ -65,16 +66,16 @@ set edit:completion:arg-completer[kitty] = {|@cmd|
 }
 
 set edit:completion:arg-completer[sv] = {|@cmd|
-  if (eq (count $cmd) 2) {
+  if (== (count $cmd) 2) {
     put status up down once pause cont hup alarm interrupt quit kill term 1 2 ^
       exit start try-restart check {force-,}{stop,reload,restart,shutdown}
   } else {
-    pwd=/var/service put *
+    tmp pwd = /var/service; put *
   }
 }
 
 set edit:completion:arg-completer[man] = {|@cmd|
-  pwd=/bedrock/cross/man put man*/* | each {|a|
+  tmp pwd = /bedrock/cross/man; put man*/* | each {|a|
     re:replace &literal=$true '(\.\dp?)?(\.gz)?$' '' (path:base $a)
   }
 }
@@ -85,7 +86,7 @@ set edit:completion:arg-completer[kill] = {|@cmd|
 }
 
 set edit:completion:arg-completer[nimble] = {|@cmd|
-  if (eq (count $cmd) 2) {
+  if (== (count $cmd) 2) {
     put {un,}install develop check init publish build c cc js test doc{,2} ^
       refresh search list tasks path dump
     if ?(isnimbleproject) {
@@ -117,7 +118,7 @@ var pijul-cmds = [add apply branches checkout clone credit delete-branch diff di
             record remove revert rollback show-dependencies sign status tag unrecord]
 
 set edit:completion:arg-completer[pijul] = {|@cmd|
-  if (eq (count $cmd) 2) {
+  if (== (count $cmd) 2) {
     all $pijul-cmds
   }
 }
@@ -137,7 +138,7 @@ set edit:completion:arg-completer[neofetch] = {|@cmd|
 }
 
 set edit:completion:arg-completer[bspc] = {|@cmd|
-  if (eq (count $cmd) 2) {
+  if (== (count $cmd) 2) {
     put node desktop monitor query wm rule config subscribe quit
   } elif (eq $cmd[1] subscribe) {
     put all report monitor desktop node pointer
@@ -152,14 +153,14 @@ set edit:completion:arg-completer[bspc] = {|@cmd|
 
 set edit:completion:arg-completer[ntr] = {|@cmd|
   if (not (str:has-prefix $cmd[-1] '-')) {
-    pwd=$E:XDG_CONFIG_HOME/ntr/contexts put **
+    tmp pwd = $E:XDG_CONFIG_HOME/ntr/contexts; put **
   }
 }
 
 set edit:completion:arg-completer[mpv] = {|@cmd|
   if (and (> (count $cmd[-1]) 0) (eq $cmd[-1][0] '-')) {
     mpv --list-options | drop 2 | take 872 | eawk {|_ a @b|
-      if (eq (count $b) 0) {
+      if (== (count $b) 0) {
         put $a
       } else {
         edit:complex-candidate $a &display=' '(str:join ' ' $b)
@@ -176,11 +177,11 @@ set edit:completion:arg-completer[update] = {|@cmd|
 
 set edit:completion:arg-completer[xr] = {|@cmd|
   xpkg -m
-  xpkg -O | peach {|x| edit:complex-candidate $x }
+  xpkg -O | peach {|x| edit:complex-candidate &display=(styled $x bg-red) $x }
 }
 
 set edit:completion:arg-completer[xi] = {|@cmd|
-  pwd=$E:XBPS_DISTDIR/srcpkgs put *
+  tmp pwd = $E:XBPS_DISTDIR/srcpkgs; put *
 }
 
 var xbps-src-cmds = $nil
@@ -197,7 +198,7 @@ set edit:completion:arg-completer[xbps-src] = {|@cmd|
     if (not (overlap-at $xbps-src-cmds $cmd)) {
       all $xbps-src-cmds
     } else {
-      pwd=$E:XBPS_DISTDIR/srcpkgs put *
+      tmp pwd = $E:XBPS_DISTDIR/srcpkgs; put *
     }
   }
 }
@@ -273,8 +274,10 @@ set edit:completion:arg-completer[flatpak] = {|@cmd|
 }
 
 set edit:completion:arg-completer[promotescript] = {|@cmd|
-  pwd=~/.local/bin fd -t f
+  tmp pwd = ~/.local/bin; fd -t f
 }
+
+set edit:completion:arg-completer[asdf] = $asdf:arg-completer~
 
 set edit:completion:arg-completer[edit-script] = $edit:complete-sudo~
 set edit:completion:arg-completer[whereis] = $edit:complete-sudo~
@@ -291,4 +294,4 @@ var prefixes = [
   &torify=$edit:complete-sudo~
 ]
 
-for k [(keys $prefixes)] { prefix-completer $k $prefixes[$k] }
+keys $prefixes | each {|k| prefix-completer $k $prefixes[$k] }

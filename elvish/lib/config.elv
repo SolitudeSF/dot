@@ -23,10 +23,10 @@ fn sxhkd { edit $conf/sxhkd/sxhkdrc; pkill -USR1 -x sxhkd }
 fn polybar { edit $ntrtmp/polybar }
 fn rofi { edit &type=css $conf/rofi/config.rasi }
 fn dunst { edit $ntrtmp/dunst }
-fn elvish { pwd=$conf/elvish edit (select -e elv) }
+fn elvish { tmp pwd = $conf/elvish; edit (select -e elv) }
 fn nim { edit $conf/nim/config.nims }
 fn min { edit $E:HOME/.minrc }
-fn ntr { pwd=$conf/ntr edit (select) }
+fn ntr { tmp pwd = $conf/ntr; edit (select) }
 fn splug { edit $conf/splug/config.toml }
 fn kitty { edit &type=ini $conf/kitty/kitty.conf }
 fn kitty-diff { edit &type=ini $conf/kitty/diff.conf }
