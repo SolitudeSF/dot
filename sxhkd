@@ -128,15 +128,8 @@ super + {o,i}
 	bspc wm -h on
 
 # focus/send to the given desktop
-{_,shift + }{super,mode_switch} + {1-9,0}
-	bspc {desktop -f,node -d} {DisplayPort-1,HDMI-A-0}:'^{1-9,10}'
-
-# focus/send to another monitor
-super + minus
-	bspc monitor -f last
-
-super + underscore
-	bspc node -m last --follow
+{_,shift + }super + {1-9,0}
+	bspc {desktop -f,node -d} DisplayPort-1:'^{1-9,10}'
 
 #
 # preselect
