@@ -1,4 +1,4 @@
-music_directory         "~/mus/"
+music_directory         "~/mus"
 db_file                 "~/.local/share/mpd/database"
 log_file                "~/.local/share/mpd/log"
 pid_file                "~/.local/share/mpd/pid"

@@ -80,9 +80,8 @@ def type -params 1 -docstring 'Set buffer filetype' %{
 }
 
 def lint-engage -docstring 'Enable linting' %{
-    lint-enable
-    map buffer user -docstring "next error" l ': lint-next-error<ret>'
-    map buffer user -docstring "previous error" L ': lint-previous-error<ret>'
+    map buffer user -docstring "next error" l ': lint-next-message<ret>'
+    map buffer user -docstring "previous error" L ': lint-previous-message<ret>'
 }
 
 def lsp-engage -docstring 'Enable language server' %{
@@ -205,10 +204,12 @@ hook global WinSetOption filetype=kak %{
 hook global WinSetOption filetype=sh %{
     set buffer lintcmd 'shellcheck --norc -x -f gcc'
     lint-on-write
+    lsp-engage
 }
 
 hook global WinSetOption filetype=elvish %{
     no-tabs 2
+    lsp-engage
 }
 
 hook global WinSetOption filetype=go %{

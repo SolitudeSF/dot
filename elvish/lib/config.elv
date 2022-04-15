@@ -20,7 +20,7 @@ fn git { edit $conf/git/config }
 fn xbps-src { edit &type=sh $E:XBPS_DISTDIR/etc/conf }
 fn bspwm { edit &type=sh $conf/bspwm/bspwmrc }
 fn sxhkd { edit $conf/sxhkd/sxhkdrc; pkill -USR1 -x sxhkd }
-fn polybar { edit $ntrtmp/polybar }
+fn polybar { edit $conf/polybar/config; pkill -USR1 -x polybar }
 fn rofi { edit &type=css $conf/rofi/config.rasi }
 fn dunst { edit $ntrtmp/dunst }
 fn elvish { tmp pwd = $conf/elvish; edit (select -e elv) }

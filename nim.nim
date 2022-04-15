@@ -1,4 +1,5 @@
 from macros import error
+import os
 
 type Compiler = enum gcc = "gcc", clang = "clang"
 
@@ -67,11 +68,11 @@ if defined(danger):
 if defined(hotcodereloading):
   switch "nimcache", "nimcache"
 elif defined(danger):
-  switch "nimcache", "/tmp/nim/" & projectName() & "_d"
+  switch "nimcache", getTempDir() / "nim" / projectName() & "_d"
 elif defined(release):
-  switch "nimcache", "/tmp/nim/" & projectName() & "_r"
+  switch "nimcache", getTempDir() / "nim" / projectName() & "_r"
 else:
-  switch "nimcache", "/tmp/nim/" & projectName()
+  switch "nimcache", getTempDir() / "nim" / projectName()
 
 switch "spellsuggest"
 switch "styleCheck", "usages"

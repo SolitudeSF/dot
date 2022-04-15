@@ -1,4 +1,5 @@
 set-env ASDF_DIR $E:XDG_DATA_HOME/asdf
+set-env GPG_TTY (tty)
 
 use epm
 use str
@@ -41,14 +42,18 @@ set edit:abbr = [
   use theme
   use completers
   use smart-matcher
+  use semantic-prompt semp
   util:add-before-readline {
     util:set-title (tilde-abbr $pwd)
   }
   util:add-after-readline {|a|
-    if (eq $a '') { ls }
     util:set-title (str:split ' ' $a | take 1)' '(tilde-abbr $pwd)
+    semp:output-start
+    if (eq $a '') { ls }
+  }
+  util:add-after-command {|a|
+    semp:output-end
   }
 }
 
 -override-wcwidth 🦀 2
-set-env GPG_TTY (tty)

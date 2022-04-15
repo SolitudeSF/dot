@@ -44,7 +44,7 @@ if [ "$GPG_TTY" = /dev/tty1 ]; then
 	QT_QPA_PLATFORMTHEME=gtk2
 	TERMINAL='kitty -1'
 	_JAVA_AWT_WM_NONREPARENTING=1
-	_JAVA_OPTIONS="-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+	_JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 	export \
 	 _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS QT_QPA_PLATFORMTHEME \
 	 GTK2_RC_FILES TERMINAL

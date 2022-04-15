@@ -56,3 +56,11 @@ fn add-after-readline {|@hooks|
     }
   }
 }
+
+fn add-after-command {|@hooks|
+  for hook $hooks {
+    if (not (has-value $edit:after-readline $hook)) {
+      set edit:after-command = [ $@edit:after-command $hook ]
+    }
+  }
+}

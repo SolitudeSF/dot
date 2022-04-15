@@ -65,7 +65,8 @@ for arg; do
 		dunst)
 			_render dunst "$CONF/dunst/dunstrc";;
 		polybar)
-			_render polybar "$CONF/polybar/config";;
+			_install polybar.ini "$CONF/polybar/config"
+			_render polybar "$CONF/polybar/color";;
 		rofi)
 			_install rofi.rasi "$CONF/rofi/config.rasi";;
 		mpv)
@@ -99,7 +100,7 @@ for arg; do
 			FF_CHROME=$FF_DIR/chrome
 			_install firefox/user.js "$FF_DIR/user.js"
 			_install firefox/userChrome.css "$FF_CHROME/userChrome.css"
-			nim e -p:$HOME/sns/ firefox/homepage.nims >"$HOME/.mozilla/firefox/homepage.html"
+			nim e -p:"$HOME/sns/" firefox/homepage.nims >"$HOME/.mozilla/firefox/homepage.html"
 			_render homepage.css "$HOME/.mozilla/firefox/homepage.css";;
 		elvish)
 			_install elvish/rc.elv "$CONF/elvish/rc.elv"
