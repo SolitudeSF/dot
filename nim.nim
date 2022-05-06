@@ -75,8 +75,10 @@ else:
   switch "nimcache", getTempDir() / "nim" / projectName()
 
 switch "spellsuggest"
+switch "hyperlink"
 switch "styleCheck", "usages"
 switch "hint", "Dependency:on"
+switch "hint", "MsgOrigin:off"
 switch "processing", "filenames"
 
 # Way of Nim

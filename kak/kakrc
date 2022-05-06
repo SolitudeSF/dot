@@ -20,6 +20,7 @@ set global grepcmd 'rg -iHL --column'
 set global modelinefmt '%opt{git_branch_str}%val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
+set global disabled_hooks '.+-insert'
 
 alias global sw sudo-write
 alias global cdb change-directory-current-buffer

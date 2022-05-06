@@ -94,6 +94,7 @@ for arg; do
 		kitty)
 			_install kitty/kitty.conf "$CONF/kitty/kitty.conf"
 			_install kitty/diff.conf "$CONF/kitty/diff.conf"
+			_install kitty/open-actions.conf "$CONF/kitty/open-actions.conf"
 			_render kitty-colors "$CONF/kitty/colors.conf";;
 		firefox)
 			FF_DIR=$HOME/.mozilla/firefox/$(ls -t "$HOME/.mozilla/firefox/" | grep -v profiles.ini | head -1)
