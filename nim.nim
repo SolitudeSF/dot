@@ -51,7 +51,6 @@ elif defined(wasm):
   switch "clang.cpp.options.linker", linkerOptions
 
 if defined(release) or defined(danger):
-  switch "excessiveStackTrace", "off"
   if not cross:
     switch "passC", "-march=native"
   switch "passC", "-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
@@ -61,6 +60,11 @@ if defined(release) or defined(danger):
   switch "passL", "-fuse-linker-plugin"
   if strip:
     switch "passL", "-s"
+
+if defined(libbacktrace):
+  switch "stacktrace", "off"
+  switch "d", "nimStackTraceOverride"
+  switch "import", "libbacktrace"
 
 if defined(danger):
   switch "panics", "on"
@@ -85,7 +89,7 @@ switch "processing", "filenames"
 # --gc:orc
 # --experimental:strictEffects
 --experimental:unicodeOperators
---experimental:overloadableEnums
+# --experimental:overloadableEnums
 --define:nimPreviewDotLikeOps
 --define:nimPreviewFloatRoundtrip
 --define:nimStrictDelete

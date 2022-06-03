@@ -56,6 +56,10 @@ files = ["fandt.kak"]
 branch = "main"
 files = ["rc/diff.kak"]
 
+["https://github.com/JacobTravers/kakoune-grep-write"]
+branch = "main"
+files = ["rc/grep-write.kak"]
+
 # mpv plugins
 
 ["https://github.com/rossy/mpv-repl"]

@@ -12,11 +12,12 @@ require-module search-highlighter
 require-module word-select
 require-module replace-mode
 require-module fandt
+require-module kakpipe
 
 set global ui_options ncurses_assistant=none
 set global scrolloff 7,7
 set global autoreload yes
-set global grepcmd 'rg -iHL --column'
+set global grepcmd 'rg -iHL --column --vimgrep'
 set global modelinefmt '%opt{git_branch_str}%val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
@@ -77,18 +78,18 @@ map global user -docstring 'clip-cut -> insert mode' c '<a-|>xclip -i -f -sel c<
 # Functions
 
 def type -params 1 -docstring 'Set buffer filetype' %{
-    set buffer filetype %arg{1}
+    set window filetype %arg{1}
 }
 
 def lint-engage -docstring 'Enable linting' %{
-    map buffer user -docstring "next error" l ': lint-next-message<ret>'
-    map buffer user -docstring "previous error" L ': lint-previous-message<ret>'
+    map window user -docstring "next error" l ': lint-next-message<ret>'
+    map window user -docstring "previous error" L ': lint-previous-message<ret>'
 }
 
 def lsp-engage -docstring 'Enable language server' %{
-    lsp-enable
+    lsp-enable-window
     lsp-auto-hover-enable
-    map buffer user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
+    map window user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
 }
 
 def lsp-semantic-highlighting -docstring 'Enable semantic highlighting' %{
@@ -102,19 +103,19 @@ def lsp-semantic-highlighting -docstring 'Enable semantic highlighting' %{
 
 def lint-on-write -docstring 'Activate linting on buffer write' %{
     lint-engage
-    hook buffer BufWritePost .* lint
+    hook window BufWritePost .* lint
 }
 
 def set-indent -params 1 -docstring 'Set indentation width' %{
-    set buffer indentwidth %arg{1}
-    set buffer tabstop %arg{1}
-    set buffer softtabstop %arg{1}
+    set window indentwidth %arg{1}
+    set window tabstop %arg{1}
+    set window softtabstop %arg{1}
 }
 
 def no-tabs -params 1 -docstring 'Indent with spaces' %{
     expandtab
     set-indent %arg{1}
-    hook buffer InsertKey <space> %{ try %{
+    hook window InsertKey <space> %{ try %{
         exec -draft h<a-i><space><a-k>^\h+<ret>
         exec -with-hooks <tab>
     }}
@@ -138,12 +139,12 @@ select-or-add-cursor %{
 # Hooks
 
 hook global WinCreate .* %{
-    addhl buffer/number-lines number-lines -hlcursor -separator ' '
-    addhl buffer/ruler column 100 default,rgb:303030
-    addhl buffer/trailing-whitespace regex '\h+$' 0:default,red
-    addhl buffer/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
-    addhl buffer/matching-brackets show-matching
-    addhl buffer/wrap wrap -word -indent -marker ''
+    addhl window/number-lines number-lines -hlcursor -separator ' '
+    addhl window/ruler column 100 default,rgb:303030
+    addhl window/trailing-whitespace regex '\h+$' 0:default,red
+    addhl window/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
+    addhl window/matching-brackets show-matching
+    addhl window/wrap wrap -word -indent -marker ''
 
     smarttab
     readline-enable
@@ -186,7 +187,7 @@ hook global ModuleLoaded kitty %{
 # Filetype detection
 
 hook global BufCreate .*srcpkgs/.+/template$ %{
-    set buffer filetype sh
+    set window filetype sh
     def xgensum %{ %sh{ xgensum -i "$kak_buffile" } }
 }
 
@@ -203,7 +204,7 @@ hook global WinSetOption filetype=kak %{
 }
 
 hook global WinSetOption filetype=sh %{
-    set buffer lintcmd 'shellcheck --norc -x -f gcc'
+    set window lintcmd 'shellcheck --norc -x -f gcc'
     lint-on-write
     lsp-engage
 }
@@ -218,7 +219,7 @@ hook global WinSetOption filetype=go %{
 }
 
 hook global WinSetOption filetype=(c|cpp) %{
-    set buffer formatcmd clang-format
+    set window formatcmd clang-format
     lsp-engage
 }
 
@@ -233,7 +234,7 @@ hook global WinSetOption filetype=rust %{
 }
 
 hook global WinSetOption filetype=markdown %{
-    set buffer formatcmd 'prettier --parser markdown'
+    set window formatcmd 'prettier --parser markdown'
 }
 
 hook global WinSetOption filetype=python %{
@@ -242,8 +243,8 @@ hook global WinSetOption filetype=python %{
 }
 
 hook global WinSetOption filetype=nim %{
-    set buffer gdb_program 'nim-gdb'
-    set buffer formatcmd 'nimprettify'
+    set window gdb_program 'nim-gdb'
+    set window formatcmd 'nimprettify'
     no-tabs 2
     lsp-engage
 }

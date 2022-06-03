@@ -18,5 +18,5 @@ bspc rule -a Peek state=floating
 bspc rule -a kittyfloat state=floating
 bspc rule -a Steam desktop=^4 state=floating
 
-disown polybar -q main &
-disown polybar -q secondary &
+detach polybar -q main &
+detach polybar -q secondary &

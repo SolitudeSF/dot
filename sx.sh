@@ -1,13 +1,13 @@
-xrdb -nocpp "$HOME/.Xresources" &
+xrdb -nocpp "$XDG_CONFIG_HOME/X11/xresources" &
 dbus-update-activation-environment DISPLAY XAUTHORITY
 xsetroot -cursor_name left_ptr &
 xkbcomp "$DOTS_DIR/layout.xkb" "$DISPLAY" &
-disown pipewire &
+detach strat arch pipewire &
 wlp &
 mpd &
 perWindowLayoutD &
-disown sxhkd &
-disown unclutter &
-disown /usr/libexec/xfce-polkit &
-disown syncthing -no-browser &
+detach sxhkd &
+detach unclutter &
+detach strat artix /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
+detach syncthing -no-browser &
 exec bspwm

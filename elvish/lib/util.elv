@@ -28,7 +28,7 @@ fn index-of {|a b|
     if (eq $val $b) { put $r; return }
     set r = (+ $r 1)
   }
-  float64 -1
+  num -1
 }
 
 fn pad {|a b &with=' ' &left=$true|
