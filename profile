@@ -51,6 +51,6 @@ if [ "$GPG_TTY" = /dev/tty1 ]; then
 	 _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS QT_QPA_PLATFORMTHEME \
 	 GTK2_RC_FILES TERMINAL XCOMPOSEFILE
 
-	exec dbus-launch strat arch sx
+	exec dbus-launch sx
 fi
 exec elvish

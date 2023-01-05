@@ -26,6 +26,9 @@ alt + Tab
 super + Return
 	exec kitty -1
 
+super + Pause
+	exec xpause
+
 super + shift + {m,v,p,e}
 	exec {mpv "$(xclip -sel c -o)",pavucontrol,gnome-system-monitor,pcmanfm}
 
@@ -132,7 +135,7 @@ super + {o,i}
 
 # focus/send to the given desktop
 {_,shift + }{super,mode_switch} + {1-9,0}
-	bspc {desktop -f,node -d} {DisplayPort,HDMI-A}-3:'^{1-9,10}'
+	bspc {desktop -f,node -d} {DisplayPort-1,HDMI-A-0}:'^{1-9,10}'
 
 # focus/send to another monitor
 super + minus

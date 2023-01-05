@@ -46,6 +46,7 @@ fn abort {|&code=1 a|
 try {
   (external (get-editor)) $file
 } catch {
+  rm $file
   abort 'Editor exited with error. Aborting...'
 }
 

@@ -32,15 +32,15 @@ face global LineNumbersWrapped black
 
 # Keybinds
 
-map global normal <space> ,
-map global normal -docstring 'remove all sels except main' <backspace> <space>
-map global normal -docstring 'remove main sel' <a-backspace> <a-space>
+map global normal -docstring 'remove all sels except main' <backspace> ,
+map global normal -docstring 'remove main sel' <a-backspace> <a-,>
 map global normal -docstring 'comment line' '#' ': comment-line<ret>'
 map global normal -docstring 'comment block' '<a-#>' ': comment-block<ret>'
 map global normal -docstring 'delete to end of line' D <a-l>d
 map global normal -docstring 'yank to end of line' Y <a-l>
 map global normal -docstring 'replay macro' , q
 map global normal -docstring 'record macro' <a-,> Q
+map global normal X ': select-or-extend-lines<ret>'
 
 map global normal w ': word-select-next-word<ret>'
 map global normal <a-w> ': word-select-next-big-word<ret>'
@@ -89,7 +89,7 @@ def lint-engage -docstring 'Enable linting' %{
 def lsp-engage -docstring 'Enable language server' %{
     lsp-enable-window
     lsp-auto-hover-enable
-    map window user -docstring 'Enter lsp user mode' <a-l> ': enter-user-mode lsp<ret>'
+    map window user -docstring 'Enter lsp user mode' l ': enter-user-mode lsp<ret>'
 }
 
 def lsp-semantic-highlighting -docstring 'Enable semantic highlighting' %{
@@ -134,6 +134,17 @@ select-or-add-cursor %{
     } catch %{
         exec -save-regs '' "_*<s-n>"
     } catch nop
+}
+
+define-command select-or-extend-lines %{
+  execute-keys '<a-:>'
+  try %{
+    # At least one selection is not full, so select whole lines.
+    execute-keys -draft '<a-K>\A^.*\n\z<ret>'
+    execute-keys 'x'
+  } catch %{
+    execute-keys 'Jx'
+  }
 }
 
 # Hooks

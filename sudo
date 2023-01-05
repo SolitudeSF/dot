@@ -1,17 +1,10 @@
-Cmnd_Alias XBPS_CMD = /usr/sbin/xbps-install, /usr/sbin/xbps-remove, /usr/sbin/xbps-reconfigure
-Cmnd_Alias PACMAN_CMD = /bedrock/cross/bin/pacman
-Cmnd_Alias EXCEPT_CMD = /usr/sbin/radeontop
-
 Defaults env_keep += "HOME"
 Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
-# Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
-# Defaults env_keep += "QTDIR KDEDIR"
 # Defaults env_keep += "XDG_SESSION_COOKIE"
 # Defaults env_keep += "XMODIFIERS GTK_IM_MODULE QT_IM_MODULE QT_IM_SWITCHER"
 Defaults timestamp_timeout = -1
 
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
-%wheel ALL=(ALL) NOPASSWD: EXCEPT_CMD
 
 #includedir /etc/sudoers.d

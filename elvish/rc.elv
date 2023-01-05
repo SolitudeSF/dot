@@ -1,7 +1,9 @@
 set-env ASDF_DIR $E:XDG_DATA_HOME/asdf
 set-env GPG_TTY (tty)
+set-env CCACHE_DIR $E:XDG_CACHE_HOME/ccache
 
 use epm
+use doc
 use str
 use util
 use path
@@ -17,10 +19,13 @@ fn r {|@a|
 }
 
 fn edit-current-command {
-  print $edit:current-command > /tmp/elvish-edit-command-$pid.elv
-  e /tmp/elvish-edit-command-$pid.elv </dev/tty >/dev/tty 2>&1
-  set edit:current-command = (slurp </tmp/elvish-edit-command-$pid.elv)[0..-1]
+  var temp-file = "/tmp/elvish-edit-command-$pid.elv"
+  print $edit:current-command > $temp-file
+  e $temp-file </dev/tty >/dev/tty 2>&1
+  set edit:current-command = (slurp < $temp-file | str:trim-right (one) "\n")
 }
+
+fn newdir {|name| mkdir -p $name; put $name }
 
 fn alias {|cmd @a| put {|@b| (external $cmd) $@a $@b } }
 

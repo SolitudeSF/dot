@@ -1,6 +1,6 @@
 #!/bin/sh
-bspc monitor DisplayPort-3 -d 0 1 2 3 4 5 6 7 8 9
-bspc monitor HDMI-A-3 -d 10 11 12 13 14 15 16 17 18 19
+bspc monitor DisplayPort-1 -d 0 1 2 3 4 5 6 7 8 9
+bspc monitor HDMI-A-0 -d 10 11 12 13 14 15 16 17 18 19
 
 bspc config border_width          1
 bspc config window_gap            3
@@ -11,12 +11,6 @@ bspc config gapless_monocle       true
 bspc config focus_follows_pointer true
 bspc config pointer_follows_monitor true
 bspc config click_to_focus        button1
-
-bspc rule -a firefox-default desktop=^2
-bspc rule -a mpv state=floating
-bspc rule -a Peek state=floating
-bspc rule -a kittyfloat state=floating
-bspc rule -a Steam desktop=^4 state=floating
 
 detach polybar -q main &
 detach polybar -q secondary &

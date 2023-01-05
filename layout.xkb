@@ -1177,7 +1177,7 @@ xkb_compatibility "complete+ledscroll(group_lock)" {
     };
 };
 
-xkb_symbols "pc+us+ru(ruu):2+inet(evdev)+group(shift_caps_toggle)+level3(ralt_switch)+compose(rwin-altgr)+nbsp(l" {
+xkb_symbols "pc+us+ru(ruu):2+inet(evdev)+group(shift_caps_toggle)+lv3(ralt_switch)+compose(lctrl-altgr)+nbsp(level3)" {
 
     name[group1]="English (US)";
     name[group2]="Russian (with Ukrainian-Belorussian layout)";

@@ -55,8 +55,8 @@ if defined(release) or defined(danger):
     switch "passC", "-march=native"
   switch "passC", "-floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block"
   switch "passC", "-ftree-vectorize"
-  switch "passC", "-flto"
-  switch "passL", "-flto"
+  switch "passC", "-flto=auto"
+  switch "passL", "-flto=auto"
   switch "passL", "-fuse-linker-plugin"
   if strip:
     switch "passL", "-s"

@@ -89,7 +89,7 @@ set edit:completion:arg-completer[nimble] = {|@cmd|
   if (== (count $cmd) 2) {
     put {un,}install develop check init publish build c cc js test doc{,2} ^
       refresh search list tasks path dump
-    if ?(isnimbleproject) {
+    if (> (count [*[nomatch-ok].nimble]) 0) {
       nimble tasks 2>&- | eawk {|_ a @_| put $a }
     }
   } elif (eq $cmd[-2] install) {
@@ -267,7 +267,7 @@ set edit:completion:arg-completer[flatpak] = {|@cmd|
   if (at-command $cmd) {
     flatpak --help | peach {|x| put (re:find '^  ([a-z-]+)' $x)[groups][1][text] }
   } elif (and (== (count $cmd) 3) (has-value [run uninstall] $cmd[-2])) {
-    flatpak list --columns=application,name | drop 1 | eawk {|_ id @name|
+    flatpak list --columns=application,name | drop 0 | eawk {|_ id @name|
       edit:complex-candidate $id &display=(styled (str:join ' ' $name)' ')(styled $id blue)
     }
   }
@@ -275,6 +275,49 @@ set edit:completion:arg-completer[flatpak] = {|@cmd|
 
 set edit:completion:arg-completer[promotescript] = {|@cmd|
   tmp pwd = ~/.local/bin; fd -t f
+}
+
+set edit:completion:arg-completer[ferium] = {|@cmd|
+  var cmds = [add complete help list modpack profile remove upgrade]
+  var cmd-pos = (overlap-at $cmds $cmd)
+  if (not $cmd-pos) {
+    if (> (count $cmd) 2) {
+      if (eq $cmd[-2] --config-file) {
+        edit:complete-filename $cmd[-1]
+      } elif (has-value [--threads -t] $cmd[-2]) {
+        range 9
+      } else {
+        all $cmds
+        put --config-file --github-token --help --threads --version
+      }
+    } else {
+      all $cmds
+      put --config-file --github-token --help --threads --version
+    }
+  } else {
+    var command = $cmd[$cmd-pos]
+    if (eq $command help) {
+      all $cmds
+    } elif (eq $command add) {
+      put --dont-add-dependencies --dont-check-game-version --dont-check-mod-loader
+    } elif (eq $command list) {
+      put --markdown --verbose
+    }
+  }
+}
+
+set edit:completion:arg-completer[vkpurge] = {|@cmd|
+  var cmds = [list rm]
+  var cmd-pos = (overlap-at $cmds $cmd)
+  if (not $cmd-pos) {
+    all $cmds
+  } else {
+    var command = $cmd[$cmd-pos]
+    if (eq $command rm) {
+      vkpurge list
+      put all
+    }
+  }
 }
 
 set edit:completion:arg-completer[asdf] = $asdf:arg-completer~
