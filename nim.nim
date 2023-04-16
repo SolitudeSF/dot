@@ -60,6 +60,8 @@ if defined(release) or defined(danger):
   switch "passL", "-fuse-linker-plugin"
   if strip:
     switch "passL", "-s"
+else:
+  switch "d", "stacktraceHyperlinks"
 
 if defined(libbacktrace):
   switch "stacktrace", "off"

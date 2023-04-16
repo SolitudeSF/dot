@@ -1,4 +1,3 @@
-set-env ASDF_DIR $E:XDG_DATA_HOME/asdf
 set-env GPG_TTY (tty)
 set-env CCACHE_DIR $E:XDG_CACHE_HOME/ccache
 
@@ -8,7 +7,6 @@ use str
 use util
 use path
 use config
-use asdf
 
 fn xqt {|a| e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
@@ -25,6 +23,8 @@ fn edit-current-command {
   set edit:current-command = (slurp < $temp-file | str:trim-right (one) "\n")
 }
 
+fn chatgpt {|@a| tmp E:CHATGPT_API_KEY = (str:trim-space (slurp <~/sns/chatgpt)); e:chatgpt $@a }
+
 fn newdir {|name| mkdir -p $name; put $name }
 
 fn alias {|cmd @a| put {|@b| (external $cmd) $@a $@b } }
@@ -34,10 +34,15 @@ var cat~ = (alias bat --paging=never)
 var xr~ = (alias sudo xbps-remove -R)
 var o~ = (alias gio open)
 var g~ = (alias kitty +kitten hyperlinked_grep)
-var asdf~ = $asdf:asdf~
 
 set edit:insert:binding[Ctrl-X] = { edit:-instant:start }
 set edit:insert:binding[Alt-E] = { edit-current-command }
+set edit:insert:binding[Alt-q] = {
+  var oldlen = (count $edit:current-command)
+  var olddot = $edit:-dot
+  set edit:current-command = "pueue add -- "$edit:current-command
+  set edit:-dot = (+ $olddot (- (count $edit:current-command) $oldlen))
+}
 
 set edit:abbr = [
   &'.etc'='~/.local/etc/'

@@ -36,9 +36,6 @@ super + shift + n
 	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \
 		ncmpcpp
 
-super + Insert
-	carpalx-helper
-
 {_,ctrl} + Print
 	screenshot {-s -u,-u}
 

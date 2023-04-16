@@ -2,7 +2,6 @@ use re
 use str
 use path
 use util
-use asdf
 
 fn overlap-at {|a b|
   for i [(range 1 (- (count $b) 1))] {
@@ -319,8 +318,6 @@ set edit:completion:arg-completer[vkpurge] = {|@cmd|
     }
   }
 }
-
-set edit:completion:arg-completer[asdf] = $asdf:arg-completer~
 
 set edit:completion:arg-completer[edit-script] = $edit:complete-sudo~
 set edit:completion:arg-completer[whereis] = $edit:complete-sudo~
