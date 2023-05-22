@@ -75,7 +75,7 @@ image_backend=kitty
 crop_mode=none
 image_source=$(getmpdalbumart)
 if [ -z "$image_source" ]; then
-	image_source=$(randfile "$(xdg-user-dir PICTURES)/anzu")
+	image_source=$(randfile "$(xdg-user-dir PICTURES)/alitaarmy")
         crop_mode=fill
 fi
 image_loop=off

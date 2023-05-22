@@ -44,7 +44,7 @@ fn pad {|a b &with=' ' &left=$true|
 fn add-before-readline {|@hooks|
   for hook $hooks {
     if (not (has-value $edit:before-readline $hook)) {
-      set edit:before-readline = [ $@edit:before-readline $hook ]
+      set edit:before-readline = (conj $edit:before-readline $hook)
     }
   }
 }
@@ -52,7 +52,7 @@ fn add-before-readline {|@hooks|
 fn add-after-readline {|@hooks|
   for hook $hooks {
     if (not (has-value $edit:after-readline $hook)) {
-      set edit:after-readline = [ $@edit:after-readline $hook ]
+      set edit:after-readline = (conj $edit:after-readline $hook)
     }
   }
 }
@@ -60,7 +60,7 @@ fn add-after-readline {|@hooks|
 fn add-after-command {|@hooks|
   for hook $hooks {
     if (not (has-value $edit:after-readline $hook)) {
-      set edit:after-command = [ $@edit:after-command $hook ]
+      set edit:after-command = (conj $edit:after-command $hook)
     }
   }
 }

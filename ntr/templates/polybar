@@ -1,5 +1,5 @@
 [color]
-background = <{color.bg}>
+background = #c9<{strip:<{color.bg}>:#}>
 foreground = <{color.fg}>
 red  = <{color5}>
 green = <{color2}>

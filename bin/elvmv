@@ -23,9 +23,9 @@ if (== (count $args) 0) {
 } else {
   for i $args {
     if (eq $i '-') {
-      each {|x| set items = [$@items (list-items $x)] }
+      each {|x| set items = (conj $items (list-items $x)) }
     } else {
-      set items = [$@items (list-items $i)]
+      set items = (conj $items (list-items $i))
     }
   }
 }

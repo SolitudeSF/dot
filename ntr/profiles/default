@@ -6,3 +6,4 @@ zathura: <{$XDG_CONFIG_HOME}>/zathura/zathurarc
 polybar: <{$XDG_CONFIG_HOME}>/polybar/color
 rofi-theme: <{$XDG_CONFIG_HOME}>/rofi/theme.rasi
 homepage.css: <{$HOME}>/.mozilla/firefox/homepage.css
+colorscheme.kak: <{$XDG_CONFIG_HOME}>/kak/colors/ntr.kak

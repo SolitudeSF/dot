@@ -7,6 +7,7 @@ use str
 use util
 use path
 use config
+use rtx
 
 fn xqt {|a| e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
@@ -33,7 +34,7 @@ var ls~ = (alias lc)
 var cat~ = (alias bat --paging=never)
 var xr~ = (alias sudo xbps-remove -R)
 var o~ = (alias gio open)
-var g~ = (alias kitty +kitten hyperlinked_grep)
+var g~ = (alias kitten hyperlinked_grep)
 
 set edit:insert:binding[Ctrl-X] = { edit:-instant:start }
 set edit:insert:binding[Alt-E] = { edit-current-command }
@@ -66,4 +67,5 @@ set edit:abbr = [
   }
 }
 
+rtx:activate
 -override-wcwidth 🦀 2

@@ -8,13 +8,15 @@ eval %sh{
 
 # Initialization
 
+colorscheme ntr
+
 require-module search-highlighter
 require-module word-select
 require-module replace-mode
 require-module fandt
 require-module kakpipe
 
-set global ui_options ncurses_assistant=none
+set global ui_options terminal_assistant=none
 set global scrolloff 7,7
 set global autoreload yes
 set global grepcmd 'rg -iHL --column --vimgrep'
@@ -149,23 +151,34 @@ define-command select-or-extend-lines %{
 
 # Hooks
 
-hook global WinCreate .* %{
-    addhl window/number-lines number-lines -hlcursor -separator ' '
-    addhl window/ruler column 100 default,rgb:303030
-    addhl window/trailing-whitespace regex '\h+$' 0:default,red
-    addhl window/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
-    addhl window/matching-brackets show-matching
-    addhl window/wrap wrap -word -indent -marker ''
+hook global WinCreate '\*stdin(?:-\d+)?\*' %{
+    set-option window filetype scrollback
+}
 
-    smarttab
-    readline-enable
-    colorcol-enable
-    colorcol-refresh-continuous
-    indentguide-enable
-    indentguide-refresh-continuous
-    mark-show-enable
+hook global WinCreate '.*man\.XXXX\w{6}' %{
+  ansi-render
+  write
+}
 
-    hook window NormalIdle .* refresh-git-branch
+hook global WinSetOption filetype=(?!scrollback).* %{
+    try %{
+      addhl window/number-lines number-lines -hlcursor -separator ' '
+      addhl window/ruler column 100 default,rgb:303030
+      addhl window/trailing-whitespace regex '\h+$' 0:default,red
+      addhl window/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
+      addhl window/matching-brackets show-matching
+      addhl window/wrap wrap -word -indent -marker ''
+
+      smarttab
+      readline-enable
+      colorcol-enabl
+      colorcol-refresh-continuous
+      indentguide-enable
+      indentguide-refresh-continuous
+      mark-show-enable
+
+      hook window NormalIdle .* refresh-git-branch
+    }
 }
 
 hook global KakBegin .* %{
