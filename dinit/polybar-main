@@ -1,0 +1,4 @@
+type = process
+command = polybar main
+depends-on = xorg
+restart = yes

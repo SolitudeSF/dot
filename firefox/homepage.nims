@@ -1,5 +1,5 @@
 import karax/[karaxdsl, vdom]
-import homepageData
+from homepageData import links
 
 type
   Link = tuple[url, label: string]

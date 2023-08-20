@@ -3,7 +3,7 @@ var dot = $E:DOTS_DIR
 var ntrtmp = $conf/ntr/templates
 
 fn select {|@a|
-  fd . -L -t f $@a | sk --height=35% --layout=reverse -m
+  e:f -L -t=f $@a | sk --height=35% --layout=reverse -m
 }
 
 fn edit {|&type='' @a|
@@ -23,7 +23,7 @@ fn sxhkd { edit $conf/sxhkd/sxhkdrc; pkill -USR1 -x sxhkd }
 fn polybar { edit $conf/polybar/config; pkill -USR1 -x polybar }
 fn rofi { edit &type=css $conf/rofi/config.rasi }
 fn dunst { edit $ntrtmp/dunst }
-fn elvish { tmp pwd = $conf/elvish; edit (select -e elv) }
+fn elvish { tmp pwd = $conf/elvish; edit (select '.elv') }
 fn nim { edit $conf/nim/config.nims }
 fn min { edit $E:HOME/.minrc }
 fn ntr { tmp pwd = $conf/ntr; edit (select) }

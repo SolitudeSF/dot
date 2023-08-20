@@ -53,7 +53,7 @@ var kitty-kittens = $nil
 set edit:completion:arg-completer[kitty] = {|@cmd|
   if (not $kitty-cmds) {
     set @kitty-cmds = (kitty @ --help | peach {|x| if (re:match '^  \w' $x) { put $x[2..] } })
-    set @kitty-kittens = (tmp pwd = /usr/lib/kitty/kittens; fd main.py | peach {|x| path:dir $x })
+    set @kitty-kittens = (tmp pwd = /usr/lib/kitty/kittens; f main.py | peach {|x| path:dir $x })
   }
   if (has-value [kitten '+kitten'] $cmd[-2]) {
     all $kitty-kittens
@@ -273,7 +273,7 @@ set edit:completion:arg-completer[flatpak] = {|@cmd|
 }
 
 set edit:completion:arg-completer[promotescript] = {|@cmd|
-  tmp pwd = ~/.local/bin; fd -t f
+  tmp pwd = ~/.local/bin; f -t f
 }
 
 set edit:completion:arg-completer[ferium] = {|@cmd|

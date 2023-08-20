@@ -1,0 +1,4 @@
+type = process
+command = pipewire -c pipewire-pulse.conf
+depends-on = pipewire
+restart = yes

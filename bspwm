@@ -11,6 +11,4 @@ bspc config gapless_monocle       true
 bspc config focus_follows_pointer true
 bspc config pointer_follows_monitor true
 bspc config click_to_focus        button1
-
-detach polybar -q main &
-detach polybar -q secondary &
+bspc config external_rules_command "$XDG_CONFIG_HOME/bspwm/rules"

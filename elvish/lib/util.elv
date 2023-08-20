@@ -64,3 +64,7 @@ fn add-after-command {|@hooks|
     }
   }
 }
+
+fn eval-namespace {|&ns=(ns [&]) code|
+  eval &ns=$ns &on-end=$put~ $code
+}

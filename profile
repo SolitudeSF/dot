@@ -4,25 +4,24 @@ XDG_DATA_HOME=$HOME/.local/share
 XDG_STATE_HOME=$HOME/.local/state
 XDG_CACHE_HOME=$HOME/.local/cache
 XDG_CONFIG_HOME=$HOME/.local/etc
-XDG_RUNTIME_DIR=/tmp/runtime-$USER
+XDG_RUNTIME_DIR=/run/user/$(id -u)
 XBPS_DISTDIR=$HOME/git/void-packages
 DOTS_DIR=$HOME/dot
 GOPATH=$XDG_DATA_HOME/go
 CARGO_HOME=$XDG_DATA_HOME/cargo
-GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
-
-mkdir -p -m=0700 "$XDG_RUNTIME_DIR"
+GRADLE_USER_HOME=$XDG_DATA_HOME/gradle
 
 # Override system variables
 PATH=$HOME/.local/bin:$DOTS_DIR/bin:$HOME/.nimble/bin:$CARGO_HOME/bin:$GOPATH/bin:$PATH
 
-GPG_TTY=$(tty)
 EDITOR=kak
 VISUAL=kak
 
 NO_AT_BRIDGE=1
+DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh.agent
 GNUPGHOME=$XDG_DATA_HOME/gnupg
-GPG_AGENT_INFO=$XDG_RUNTIME_DIR/S.gpg-agent::1
+GPG_TTY=$(tty)
 NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 RUSTUP_HOME=$XDG_DATA_HOME/rustup
 
@@ -31,13 +30,8 @@ unset LS_COLORS
 export \
  XDG_DATA_HOME XDG_RUNTIME_DIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_STATE_HOME \
  XBPS_DISTDIR DOTS_DIR TERMINAL EDITOR VISUAL GOPATH CARGO_HOME RUSTUP_HOME \
- GPG_TTY GPG_AGENT_INFO GNUPGHOME NO_AT_BRIDGE NPM_CONFIG_USERCONFIG GRADLE_USER_HOME
-
-# Init sharable {ssh,gpg}-agent
-UID=$(id -u)
-pgrep -xu "$UID" gpg-agent || gpg-agent -q --daemon
-pgrep -xu "$UID" ssh-agent || ssh-agent >"$XDG_RUNTIME_DIR/ssh-env"
-. "$XDG_RUNTIME_DIR/ssh-env"
+ SSH_AUTH_SOCK GPG_TTY GPG_AGENT_INFO GNUPGHOME NO_AT_BRIDGE NPM_CONFIG_USERCONFIG GRADLE_USER_HOME \
+ DBUS_SESSION_BUS_ADDRESS
 
 # Start X or shell
 if [ "$GPG_TTY" = /dev/tty1 ]; then
@@ -51,6 +45,6 @@ if [ "$GPG_TTY" = /dev/tty1 ]; then
 	 _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS QT_QPA_PLATFORMTHEME \
 	 GTK2_RC_FILES TERMINAL XCOMPOSEFILE
 
-	exec dbus-launch sx
+	exec dinit -d "$XDG_CONFIG_HOME/dinit.d"
 fi
 exec elvish

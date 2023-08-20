@@ -24,6 +24,7 @@ set global modelinefmt '%opt{git_branch_str}%val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
 {{context_info}}◂%val{client}⊙%val{session}▸'
 set global disabled_hooks '.+-insert'
+set global path '%/' ./
 
 alias global sw sudo-write
 alias global cdb change-directory-current-buffer
@@ -166,12 +167,12 @@ hook global WinSetOption filetype=(?!scrollback).* %{
       addhl window/ruler column 100 default,rgb:303030
       addhl window/trailing-whitespace regex '\h+$' 0:default,red
       addhl window/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
-      addhl window/matching-brackets show-matching
+      addhl window/matching-brackets show-matching -previous
       addhl window/wrap wrap -word -indent -marker ''
 
       smarttab
       readline-enable
-      colorcol-enabl
+      colorcol-enable
       colorcol-refresh-continuous
       indentguide-enable
       indentguide-refresh-continuous

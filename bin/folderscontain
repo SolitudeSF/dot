@@ -1,3 +1,2 @@
 #!/bin/sh
-for i; do ext="$ext -e $i"; done
-if [ "$ext" ]; then fd -L $ext | xe dirname | sort | uniq; fi
+(for i; do f -t f ".$i" -e dirname; done) | sort | uniq

@@ -87,11 +87,12 @@ switch "hint", "Dependency:on"
 switch "hint", "MsgOrigin:off"
 switch "processing", "filenames"
 
+switch "passC", "-fdiagnostics-urls=always"
+switch "passL", "-fdiagnostics-urls=always"
+
 # Way of Nim
-# --gc:orc
 # --experimental:strictEffects
 --experimental:unicodeOperators
-# --experimental:overloadableEnums
 --define:nimPreviewDotLikeOps
 --define:nimPreviewFloatRoundtrip
 --define:nimStrictDelete

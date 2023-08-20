@@ -1,0 +1,4 @@
+type = process
+command = unclutter
+depends-on = xorg
+restart = yes

@@ -1,0 +1,4 @@
+type = process
+command = mpd --no-daemon
+after = pipewire
+restart = yes

@@ -2,12 +2,16 @@ set-env GPG_TTY (tty)
 set-env CCACHE_DIR $E:XDG_CACHE_HOME/ccache
 
 use epm
+use os
 use doc
 use str
-use util
 use path
+
+use util
 use config
-use rtx
+use atuin
+
+var rtx: = (util:eval-namespace (rtx activate elvish | slurp))
 
 fn xqt {|a| e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
@@ -18,13 +22,11 @@ fn r {|@a|
 }
 
 fn edit-current-command {
-  var temp-file = "/tmp/elvish-edit-command-$pid.elv"
+  var temp-file = "/tmp/elvish-edit-command-"$pid".elv"
   print $edit:current-command > $temp-file
-  e $temp-file </dev/tty >/dev/tty 2>&1
-  set edit:current-command = (slurp < $temp-file | str:trim-right (one) "\n")
+  e $temp-file <$path:dev-tty >$path:dev-tty 2>&1
+  set edit:current-command = (slurp <$temp-file | str:trim-right (one) "\n")
 }
-
-fn chatgpt {|@a| tmp E:CHATGPT_API_KEY = (str:trim-space (slurp <~/sns/chatgpt)); e:chatgpt $@a }
 
 fn newdir {|name| mkdir -p $name; put $name }
 
@@ -35,8 +37,10 @@ var cat~ = (alias bat --paging=never)
 var xr~ = (alias sudo xbps-remove -R)
 var o~ = (alias gio open)
 var g~ = (alias kitten hyperlinked_grep)
+var f~ = (alias f --hyperlink=auto)
 
 set edit:insert:binding[Ctrl-X] = { edit:-instant:start }
+set edit:insert:binding[Ctrl-N] = { edit:navigation:start; edit:navigation:trigger-filter }
 set edit:insert:binding[Alt-E] = { edit-current-command }
 set edit:insert:binding[Alt-q] = {
   var oldlen = (count $edit:current-command)
@@ -44,6 +48,7 @@ set edit:insert:binding[Alt-q] = {
   set edit:current-command = "pueue add -- "$edit:current-command
   set edit:-dot = (+ $olddot (- (count $edit:current-command) $oldlen))
 }
+set edit:insert:binding[Alt-r] = { edit:replace-input (atuin:search $edit:current-command) }
 
 set edit:abbr = [
   &'.etc'='~/.local/etc/'
@@ -67,5 +72,7 @@ set edit:abbr = [
   }
 }
 
+eval (navi widget elvish | slurp)
 rtx:activate
+atuin:activate
 -override-wcwidth 🦀 2
