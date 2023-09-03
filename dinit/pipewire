@@ -1,4 +1,3 @@
 type = process
 command = pipewire
 depends-on = dbus-session
-restart = yes

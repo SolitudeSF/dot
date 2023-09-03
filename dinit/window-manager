@@ -1,2 +1,2 @@
 type = internal
-waits-for.d = window-manager.d
+depends-on = bspwm

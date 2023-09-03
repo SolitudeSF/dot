@@ -1,4 +1,3 @@
 type = process
 command = strat void /usr/libexec/polkit-mate-authentication-agent-1
 depends-on = xorg
-restart = yes

@@ -2,4 +2,3 @@ type = process
 command = wireplumber
 depends-on = pipewire
 after = pipewire-pulse
-restart = yes

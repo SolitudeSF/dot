@@ -218,14 +218,17 @@ set edit:completion:arg-completer[brl] = {|@cmd|
   if (not $brl-cmds) {
     set @brl-cmds = (brl -h | take 36 | drop 5 | each {|x| put (re:find &max=1 '^  \w+' $x)[text][2..] })
   }
-  if (at-command $cmd) {
+  var has-command = (overlap-at $brl-cmds $cmd)
+  if (not $has-command) {
     all $brl-cmds
   } else {
-    var c = $cmd[1]
+    var c = $cmd[$has-command]
     if (has-value [status enable disable hide show] $c) {
       brl list
     } elif (eq $c fetch) {
       brl fetch -L
+    } elif (eq $c which) {
+      edit:complete-sudo (all $cmd[$has-command..])
     }
   }
 }

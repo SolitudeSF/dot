@@ -32,7 +32,7 @@ fn index-of {|a b|
 }
 
 fn pad {|a b &with=' ' &left=$true|
-  set a = (to-string $a)
+  var a = (to-string $a)
   var p = (repeat (- $b (count $a)) $with | str:join '')
   if $left {
     put $p$a

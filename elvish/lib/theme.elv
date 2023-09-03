@@ -47,11 +47,11 @@ fn duration {
   }
 
   if (> $h 0) {
-    styled ' ⏱'$h':'(util:pad $m 2 &with=0)':'(util:pad $s 2 &with=0) bold
+    styled ' ⏱ '$h':'(util:pad $m 2 &with=0)':'(util:pad $s 2 &with=0) bold
   } elif (> $m 0) {
-    styled ' ⏱'$m':'(util:pad $s 2 &with=0) bold
+    styled ' ⏱ '$m':'(util:pad $s 2 &with=0) bold
   } elif (> $s 5) {
-    styled ' ⏱'$s bold
+    styled ' ⏱ '$s bold
   }
 }
 
@@ -62,7 +62,7 @@ fn git {
       styled ' +'$git:untracked magenta
     }
     if (not-eq $git:dirty 0) {
-      styled ' ✎'$git:dirty red
+      styled ' ✎ '$git:dirty red
     }
     if (not-eq $git:staged 0) {
       styled ' ✓'$git:staged green
@@ -84,7 +84,7 @@ set edit:prompt = {
 
 set edit:rprompt = {
   if (not-eq $num-bg-jobs 0) {
-    put ' '$num-bg-jobs
+    put '  '$num-bg-jobs
   }
   duration
   git

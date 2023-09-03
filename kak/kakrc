@@ -71,12 +71,12 @@ map global anchor -docstring 'reduce to anchor' a '<a-;>;'
 map global anchor -docstring 'reduce to cursor' c ';'
 map global anchor -docstring 'select cursor and anchor' s '<a-S>'
 
-map global user -docstring 'clip-paste after' p '<a-!>xsel -b -o<ret>'
-map global user -docstring 'clip-paste before' P '!xsel -b -o<ret>'
-map global user -docstring 'clip-paste replace' R '|xsel -b -o<ret>'
-map global user -docstring 'clip-yank' y '<a-|>xclip -i -f -sel c<ret>'
-map global user -docstring 'clip-cut' d '<a-|>xclip -i -f -sel c<ret><a-d>'
-map global user -docstring 'clip-cut -> insert mode' c '<a-|>xclip -i -f -sel c<ret><a-c>'
+map global user -docstring 'clip-paste after' p '<a-!>clip-paste<ret>'
+map global user -docstring 'clip-paste before' P '!clip-paste<ret>'
+map global user -docstring 'clip-paste replace' R '|clip-paste<ret>'
+map global user -docstring 'clip-yank' y '<a-|>clip-copy<ret>'
+map global user -docstring 'clip-cut' d '<a-|>clip-copy<ret><a-d>'
+map global user -docstring 'clip-cut -> insert mode' c '<a-|>clip-copy<ret><a-c>'
 
 # Functions
 

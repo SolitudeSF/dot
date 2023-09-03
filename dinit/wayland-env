@@ -1,0 +1,2 @@
+type = scripted
+command = $XDG_CONFIG_HOME/dinit.d/scripts/wayland-env

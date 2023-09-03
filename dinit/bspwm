@@ -1,4 +1,3 @@
 type = process
 command = strat void bspwm
 depends-on = xorg
-restart = true

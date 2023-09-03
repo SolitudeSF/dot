@@ -1,4 +1,3 @@
 type = process
 command = picom
 depends-on = xorg
-restart = yes

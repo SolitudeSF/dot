@@ -28,8 +28,7 @@ fn nim { edit $conf/nim/config.nims }
 fn min { edit $E:HOME/.minrc }
 fn ntr { tmp pwd = $conf/ntr; edit (select) }
 fn splug { edit $conf/splug/config.toml }
-fn kitty { edit &type=ini $conf/kitty/kitty.conf }
-fn kitty-diff { edit &type=ini $conf/kitty/diff.conf }
+fn kitty { tmp pwd = $conf/kitty; edit &type=ini (select) }
 fn kitty-colors { edit &type=ini $dot/ntr/templates/kitty-colors }
 fn ranger { edit $conf/ranger/rc.conf }
 fn rifle { edit $conf/ranger/rifle.conf }
@@ -42,3 +41,5 @@ fn ncmpcpp { edit &type=ini $conf/ncmpcpp/config }
 fn bedrock { edit /bedrock/etc/bedrock.conf; sudo brl apply }
 fn homepage { edit $dot/firefox/homepage.nims; e:nim e -p:$E:HOME/sns/ $dot/firefox/homepage.nims >~/.mozilla/firefox/homepage.html }
 fn layout { edit $dot/layout.xkb; xkbcomp $dot/layout.xkb $E:DISPLAY }
+fn dinit { tmp pwd = $conf/dinit.d; edit (select) }
+fn hyprland { edit $conf/hypr/hyprland.conf }

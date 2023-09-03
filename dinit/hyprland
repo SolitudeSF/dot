@@ -1,0 +1,4 @@
+type = process
+command = Hyprland
+depends-on = dbus-session
+ready-notification = pipefd:4
