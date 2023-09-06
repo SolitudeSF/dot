@@ -322,6 +322,14 @@ set edit:completion:arg-completer[vkpurge] = {|@cmd|
   }
 }
 
+set edit:completion:arg-completer[dinitctl] = {|@cmd|
+  var cmds = [status is-started is-failed start stop restart wake release unpin unload reload list shutdown add-dep rm-dep enable disable trigger untrigger setenv catlog signal]
+  var cmd-pos = (overlap-at $cmds $cmd)
+  if (not $cmd-pos) {
+    all $cmds
+  }
+}
+
 set edit:completion:arg-completer[edit-script] = $edit:complete-sudo~
 set edit:completion:arg-completer[whereis] = $edit:complete-sudo~
 set edit:completion:arg-completer[which] = $edit:complete-sudo~

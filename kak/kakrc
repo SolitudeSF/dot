@@ -2,6 +2,7 @@
 
 eval %sh{
     kak-lsp --kakoune -s $kak_session
+    kak-tree-sitter -dks --session $kak_session
     colorcol
     indentguide
 }
