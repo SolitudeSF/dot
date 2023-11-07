@@ -21,6 +21,12 @@ fn r {|@a|
   rm -f $f
 }
 
+fn d {|@a|
+  var f = (mktemp)
+  if ?(yazi --cwd-file=$f $@a) { cd (e:cat $f) }
+  rm -f $f
+}
+
 fn edit-current-command {
   var temp-file = "/tmp/elvish-edit-command-"$pid".elv"
   print $edit:current-command > $temp-file
