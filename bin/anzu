@@ -1,2 +1,0 @@
-#!/bin/sh
-kitty +kitten icat "$(randfile "$HOME/pic/anzu")"

@@ -1,2 +1,0 @@
-#!/bin/sh
-nim check --hints:off --colors:off --stdout "$1" | sd '\(([1-9]\d*), ([1-9]\d*)\)' ':$1:$2:'

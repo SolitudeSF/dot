@@ -31,13 +31,22 @@ fn index-of {|a b|
   num -1
 }
 
-fn pad {|a b &with=' ' &left=$true|
-  var a = (to-string $a)
-  var p = (repeat (- $b (count $a)) $with | str:join '')
+fn pad {|str len &with=' ' &left=$true|
+  var a = (to-string $str)
+  var p = (repeat (- $len (count $a)) $with | str:join '')
   if $left {
     put $p$a
   } else {
     put $a$p
+  }
+}
+
+fn replace-ext {|file ext|
+  var dot = (str:last-index $file .)
+  if (!= $dot -1) {
+    put $file[0..(+ 1 $dot)]$ext
+  } else {
+    put $file'.'$ext
   }
 }
 
@@ -67,4 +76,16 @@ fn add-after-command {|@hooks|
 
 fn eval-namespace {|&ns=(ns [&]) code|
   eval &ns=$ns &on-end=$put~ $code
+}
+
+fn mimes {|@files|
+  var result = [&]
+  each {|file|
+    set result[$file] = [
+      &file=(file -bL --mime-type $file)
+      &xdg-mime=(xdg-mime query filetype $file)
+      &handlr=(handlr mime --json $file | from-json)[0][mime]
+    ]
+  } $files
+  put $result
 }

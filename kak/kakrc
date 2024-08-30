@@ -2,20 +2,21 @@
 
 eval %sh{
     kak-lsp --kakoune -s $kak_session
-    kak-tree-sitter -dks --session $kak_session
+    kak-tree-sitter -dks -vvvvv --init $kak_session
     colorcol
-    indentguide
 }
 
 # Initialization
 
 colorscheme ntr
 
+require-module grep
 require-module search-highlighter
 require-module word-select
 require-module replace-mode
 require-module fandt
 require-module kakpipe
+require-module kittyutils
 
 set global ui_options terminal_assistant=none
 set global scrolloff 7,7
@@ -23,7 +24,7 @@ set global autoreload yes
 set global grepcmd 'rg -iHL --column --vimgrep'
 set global modelinefmt '%opt{git_branch_str}%val{bufname}
 %val{cursor_line}:%val{cursor_char_column} {{mode_info}}
-{{context_info}}◂%val{client}⊙%val{session}▸'
+{{context_info}}{MenuForeground}%val{client}⊙%val{session}'
 set global disabled_hooks '.+-insert'
 set global path '%/' ./
 
@@ -33,6 +34,7 @@ alias global f find
 alias global g grep
 
 face global LineNumbersWrapped black
+face global WhitespaceIndent bright-black,default+d
 
 # Keybinds
 
@@ -78,6 +80,8 @@ map global user -docstring 'clip-paste replace' R '|clip-paste<ret>'
 map global user -docstring 'clip-yank' y '<a-|>clip-copy<ret>'
 map global user -docstring 'clip-cut' d '<a-|>clip-copy<ret><a-d>'
 map global user -docstring 'clip-cut -> insert mode' c '<a-|>clip-copy<ret><a-c>'
+
+map global normal -docstring 'Enter tree-sitter mode' <c-space> ': enter-user-mode tree-sitter<ret>'
 
 # Functions
 
@@ -170,6 +174,7 @@ hook global WinSetOption filetype=(?!scrollback).* %{
       addhl window/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
       addhl window/matching-brackets show-matching -previous
       addhl window/wrap wrap -word -indent -marker ''
+      addhl window/indent show-whitespaces -indent '🭰' -spc ' ' -nbspc ' ' -lf ' ' -tab ' ' -tabpad ' '
 
       smarttab
       readline-enable
@@ -207,7 +212,7 @@ eval %sh{ git rev-parse --is-inside-work-tree 2>/dev/null 1>/dev/null && printf 
 "}
 
 hook global ModuleLoaded kitty %{
-    set global kitty_window_type kitty
+    set global kitty_window_type os-window
 }
 
 # Filetype detection
@@ -221,7 +226,9 @@ hook global BufCreate .*/\.?((sx|xinit)(rc)?|profile) %{ set buffer filetype sh 
 hook global BufCreate .*\.ino %{ set buffer filetype cpp }
 hook global BufCreate .*\.cs %{ addhl buffer/java ref java }
 hook global BufCreate .*\.rasi %{ set buffer filetype css }
+hook global BufCreate .*\.nu %{ set buffer filetype nu }
 hook global BufCreate .*\.sccprofile %{ set buffer filetype json }
+hook global BufCreate .*hyprland\.conf %{ set buffer filetype hyprlang }
 
 # Filetype settings
 
@@ -261,16 +268,34 @@ hook global WinSetOption filetype=rust %{
 
 hook global WinSetOption filetype=markdown %{
     set window formatcmd 'prettier --parser markdown'
+    lsp-engage
 }
 
 hook global WinSetOption filetype=python %{
-    set global lsp_server_configuration pyls.plugins.jedi_completion.include_params=false
     lsp-engage
 }
 
 hook global WinSetOption filetype=nim %{
-    set window gdb_program 'nim-gdb'
     set window formatcmd 'nimprettify'
     no-tabs 2
+    lsp-engage
+    lsp-inlay-hints-enable window
+}
+
+hook global WinSetOption filetype=toml %{
+    set window formatcmd 'taplo fmt -'
+    lsp-engage
+}
+
+hook global WinSetOption filetype=json %{
+    set window formatcmd 'biome format --stdin-file-path=t.json'
+    lsp-engage
+}
+
+hook global WinSetOption filetype=lua %{
+    lsp-engage
+}
+
+hook global WinSetOption filetype=nu %{
     lsp-engage
 }

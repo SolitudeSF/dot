@@ -67,6 +67,3 @@ files = ["repl.lua"]
 
 ["https://github.com/mfcc64/mpv-scripts"]
 files = ["visualizer.lua"]
-
-["https://github.com/Eisa01/mpv-scripts"]
-files = ["scripts/UndoRedo.lua", "scripts/SmartCopyPaste.lua"]

@@ -2,18 +2,7 @@ provide-module kittyutils %{
 
 require-module kitty
 
-define-command new-tab -params .. -command-completion -docstring '
-new-tab [<commands>]: create a new kakoune client in new tab
-The ''terminal-tab'' alias is being used to determine the user''s preferred terminal emulator
-The optional arguments are passed as commands to the new client' %{
-    try %{
-        terminal-tab kak -c %val{session} -e "%arg{@}"
-    } catch %{
-        fail "The 'terminal-tab' alias must be defined to use this command"
-    }
-}
-
-define-command kitty-terminal-overlay -params 1.. -shell-completion -docstring '
+define-command kitty-terminal-overlay -params 1.. -docstring '
 kitty-terminal <program> [<arguments>]: create a new terminal as a kitty overlay window
 The program passed as argument will be executed in the new terminal' \
 %{
@@ -26,10 +15,9 @@ The program passed as argument will be executed in the new terminal' \
         if [ -n "$kak_client_env_KITTY_LISTEN_ON" ]; then
             listen="--to=$kak_client_env_KITTY_LISTEN_ON"
         fi
-        kitty @ $listen launch --no-response --type="overlay" --cwd="$PWD" $match "$@"
+        kitty @ $listen launch --no-response --type=overlay --cwd="$PWD" $match "$@"
     }
 }
+complete-command kitty-terminal-overlay shell
 
 }
-
-require-module kittyutils

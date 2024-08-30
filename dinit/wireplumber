@@ -1,4 +1,4 @@
 type = process
-command = wireplumber
+command = strat arch wireplumber
 depends-on = pipewire
 after = pipewire-pulse

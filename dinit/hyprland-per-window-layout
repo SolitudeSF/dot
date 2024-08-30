@@ -1,0 +1,3 @@
+type = process
+command = hyprland-per-window-layout
+depends-on = hyprland

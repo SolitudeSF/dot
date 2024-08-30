@@ -9,8 +9,8 @@ Lock screen
 Reboot
 Power-off
 " | rofi -width 20 -lines 4 -dmenu -no-custom -i -format i -p 'Powermenu: ')" in
-	0) $LOCKSCREEN & sudo -n zzz;;
+	0) $LOCKSCREEN & loginctl suspend;;
 	1) $LOCKSCREEN & xset dpms force off;;
-	2) sudo -n reboot;;
-	3) sudo -n poweroff;;
+	2) loginctl reboot;;
+	3) loginctl poweroff;;
 esac

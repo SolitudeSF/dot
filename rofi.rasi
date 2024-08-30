@@ -1,6 +1,6 @@
 configuration {
         modi: "run,drun";
-        font: "Iosevka 12";
+        font: "Iosevka 14";
         show-icons: true;
         terminal: "kitty -1";
         ssh-client: "ssh";

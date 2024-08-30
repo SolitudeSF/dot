@@ -26,14 +26,6 @@ fn prefix-completer {|p a|
   }
 }
 
-set edit:completion:arg-completer[kak] = {|@cmd|
-  if (eq $cmd[-2] -c) {
-    kak -l | each {|x| if (not-eq $x[-1] ')') { put $x } }
-  } else {
-    edit:complete-filename $cmd[-1]
-  }
-}
-
 set edit:completion:arg-completer[waifu2x-converter-cpp] = {|@cmd|
   if (has-value [-i --input -o --output] $cmd[-2]) {
     edit:complete-filename $cmd[-1]
@@ -81,7 +73,7 @@ set edit:completion:arg-completer[man] = {|@cmd|
 
 set edit:completion:arg-completer[kill] = {|@cmd|
   ps -u (whoami) --no-headers -o pid,command |^
-    eawk {|_ p @c| edit:complex-candidate &display=(print ' '$@c) $p }
+    re:awk {|_ p @c| edit:complex-candidate &display=(print ' '$@c) $p }
 }
 
 set edit:completion:arg-completer[nimble] = {|@cmd|
@@ -89,17 +81,17 @@ set edit:completion:arg-completer[nimble] = {|@cmd|
     put {un,}install develop check init publish build c cc js test doc{,2} ^
       refresh search list tasks path dump
     if (> (count [*[nomatch-ok].nimble]) 0) {
-      nimble tasks 2>&- | eawk {|_ a @_| put $a }
+      nimble tasks 2>&- | re:awk {|_ a @_| put $a }
     }
   } elif (eq $cmd[-2] install) {
     for x (from-json <~/.nimble/packages_official.json) { put $x[name] }
   } elif (eq $cmd[-2] uninstall) {
     var idx = (util:index-of $cmd[-1] '@')
     if (== $idx -1) {
-      nimble list -i | eawk {|_ n @_| put $n }
+      nimble list -i | re:awk {|_ n @_| put $n }
     } else {
       var pkgs = [&]
-      nimble list -i | eawk {|_ n @v|
+      nimble list -i | re:awk {|_ n @v|
         var @ver = $@v[..-1]
         set ver[0] = $ver[0][1..]
         set pkgs[$n] = $ver
@@ -110,30 +102,6 @@ set edit:completion:arg-completer[nimble] = {|@cmd|
       }
     }
   }
-}
-
-var pijul-cmds = [add apply branches checkout clone credit delete-branch diff dist^
-            generate-completions help init key log ls mv patch pull push^
-            record remove revert rollback show-dependencies sign status tag unrecord]
-
-set edit:completion:arg-completer[pijul] = {|@cmd|
-  if (== (count $cmd) 2) {
-    all $pijul-cmds
-  }
-}
-
-var neofetch-img = [ascii caca iterm2 jp2a kitty pixterm sixel termpix tycat w3m off]
-var neofetch-opts = $nil
-
-set edit:completion:arg-completer[neofetch] = {|@cmd|
-  if (not $neofetch-opts) {
-    set neofetch-opts = [(set _ = ?(neofetch --help | each {|x|
-      if (str:has-prefix $x '    --') {
-        put $x | eawk {|_ a @_| put $a }
-      }
-    })) --logo -L -v -vv]
-  }
-  all $neofetch-opts
 }
 
 set edit:completion:arg-completer[bspc] = {|@cmd|
@@ -153,20 +121,6 @@ set edit:completion:arg-completer[bspc] = {|@cmd|
 set edit:completion:arg-completer[ntr] = {|@cmd|
   if (not (str:has-prefix $cmd[-1] '-')) {
     tmp pwd = $E:XDG_CONFIG_HOME/ntr/contexts; put **
-  }
-}
-
-set edit:completion:arg-completer[mpv] = {|@cmd|
-  if (and (> (count $cmd[-1]) 0) (eq $cmd[-1][0] '-')) {
-    mpv --list-options | drop 2 | take 872 | eawk {|_ a @b|
-      if (== (count $b) 0) {
-        put $a
-      } else {
-        edit:complex-candidate $a &display=' '(str:join ' ' $b)
-      }
-    }
-  } else {
-    edit:complete-filename $cmd[-1]
   }
 }
 
@@ -212,25 +166,24 @@ set edit:completion:arg-completer[strat] = {|@cmd|
   }
 }
 
-var brl-cmds = $nil
-
 set edit:completion:arg-completer[brl] = {|@cmd|
-  if (not $brl-cmds) {
-    set @brl-cmds = (brl -h | take 36 | drop 5 | each {|x| put (re:find &max=1 '^  \w+' $x)[text][2..] })
-  }
-  var has-command = (overlap-at $brl-cmds $cmd)
-  if (not $has-command) {
-    all $brl-cmds
-  } else {
-    var c = $cmd[$has-command]
-    if (has-value [status enable disable hide show] $c) {
-      brl list
-    } elif (eq $c fetch) {
-      brl fetch -L
-    } elif (eq $c which) {
-      edit:complete-sudo (all $cmd[$has-command..])
+  var @brl-cmds = (brl -h | take 36 | drop 5 | each {|x| put (re:find &max=1 '^  \w+' $x)[text][2..] })
+  set edit:completion:arg-completer[brl] = {|@cmd|
+    var has-command = (overlap-at $brl-cmds $cmd)
+    if (not $has-command) {
+      all $brl-cmds
+    } else {
+      var c = $cmd[$has-command]
+      if (has-value [status enable disable hide show] $c) {
+        brl list
+      } elif (eq $c fetch) {
+        brl fetch -L
+      } elif (eq $c which) {
+        edit:complete-sudo (all $cmd[$has-command..])
+      }
     }
   }
+  $edit:completion:arg-completer[brl] $@cmd
 }
 
 set edit:completion:arg-completer[tam] = {|@cmd|
@@ -262,16 +215,6 @@ set edit:completion:arg-completer[handlr] = {|@cmd|
     }
   } else {
     edit:complete-filename $@cmd
-  }
-}
-
-set edit:completion:arg-completer[flatpak] = {|@cmd|
-  if (at-command $cmd) {
-    flatpak --help | peach {|x| put (re:find '^  ([a-z-]+)' $x)[groups][1][text] }
-  } elif (and (== (count $cmd) 3) (has-value [run uninstall] $cmd[-2])) {
-    flatpak list --columns=application,name | drop 0 | eawk {|_ id @name|
-      edit:complex-candidate $id &display=(styled (str:join ' ' $name)' ')(styled $id blue)
-    }
   }
 }
 
@@ -330,6 +273,24 @@ set edit:completion:arg-completer[dinitctl] = {|@cmd|
   }
 }
 
+set edit:completion:arg-completer[stratify] = {|@cmd|
+  if (== 2 (count $cmd)) { brl list }
+}
+
+set edit:completion:arg-completer[playerctl] = {|@cmd|
+  var cmds = [play pause play-pause stop next previous position volume status metadata open loop shuffle]
+  var cmd-pos = (overlap-at $cmds $cmd)
+  if (not $cmd-pos) {
+    all $cmds
+  } elif (eq $cmd[$cmd-pos] open) {
+    edit:complete-filename $cmd[-1]
+  } elif (eq $cmd[$cmd-pos] loop) {
+    put None Track Playlist
+  } elif (eq $cmd[$cmd-pos] shuffle) {
+    put On Off Toggle
+  }
+}
+
 set edit:completion:arg-completer[edit-script] = $edit:complete-sudo~
 set edit:completion:arg-completer[whereis] = $edit:complete-sudo~
 set edit:completion:arg-completer[which] = $edit:complete-sudo~
@@ -346,3 +307,10 @@ var prefixes = [
 ]
 
 keys $prefixes | each {|k| prefix-completer $k $prefixes[$k] }
+
+each {|c|
+  set edit:completion:arg-completer[$c] = {|@arg|
+      eval (carapace $c elvish | slurp)
+      $edit:completion:arg-completer[$c] $@arg
+  }
+} [git kak ffmpeg cargo mkdir dd rsync yt-dlp gitui mpv env set-env unset-env elvish nu sysctl mount umount go pip gdb bluetoothctl]

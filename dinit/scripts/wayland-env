@@ -1,2 +1,6 @@
 #!/bin/sh
-dinitctl setenv GDK_BACKEND=wayland,x11 QT_QPA_PLATFORM=wayland;xcb SDL_VIDEODRIVER=wayland
+export GDK_BACKEND=wayland,x11
+export QT_QPA_PLATFORM='wayland;xcb'
+export SDL_VIDEODRIVER=wayland
+dinitctl setenv GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER
+dbus-update-activation-environment GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER

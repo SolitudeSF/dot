@@ -1,41 +1,46 @@
 set-env GPG_TTY (tty)
 set-env CCACHE_DIR $E:XDG_CACHE_HOME/ccache
+set-env NUGET_PACKAGES $E:XDG_CACHE_HOME/NuGetPackages
 
 use epm
 use os
 use doc
 use str
 use path
+use file
 
 use util
 use config
 use atuin
 
-var rtx: = (util:eval-namespace (rtx activate elvish | slurp))
+var mise: = (util:eval-namespace (mise activate elvish | slurp))
 
 fn xqt {|a| e $E:XBPS_DISTDIR/srcpkgs/$a/template }
 
-fn r {|@a|
-  var f = (mktemp)
-  if ?(ranger --choosedir=$f $@a) { cd (e:cat $f) }
-  rm -f $f
-}
-
 fn d {|@a|
-  var f = (mktemp)
-  if ?(yazi --cwd-file=$f $@a) { cd (e:cat $f) }
-  rm -f $f
+  var f = (os:temp-file "yazi-*")
+  if ?(yazi --cwd-file=$f[name] $@a) { cd (slurp <$f) }
+  file:close $f
+  os:remove $f[name]
 }
 
 fn edit-current-command {
-  var temp-file = "/tmp/elvish-edit-command-"$pid".elv"
-  print $edit:current-command > $temp-file
-  e $temp-file <$path:dev-tty >$path:dev-tty 2>&1
-  set edit:current-command = (slurp <$temp-file | str:trim-right (one) "\n")
+  var temp-file = (os:temp-file "*.elv")
+  print $edit:current-command >$temp-file
+  try {
+    e $temp-file[name] <$path:dev-tty >$path:dev-tty 2>&1
+    set edit:current-command = (slurp <$temp-file | str:trim-right (one) "\n")
+  } finally {
+    file:close $temp-file
+    os:remove $temp-file[name]
+  }
 }
 
-fn newdir {|name| mkdir -p $name; put $name }
+fn stratify {|strata| exec strat $strata elvish }
+fn newdir {|name| os:mkdir-all $name; put $name }
+fn prev { kitty @ get-text --extent=last_non_empty_output }
 
+fn .. { cd .. }
 fn alias {|cmd @a| put {|@b| (external $cmd) $@a $@b } }
 
 var ls~ = (alias lc)
@@ -60,6 +65,12 @@ set edit:abbr = [
   &'.etc'='~/.local/etc/'
 ]
 
+set before-chdir = (conj $before-chdir {|_|
+  set edit:location:pinned = [$pwd (take 4 [(each {|dir|
+    if (not (eq $pwd $dir)) { put $dir }
+  } $edit:location:pinned )] )]
+})
+
 {
   use theme
   use completers
@@ -79,6 +90,6 @@ set edit:abbr = [
 }
 
 eval (navi widget elvish | slurp)
-rtx:activate
+mise:activate
 atuin:activate
 -override-wcwidth 🦀 2

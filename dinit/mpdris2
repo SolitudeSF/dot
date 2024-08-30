@@ -1,3 +1,4 @@
 type = process
-command = strat arch pipewire
+command = mpDris2
 depends-on = dbus-session
+depends-on = mpd

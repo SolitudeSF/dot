@@ -3,7 +3,7 @@ use re
 c = [&]
 all | each [l]{
   if (re:match '^(\*\.?|URxvt\*)' $l) {
-     put $l | eawk [_ k @v]{
+     put $l | re:awk [_ k @v]{
        if (eq (count $v) 1) { c[(re:replace '(^\*\.?|^URxvt\*|:$)' '' $k)] = $v[0] }
      }
   }

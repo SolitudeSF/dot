@@ -1,5 +1,7 @@
 #!/usr/bin/env elvish
 
+use os
+use file
 use path
 
 fn list-items {|a|
@@ -30,35 +32,31 @@ if (== (count $args) 0) {
   }
 }
 
-var file = (mktemp -p /tmp elvmvXXXXX)
+var file = (os:temp-file elvmv)
 print > $file
 
 for i $items {
   echo $i >> $file
 }
 
-fn abort {|&code=1 a|
-  echo $a >&2
-  rm $file
-  exit $code
-}
-
 try {
   (external (get-editor)) $file
 } catch {
-  rm $file
-  abort 'Editor exited with error. Aborting...'
+  os:remove $file
+  echo 'Editor exited with error. Aborting...' >&2
+  exit 1
 }
 
 var i = 0
-cat $file | each {|l|
+cat $file[name] | each {|l|
   if (eq $l '') {
-    rm $items[$i]
+    os:remove-all $items[$i]
   } elif (not-eq $l $items[$i]) {
-    mkdir -p (path:dir $l)
-    mv $items[$i] $l
+    os:mkdir-all (path:dir $l)
+    os:rename $items[$i] $l
   }
   set i = (+ $i 1)
 }
 
-rm $file
+file:close $file
+os:remove $file[name]

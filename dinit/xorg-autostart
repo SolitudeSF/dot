@@ -1,4 +1,0 @@
-type = scripted
-command = $XDG_CONFIG_HOME/dinit.d/scripts/xorg-autostart
-depends-on = xorg
-restart = false

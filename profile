@@ -33,15 +33,15 @@ export \
 
 if [ "$GPG_TTY" = /dev/tty1 ]; then
 	GTK2_RC_FILES=$XDG_CONFIG_HOME/gtk-2.0/gtkrc
-	QT_QPA_PLATFORMTHEME=gtk2
+	QT_QPA_PLATFORMTHEME=qt6ct
 	TERMINAL='kitty -1'
 	_JAVA_AWT_WM_NONREPARENTING=1
-	_JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+	_JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java -Djavafx.cachedir=$XDG_CACHE_HOME/openjfx -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 	XCOMPOSEFILE=$XDG_CONFIG_HOME/X11/xcompose
 	export \
 	 _JAVA_AWT_WM_NONREPARENTING _JAVA_OPTIONS QT_QPA_PLATFORMTHEME \
 	 GTK2_RC_FILES TERMINAL XCOMPOSEFILE
 
-	exec dinit -d "$XDG_CONFIG_HOME/dinit.d"
+	exec dinit
 fi
 exec elvish

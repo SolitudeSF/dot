@@ -10,11 +10,8 @@ super + End ; b
 	xset dpms force off
 
 # rofi
-super + shift + {End,Insert,Return}
-	exec {rofi-powermenu,rofi-bspwm-unhide,rofi -modi emoji -show emoji}
-
-super + shift + space
-	exec rofi -modi calc -show calc
+super + shift + {End,Insert,Return,space}
+	exec rofi{-powermenu,-bspwm-unhide, -modi emoji -show emoji, -modi calc -show calc}
 
 super + space
 	exec rofi -show drun
@@ -29,18 +26,18 @@ super + Return
 super + Pause
 	exec xpause
 
-super + shift + {m,v,p,e}
-	exec {mpv "$(xclip -sel c -o)",pavucontrol,gnome-system-monitor,pcmanfm}
+super + shift + {m,v,p,alt + p,e}
+	exec {mpv "$(clip-paste)",pavucontrol,gnome-system-monitor,missioncenter,pcmanfm}
 
 super + shift + n
 	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \
-		ncmpcpp
+		rmpc
 
 {_,ctrl} + Print
 	screenshot {-s -u,-u}
 
-super + {_,shift + }Print
-	exec {peek -t, peek}
+super + F12
+	wlp-rotate
 
 {shift,shift + alt,ctrl,ctrl + alt,alt} + Home
 	dunstctl {close,close-all,history-pop,context,action 0}
@@ -48,10 +45,10 @@ super + {_,shift + }Print
 # Media
 
 XF86Tools
-	mpc toggle
+	rmpc togglepause
 
 XF86Audio{LowerVolume,RaiseVolume,Mute}
-	mpc {prev,next,stop}
+	rmpc {prev,next,stop}
 
 
 #

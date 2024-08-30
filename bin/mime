@@ -1,4 +1,8 @@
-#!/bin/sh
-for w; do
-	echo "$w: "$(xdg-mime query filetype "$w")
-done
+#!/usr/bin/env elvish
+each {|file|
+  echo $file
+  echo "file: "(file -bL --mime-type $file)
+  echo "xdg-mime: "(xdg-mime query filetype $file)
+  echo "handlr: "(handlr mime --json $file | from-json)[0][mime]
+  echo
+} $args

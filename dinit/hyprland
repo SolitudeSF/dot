@@ -1,4 +1,5 @@
 type = process
 command = Hyprland
 depends-on = dbus-session
-ready-notification = pipefd:4
+working-dir = $HOME
+ready-notification = pipevar:DINIT_READYFD

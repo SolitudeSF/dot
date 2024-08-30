@@ -97,12 +97,7 @@
 		<string>Iosevka</string>
 	</test>
 	<edit name="fontfeatures" mode="append">
-		<string>cv75 1</string>
-		<string>cv77 1</string>
-		<string>cv80 1</string>
-		<string>cv82 6</string>
-		<string>cv87 1</string>
-		<string>cv93 3</string>
+		<string>cv98 2</string>
 	</edit>
 	</match>
 
