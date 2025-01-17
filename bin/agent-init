@@ -2,4 +2,4 @@
 name=$(cat "$HOME/sns/mpwname")
 mpwc -k max -n "$name" -s gpg | clip-copy
 gpg2 -d -q "$HOME/sns/password.gpg" | mpwc -k max -n "$name" -s ssh -S 2>/dev/null | clip-copy
-ssh-add
+SSH_ASKPASS=prefer ssh-add

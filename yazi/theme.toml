@@ -1,0 +1,49 @@
+"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+# [flavor]
+# use = "tokyo-night"
+
+[status]
+separator_open = ""
+separator_close = ""
+
+[icon]
+prepend_exts = [
+  { name = "jxl", text = "", fg = "magenta" },
+
+  { name = "ttf", text = "" },
+  { name = "ttc", text = "" },
+
+  { name = "nim", text = "", fg = "yellow" },
+  { name = "nims", text = "", fg = "yellow" },
+  { name = "nimble", text = "", fg = "yellow" },
+  { name = "elv", text = "󰯂", fg = "green" },
+
+  { name = "nsp", text = "󰟡", fg = "red" },
+  { name = "xci", text = "󰟡", fg = "red" },
+
+  { name = "chd", text = "", fg = "#d0bec8" },
+  { name = "rvz", text = "", fg = "#d0bec8" },
+
+  { name = "dwarfs", text = "", fg = "red" },
+  { name = "zpaq", text = "", fg = "red" },
+
+]
+
+prepend_globs = [
+  { name = "*/rom/nes/", text = "󰺵", fg = "white" },
+  { name = "*/rom/snes/", text = "󰊗", fg = "white" },
+  { name = "*/rom/gb/", text = "󱎓", fg = "white" },
+  { name = "*/rom/gbc/", text = "󱎓", fg = "white" },
+  { name = "*/rom/gba/", text = "󱎓", fg = "white" },
+  { name = "*/rom/ps2/", text = "", fg = "blue" },
+  { name = "*/rom/ps3/", text = "", fg = "blue" },
+  { name = "*/rom/psp/", text = "", fg = "blue" },
+  { name = "*/rom/psx/", text = "", fg = "blue" },
+  { name = "*/rom/psx-multidisk/", text = "", fg = "blue" },
+  { name = "*/rom/switch/", text = "󰟡", fg = "red" },
+  { name = "*/rom/wii/", text = "󰖫", fg = "white" },
+  { name = "*/rom/wiiu/", text = "󰜭", fg = "blue" },
+  { name = "*/rom/xbox/", text = "", fg = "green" },
+  { name = "*/rom/xbox360/", text = "", fg = "green" },
+]

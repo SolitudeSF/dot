@@ -291,6 +291,28 @@ set edit:completion:arg-completer[playerctl] = {|@cmd|
   }
 }
 
+set edit:completion:arg-completer[vips] = {|@cmd|
+  var @cmds = (vips -c)
+  var cmd-pos = (overlap-at $cmds $cmd)
+  if (not $cmd-pos) {
+    all $cmds
+  } else {
+    edit:complete-filename $cmd[-1]
+  }
+}
+
+set edit:completion:arg-completer[mise] = {|@cmd|
+  var cmds = [activate alias a backends b bin-paths cache completion config cfg deactivate direnv doctor dr env e exec x generate gen implode install i latest link ln ls list ls-remote outdated plugins p prune registry reshim run r self-update set settings shell sh sync tasks t trust uninstall remove rm unset upgrade up use u version v watch w where which help]
+  var cmd-pos = (overlap-at $cmds $cmd)
+  if (not $cmd-pos) {
+    all $cmds
+  } else {
+    var command = $cmd[$cmd-pos]
+    if (or (==s $command upgrade) (==s $command up)) {
+      keys (mise ls --json | from-json)
+    }
+  }
+}
 set edit:completion:arg-completer[edit-script] = $edit:complete-sudo~
 set edit:completion:arg-completer[whereis] = $edit:complete-sudo~
 set edit:completion:arg-completer[which] = $edit:complete-sudo~

@@ -11,7 +11,7 @@ use file
 
 use util
 use config
-use atuin
+use television
 
 var mise: = (util:eval-namespace (mise activate elvish | slurp))
 
@@ -52,14 +52,9 @@ var f~ = (alias f --hyperlink=auto)
 
 set edit:insert:binding[Ctrl-X] = { edit:-instant:start }
 set edit:insert:binding[Ctrl-N] = { edit:navigation:start; edit:navigation:trigger-filter }
-set edit:insert:binding[Alt-E] = { edit-current-command }
-set edit:insert:binding[Alt-q] = {
-  var oldlen = (count $edit:current-command)
-  var olddot = $edit:-dot
-  set edit:current-command = "pueue add -- "$edit:current-command
-  set edit:-dot = (+ $olddot (- (count $edit:current-command) $oldlen))
-}
-set edit:insert:binding[Alt-r] = { edit:replace-input (atuin:search $edit:current-command) }
+set edit:insert:binding[Ctrl-T] = { television:smart-autocomplete }
+set edit:insert:binding[Alt-r] = { television:shell-history }
+set edit:insert:binding[Alt-e] = { edit-current-command }
 
 set edit:abbr = [
   &'.etc'='~/.local/etc/'
@@ -84,12 +79,11 @@ set before-chdir = (conj $before-chdir {|_|
     semp:output-start
     if (eq $a '') { ls }
   }
-  util:add-after-command {|a|
+  util:add-after-command {|_|
     semp:output-end
   }
 }
 
 eval (navi widget elvish | slurp)
 mise:activate
-atuin:activate
 -override-wcwidth 🦀 2

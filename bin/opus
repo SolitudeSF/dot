@@ -1,2 +1,0 @@
-#!/bin/sh
-exec xe -ap -j0 '%.{flac,wv,ape,wav}' opusenc --quiet --bitrate 256 {} %.opus -- "$@"

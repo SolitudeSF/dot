@@ -1,0 +1,61 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[input]
+prepend_keymap = [
+  { on = "<Esc>", run  = "close", desc = "Cancel input" },
+]
+
+[manager]
+prepend_keymap = [
+  { on = "l", run  = "plugin smart-enter", desc = "Enter the child directory or open the file" },
+  { on = "<Right>", run  = "plugin smart-enter", desc = "Enter the child directory or open the file" },
+
+  { on = "k", run = "plugin arrow --args=-1", desc = "Move cursor up (wrapping)" },
+  { on = "<Up>", run = "plugin arrow --args=-1", desc = "Move cursor up (wrapping)" },
+  { on = "j", run = "plugin arrow --args=1", desc = "Move cursor down (wrapping)" },
+  { on = "<Down>", run = "plugin arrow --args=1", desc = "Move cursor down (wrapping)" },
+
+  { on = "<S-Up>", run = "plugin parent-arrow --args=-1", desc = "Move up in the parent directory" },
+  { on = "<S-Down>", run = "plugin parent-arrow --args=1", desc = "Move down in the parent directory" },
+
+  { on = "a", run = "create --dir", desc = "Create directory" },
+  { on = "A", run = "create", desc = "Create file" },
+
+  { on = [ "c", "m" ], run = "plugin chmod", desc = "Change permissions of selected files" },
+  { on = [ "c", "p" ], run = "plugin command", desc = "Command palette" },
+
+  { on = [ "d", "g" ], run = '''shell --confirm 'rofi -theme gallery -modi filebrowser -show filebrowser -filebrowser-command "ya emit reveal" -filebrowser-directory "$PWD"'''', desc = "Drag and drop selected files" },
+  { on = [ "d", "s" ], run = '''shell --confirm 'blobdrop "$@"'''', desc = "Drag and drop selected files" },
+  { on = [ "d", "x" ], run = '''shell --confirm 'dtrx "$@"'''', desc = "Unpack selected files" },
+  { on = [ "d", "T" ], run = "remove", desc = "Move the files to the trash" },
+  { on = [ "d", "D" ], run = "remove --permanently", desc = "Permanently delete the files" },
+  { on = [ "d", "d" ], run = "yank --cut", desc = "Cut the selected files" },
+  { on = [ "d", "c" ], run = "plugin folder-size", desc = "Show current hovered folder size" },
+
+  { on = [ "p", "p" ], run = "paste", desc = "Paste the files" },
+  { on = [ "p", "P" ], run = "paste --force", desc = "Paste the files (overwrite if the destination exists)" },
+  { on = [ "p", "l" ], run = "link", desc = "Symlink the absolute path of files" },
+  { on = [ "p", "L" ], run = "link --relative", desc = "Symlink the relative path of files" },
+
+  { on = [ "g", "/" ], run = "cd /", desc = "Go to root" },
+  { on = [ "g", "d" ], run = "plugin shellcd --args='xdg-user-dir DOWNLOAD'", desc = "Go to downloads" },
+  { on = [ "g", "m" ], run = "cd /run/media/$USER", desc = "Go to mounted media" },
+  { on = [ "g", "M" ], run = "cd /mnt", desc = "Go to /mnt" },
+  { on = [ "g", "c" ], run = "cd $XDG_CONFIG_HOME", desc = "Go to config directory" },
+  { on = [ "g", "D" ], run = "cd $XDG_DATA_HOME", desc = "Go to data directory" },
+
+  { on = "f", run = "plugin smart-filter", desc = "Smart filter" },
+  { on = "F", run = "filter", desc = "Filter" },
+
+  { on = [ "<A-/>", "f" ], run = "search fd", desc = "Search files by name using fd" },
+  { on = [ "<A-/>", "g" ], run = "search rg", desc = "Search files by content using ripgrep" },
+  { on = "<C-/>", run = "escape --search", desc = "Cancel the ongoing search" },
+
+  { on = "s", run = "shell --interactive", desc = "Run a shell command" },
+  { on = "S", run = "shell --interactive --block", desc = "Run a shell command (block the UI until the command finishes)" },
+
+  { on = "o", run = "plugin open-with-cmd", desc = "Open with command" },
+  { on = "<A-o>", run = "plugin open-with-cmd --args=block", desc = "Open with command in terminal" },
+
+  { on = "M", run = "plugin mount", desc = "Open mount manager" },
+]

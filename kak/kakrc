@@ -1,10 +1,11 @@
 # External plugins
 
 eval %sh{
-    kak-lsp --kakoune -s $kak_session
     kak-tree-sitter -dks -vvvvv --init $kak_session
     colorcol
 }
+
+eval %sh{kak-lsp}
 
 # Initialization
 
@@ -17,6 +18,7 @@ require-module replace-mode
 require-module fandt
 require-module kakpipe
 require-module kittyutils
+require-module encapsul8-load-defaults
 
 set global ui_options terminal_assistant=none
 set global scrolloff 7,7
@@ -74,12 +76,12 @@ map global anchor -docstring 'reduce to anchor' a '<a-;>;'
 map global anchor -docstring 'reduce to cursor' c ';'
 map global anchor -docstring 'select cursor and anchor' s '<a-S>'
 
-map global user -docstring 'clip-paste after' p '<a-!>clip-paste<ret>'
-map global user -docstring 'clip-paste before' P '!clip-paste<ret>'
-map global user -docstring 'clip-paste replace' R '|clip-paste<ret>'
-map global user -docstring 'clip-yank' y '<a-|>clip-copy<ret>'
-map global user -docstring 'clip-cut' d '<a-|>clip-copy<ret><a-d>'
-map global user -docstring 'clip-cut -> insert mode' c '<a-|>clip-copy<ret><a-c>'
+map global user -docstring 'clip-paste after' p '<a-!>kitten clipboard -g<ret>'
+map global user -docstring 'clip-paste before' P '!kitten clipboard -g<ret>'
+map global user -docstring 'clip-paste replace' R '|kitten clipboard -g<ret>'
+map global user -docstring 'clip-yank' y '<a-|>kitten clipboard<ret>'
+map global user -docstring 'clip-cut' d '<a-|>kitten clipboard<ret><a-d>'
+map global user -docstring 'clip-cut -> insert mode' c '<a-|>kitten clipboard<ret><a-c>'
 
 map global normal -docstring 'Enter tree-sitter mode' <c-space> ': enter-user-mode tree-sitter<ret>'
 
@@ -239,20 +241,37 @@ hook global WinSetOption filetype=kak %{
 hook global WinSetOption filetype=sh %{
     set window lintcmd 'shellcheck --norc -x -f gcc'
     lint-on-write
+    set window lsp_servers %{
+      [bash-language-server]
+      args = ["start"]
+    }
     lsp-engage
 }
 
 hook global WinSetOption filetype=elvish %{
     no-tabs 2
+    set window lsp_servers %{
+      [elvish]
+      args = ["-lsp"]
+    }
     lsp-engage
 }
 
 hook global WinSetOption filetype=go %{
+    set window lsp_servers %{
+      [gopls]
+      roots = ["Gopkg.toml", "go.mod", ".git"]
+    }
     lsp-engage
 }
 
 hook global WinSetOption filetype=(c|cpp) %{
     set window formatcmd clang-format
+    set window lsp_servers %{
+      [clangd]
+      roots = ["compile_commands.json", ".clangd", ".git"]
+      args = ["--suggest-missing-include"]
+    }
     lsp-engage
 }
 
@@ -263,6 +282,10 @@ hook global WinSetOption filetype=rust %{
     hook -once -always window WinSetOption filetype=.* %{
         remove-hooks window rust-inlay-hints
     }
+    set window lsp_servers %{
+      [rust-analyzer]
+      roots = ["Cargo.toml"]
+    }
     lsp-engage
 }
 
@@ -272,23 +295,35 @@ hook global WinSetOption filetype=markdown %{
 }
 
 hook global WinSetOption filetype=python %{
+    set window lsp_servers %{
+      [pyls]
+      roots = ["requirements.txt", "setup.py", ".git"]
+    }
     lsp-engage
 }
 
 hook global WinSetOption filetype=nim %{
     set window formatcmd 'nimprettify'
     no-tabs 2
+    set window lsp_servers %{
+      [nimlangserver]
+      root_globs = ["*.nimble", ".git"]
+    }
     lsp-engage
-    lsp-inlay-hints-enable window
 }
 
 hook global WinSetOption filetype=toml %{
     set window formatcmd 'taplo fmt -'
+    set window lsp_servers %{
+      [taplo]
+      root = ".git"
+      args = ["server"]
+    }
     lsp-engage
 }
 
 hook global WinSetOption filetype=json %{
-    set window formatcmd 'biome format --stdin-file-path=t.json'
+    set window formatcmd 'biome format --stdin-file-path=t.json --json-formatter-indent-style=space --json-formatter-line-width=120'
     lsp-engage
 }
 
@@ -297,5 +332,18 @@ hook global WinSetOption filetype=lua %{
 }
 
 hook global WinSetOption filetype=nu %{
+    no-tabs 2
+    set window lsp_servers %{
+      [nu]
+      args = ["--lsp"]
+    }
+    lsp-engage
+}
+
+hook global WinSetOption filetype=hyprlang %{
+    set window lsp_servers %{
+      [hyprls]
+      roots = [".git"]
+    }
     lsp-engage
 }

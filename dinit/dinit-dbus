@@ -1,0 +1,4 @@
+command = dinit-dbus
+depends-on = dbus-session
+ready-notification = pipevar:DINIT_DBUS_READY_FD
+options = pass-cs-fd

@@ -1,0 +1,4 @@
+type = process
+command = scripts/mpv-wallpaper
+depends-on = xorg
+after = bspwm

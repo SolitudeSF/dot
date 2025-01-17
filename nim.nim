@@ -9,13 +9,16 @@ var cross = block:
 
 const strip {.booldefine.} = true
 
-proc setCompiler(s: string, compiler = gcc, cpp = false) {.used.} =
+proc setCompiler(s: string, compiler = gcc, cpu = "", os = "", cpp = false) {.used.} =
   let c = findExe s
-  let cpp = (if cpp: ".cpp" else: "")
   if c.len == 0:
     error s & " binary wasn't found in $PATH."
-  switch $compiler & cpp & ".exe", c
-  switch $compiler & cpp & ".linkerexe", c
+  let
+    cpu = (if cpu.len > 0: cpu & '.' else: "")
+    os = (if os.len > 0: os & '.' else: "")
+    cpp = (if cpp: ".cpp" else: "")
+  switch cpu & os & $compiler & cpp & ".exe", c
+  switch cpu & os & $compiler & cpp & ".linkerexe", c
 
 if defined(musl):
   setCompiler "x86_64-linux-musl-gcc"
@@ -50,6 +53,14 @@ elif defined(wasm):
   switch "clang.options.linker", linkerOptions
   switch "clang.cpp.options.linker", linkerOptions
 
+elif defined(libriscv):
+  cross = true
+  setCompiler "riscv64-elf-gcc", cpu = "riscv64", os = "linux"
+  # setCompiler "riscv64-unknown-elf-gcc", cpu = "riscv64", os = "linux"
+  switch "cpu", "riscv64"
+  switch "os", "any"
+  switch "threads", "off"
+
 if defined(release) or defined(danger):
   if not cross:
     switch "passC", "-march=native"
@@ -80,8 +91,9 @@ elif defined(release):
 else:
   switch "nimcache", getTempDir() / "nim" / projectName()
 
+when defined(nimHasHyperlinks):
+  switch "hyperlink"
 switch "spellsuggest"
-switch "hyperlink"
 switch "styleCheck", "usages"
 switch "hint", "Dependency:on"
 switch "hint", "MsgOrigin:off"

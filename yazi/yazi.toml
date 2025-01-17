@@ -1,0 +1,71 @@
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[manager]
+sort_by = "natural"
+linemode = "size"
+mouse_events = ["click", "scroll", "touch", "move", "drag"]
+
+[tasks]
+suppress_preload = true
+
+[opener]
+open = [
+  { run = 'exec xdg-open "$@"', orphan = true, desc = "Open", for = "linux" }
+]
+term-open = [
+  { run = 'exec xdg-open "$@"', block = true, desc = "Open in terminal", for = "linux" }
+]
+exec = [
+  { run = 'exec run "$1"', orphan = true, desc = "Execute", for = "unix" }
+]
+wine = [
+  { run = 'exec wine "$1"', orphan = true, desc = "Run with Wine", for = "unix" }
+]
+jless = [
+  { run = 'jless "$@"', block = true, desc = "View" }
+]
+dwarfs-mount = [
+  { run = 'dwarfs-mount "$@"', desc = "Mount dwarfs archive" }
+]
+fuse-umount = [
+  { run = 'fusermount -u "$@"', desc = "Unmount fuse filesystem", for = "unix" }
+]
+fuse-umount-delete = [
+  { run = 'fusermount -u "$@" && rm -rf "$@"', desc = "Unmount fuse filesystem and remove directory", for = "unix" }
+]
+copy-jpeg = [
+  { run = 'copy-jpeg "$@"', desc = "Convert image to jpeg and copy to clipboard", for = "unix" }
+]
+innoextract = [
+  { run = 'innoextract "$@"', desc = "Extract executable with innoextract" }
+]
+
+[open]
+prepend_rules = [
+  { mime = "application/x-executable", use = [ "exec" ] },
+  { mime = "application/x-pie-executable", use = [ "exec" ] },
+  { name = "*.AppImage", use = [ "exec" ] },
+  { name = "*.jar", use = [ "open", "extract", "reveal" ] },
+  { name = "*.dwarfs", use = [ "dwarfs-mount", "reveal" ] },
+  { mime = "application/microsoft.portable-executable", use = [ "wine", "innoextract", "reveal" ] },
+  { mime = "application/json", use = [ "term-open", "jless", "reveal" ] },
+  { mime = "inode/directory", use = [ "open", "fuse-umount", "fuse-umount-delete", "reveal" ] },
+  { mime = "image/*", use = [ "open", "copy-jpeg", "reveal" ] },
+]
+
+[plugin]
+prepend_previewers = [
+  { mime = "audio/*", run = "exifaudio" },
+  # { mime = "image/*", run = "allmytoes" },
+]
+
+prepend_preloader = [
+  # { mime = "image/*", run = "vips" },
+  # { mime = "image/*", run = "allmytoes" },
+]
+
+prepend_fetchers = [
+  { id = "git", name = "*", run = "git" },
+  { id = "git", name = "*/", run = "git" },
+  { id = "count", name = "*/", run = "count" },
+]

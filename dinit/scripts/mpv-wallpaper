@@ -1,0 +1,2 @@
+#!/bin/sh
+exec xwinwrap -g "$(xrandr | awk '/ connected/ {print $4}')" -un -fdt -ni -b -nf -- mpv --vo=vaapi --hwdec=vaapi --no-audio --no-border --no-config --no-window-dragging --no-input-default-bindings --no-osd-bar --no-sub --loop -wid WID "$(cat "$XDG_CONFIG_HOME/mpv-wallpaper/conf")"
