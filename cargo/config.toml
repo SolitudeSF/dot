@@ -1,0 +1,9 @@
+[build]
+rustflags = ["-C", "target-cpu=native"]
+
+[unstable]
+gc = true
+
+[profile.release]
+strip = true
+lto = true

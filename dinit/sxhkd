@@ -1,4 +1,0 @@
-type = process
-command = sxhkd -m 1
-depends-on = xorg
-working-dir = $HOME

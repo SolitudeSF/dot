@@ -1,0 +1,8 @@
+[Unit]
+Description=koboldcpp
+
+[Service]
+ExecStart=/usr/bin/env koboldcpp --quiet --nomodel --skiplauncher --usevulkan --usemmap --admin --admindir /mnt/data/models/configs/ --routermode
+
+[Install]
+WantedBy=default.target

@@ -1,2 +1,0 @@
-type = process
-command = ssh-agent -D -a $SSH_AUTH_SOCK

@@ -34,4 +34,10 @@ user_pref("font.name.monospace.x-western", "Iosevka");
 user_pref("font.name.sans-serif.x-western", "Inter UI");
 user_pref("font.name.serif.x-western", "Inter UI");
 
-user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true)
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+
+user_pref("dom.private-attribution.submission.enabled", false);
+
+user_pref("layout.frame_rate", 165);
+
+user_pref("floorp.newtab.overrides.newtaburl", "file:///home/solitude/.floorp/homepage.html");

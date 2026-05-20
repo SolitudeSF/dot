@@ -1,0 +1,11 @@
+[Unit]
+Description=picom
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/picom
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

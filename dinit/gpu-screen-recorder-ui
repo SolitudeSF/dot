@@ -1,3 +1,0 @@
-type = process
-command = gsr-ui
-depends-on = xorg

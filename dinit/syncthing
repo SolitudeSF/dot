@@ -1,2 +1,0 @@
-type = process
-command = syncthing -no-browser

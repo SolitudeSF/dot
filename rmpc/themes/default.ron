@@ -1,0 +1,123 @@
+#![enable(implicit_some)]
+#![enable(unwrap_newtypes)]
+#![enable(unwrap_variant_newtypes)]
+(
+  browser_column_widths: [20, 45, 35],
+  modal_backdrop: true,
+  symbols: (song: " ", dir: "󰉋 ", playlist: "󰲸 ",  marker: "", ellipsis: "…",
+    song_style: (fg: "magenta"), dir_style: (fg: "blue"), playlist_style: (fg: "yellow")),
+  progress_bar: (
+    symbols: ["█", "█", "", "█", "█"],
+    thumb_style: (fg: "blue", bg: "black"),
+  ),
+  song_table_format: [
+    (prop: (kind: Property(Artist), style: (fg: "blue"), default: (kind: Text("Unknown"), style: (fg: "blue"))),
+      width: "25%"),
+    (prop: (kind: Property(Title), style: (fg: "yellow"), default: (kind: Text("Unknown"), style: (fg: "yellow"))),
+      width: "35%"),
+    (prop: (kind: Property(Album), style: (fg: "magenta"), default: (kind: Text("Unknown Album"), style: (fg: "magenta"))),
+      width: "30%"),
+    (prop: (kind: Property(Duration), default: (kind: Text("-"))),
+      width: "10%", alignment: Right,),
+  ],
+  components: {
+    "progressbar_left": Pane(Property(
+      content: [
+        (kind: Property(Status(StateV2(playing_label: " ", paused_label: " ", stopped_label: " "))), style: (fg: "magenta", modifiers: "Bold")),
+        (kind: Text(" ")),
+        (kind: Property(Status(Elapsed))),
+        (kind: Text(" ")),
+      ], align: Right,
+    )),
+    "progressbar_right": Pane(Property(
+      content: [
+        (kind: Text(" ")),
+        (kind: Property(Status(Duration))),
+      ], align: Left,
+    )),
+    "progressbar_full": Split(
+      direction: Horizontal,
+      panes: [
+        (pane: Component("progressbar_left"), size: "10"),
+        (pane: Pane(ProgressBar), size: "100%"),
+        (pane: Component("progressbar_right"), size: "7"),
+      ],
+    ),
+    "header_left": Pane(Property(
+      content: [
+        (kind: Text("  "), style: (fg: "magenta")),
+        (kind: Property(Status(Volume)), style: (fg: "magenta")),
+        (kind: Text("% "), style: (fg: "magenta")),
+        (kind: Property(Status(RepeatV2(on_label: " ", off_label: ""))), style: (fg: "blue")),
+        (kind: Property(Status(RandomV2(on_label: " ", off_label: ""))), style: (fg: "blue")),
+        (kind: Property(Status(ConsumeV2(on_label: "󰮯 ", off_label: ""))), style: (fg: "blue")),
+        (kind: Property(Status(SingleV2(on_label: "󰲠 ", off_label: "", oneshot_label: "󰎤 "))), style: (fg: "blue")),
+        (kind: Property(Widget(ScanStatus)), style: (fg: "blue")),
+        (kind: Property(Status(InputBuffer())), style: (fg: "yellow")),
+      ], align: Left,
+    )),
+    "header_middle": Pane(Property(
+      content: [
+        (kind: Property(Song(Artist)), style: (fg: "blue", modifiers: "Bold"),
+          default: (kind: Text("Unknown"), style: (fg: "blue", modifiers: "Bold"))),
+        (kind: Text(" - ")),
+        (kind: Property(Song(Title)), style: (fg: "yellow", modifiers: "Bold"),
+          default: (kind: Text("No Song"), style: (fg: "yellow", modifiers: "Bold"))),
+      ], align: Center,
+    )),
+    "header_right": Pane(Property(
+      content: [
+        (kind: Text("from ")),
+        (kind: Property(Song(Album)), style: (fg: "magenta"),
+          default: (kind: Text("Unknown Album"), style: (fg: "magenta"))),
+      ], align: Right,
+    )),
+    "header": Split(
+      direction: Horizontal,
+      panes: [
+        (pane: Component("header_left"), size: "30%"),
+        (pane: Component("header_middle"), size: "40%"),
+        (pane: Component("header_right"), size: "30%"),
+      ],
+    ),
+  },
+  layout: Split(
+    direction: Vertical,
+    panes: [
+      // (pane: Pane(Header), size: "2"),
+      (pane: Component("header"), size: "2"),
+      (pane: Pane(Tabs), size: "2"),
+      (pane: Pane(TabContent), size: "100%"),
+      (pane: Component("progressbar_full"), size: "1"),
+    ],
+  ),
+  header: (
+    rows: [
+      (
+        left: [
+          (kind: Text("  "), style: (fg: "magenta")),
+          (kind: Property(Status(Volume)), style: (fg: "magenta")),
+          (kind: Text("% "), style: (fg: "magenta")),
+          (kind: Property(Status(RepeatV2(on_label: " ", off_label: ""))), style: (fg: "blue")),
+          (kind: Property(Status(RandomV2(on_label: " ", off_label: ""))), style: (fg: "blue")),
+          (kind: Property(Status(ConsumeV2(on_label: "󰮯 ", off_label: ""))), style: (fg: "blue")),
+          (kind: Property(Status(SingleV2(on_label: "󰲠 ", off_label: "", oneshot_label: "󰎤 "))), style: (fg: "blue")),
+          (kind: Property(Widget(ScanStatus)), style: (fg: "blue")),
+          (kind: Property(Status(InputBuffer())), style: (fg: "yellow")),
+        ],
+        center: [
+          (kind: Property(Song(Artist)), style: (fg: "blue", modifiers: "Bold"),
+            default: (kind: Text("Unknown"), style: (fg: "blue", modifiers: "Bold"))),
+          (kind: Text(" - ")),
+          (kind: Property(Song(Title)), style: (fg: "yellow", modifiers: "Bold"),
+            default: (kind: Text("No Song"), style: (fg: "yellow", modifiers: "Bold"))),
+        ],
+        right: [
+          (kind: Text("from ")),
+          (kind: Property(Song(Album)), style: (fg: "magenta"),
+            default: (kind: Text("Unknown Album"), style: (fg: "magenta"))),
+        ]
+      ),
+    ],
+  ),
+)

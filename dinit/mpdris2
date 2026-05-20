@@ -1,4 +1,0 @@
-type = process
-command = mpDris2
-depends-on = dbus-session
-depends-on = mpd

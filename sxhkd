@@ -4,40 +4,49 @@
 
 # power operations
 super + End ; {s,S,alt + s,r,p}
-	loginctl {suspend,hibernate,hybrid-sleep,reboot,poweroff}
+	systemctl {suspend,hibernate,hybrid-sleep,reboot,poweroff}
 
 super + End ; b
 	xset dpms force off
 
 # rofi
-super + shift + {End,Insert,Return,space}
-	exec rofi{-powermenu,-bspwm-unhide, -modi emoji -show emoji, -modi calc -show calc}
+super + shift + {End,Insert,Return}
+	exec rofi{-powermenu,-bspwm-unhide, -modi emoji -show emoji}
 
 super + space
-	exec rofi -show drun
+	vicinae toggle
+
+super + shift + space
+	mpw-get
 
 alt + Tab
-	rofi-windowswitcher
+	vicinae vicinae://launch/wm/switch-windows
 
 # applications
 super + Return
 	exec kitty -1
 
 super + Pause
-	exec xpause
+	xpause
 
-super + shift + {m,v,p,alt + p,e}
-	exec {mpv "$(clip-paste)",pavucontrol,gnome-system-monitor,missioncenter,pcmanfm}
+super + shift + {m,v,p,e,c}
+	exec app2unit -t service -- {mpv "$(clip-paste)",pwvucontrol,gnome-system-monitor,nautilus,carla}
 
 super + shift + n
-	exec kitty -1 --class=kittyfloat -o initial_window_width=900 -o initial_window_height=900 \
+	exec kitty -1 --class=kittyfloat -o initial_window_width=1500 -o initial_window_height=900 \
 		rmpc
 
 {_,ctrl} + Print
 	screenshot {-s -u,-u}
 
+alt + Print
+	gsr-ui-cli toggle-show
+
 super + F12
 	wlp-rotate
+
+super + shift + F12
+	systemctl-toggle mpv-wallpaper
 
 {shift,shift + alt,ctrl,ctrl + alt,alt} + Home
 	dunstctl {close,close-all,history-pop,context,action 0}
@@ -110,7 +119,7 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
+super + {_,alt + }c
 	bspc node -f {next,prev}.local.!local.window
 
 # focus the next/previous desktop

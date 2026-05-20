@@ -1,71 +1,113 @@
-"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+#:schema https://yazi-rs.github.io/schemas/yazi.json
 
-[manager]
+[mgr]
 sort_by = "natural"
 linemode = "size"
-mouse_events = ["click", "scroll", "touch", "move", "drag"]
+mouse_events = ["click", "scroll", "drag", "touch", "move"]
 
 [tasks]
 suppress_preload = true
 
+[pick]
+open_offset = [ 0, 1, 50, 12 ]
+
 [opener]
 open = [
-  { run = 'exec xdg-open "$@"', orphan = true, desc = "Open", for = "linux" }
+  { run = 'exec app2unit-open-service %s', orphan = true, desc = "Open" }
 ]
 term-open = [
-  { run = 'exec xdg-open "$@"', block = true, desc = "Open in terminal", for = "linux" }
+  { run = 'exec app2unit-open-service %s', block = true, desc = "Open in terminal" }
+]
+play = [
+  { run = 'exec app2unit-open-service %s', orphan = true, desc = "Play" },
+  { run = "mediainfo %s1; echo 'Press enter to exit'; read _", block = true, desc = "Show media info", for = "unix" },
 ]
 exec = [
-  { run = 'exec run "$1"', orphan = true, desc = "Execute", for = "unix" }
+  { run = 'exec run %s1', orphan = true, desc = "Execute" }
 ]
 wine = [
-  { run = 'exec wine "$1"', orphan = true, desc = "Run with Wine", for = "unix" }
+  { run = 'exec wine %s1', orphan = true, desc = "Run with Wine" }
 ]
 jless = [
-  { run = 'jless "$@"', block = true, desc = "View" }
+  { run = 'jless %s', block = true, desc = "View" }
 ]
-dwarfs-mount = [
-  { run = 'dwarfs-mount "$@"', desc = "Mount dwarfs archive" }
+dwarfs = [
+  { run = 'dwarfs-mount %s1', desc = "Mount" },
+  { run = 'dwarfs-extract %s1', desc = "Extract" }
+]
+zip-mount = [
+  { run = 'zip-mount %s', desc = "Mount" }
+]
+archive-mount = [
+  { run = 'ratarmount %s1', desc = "Mount" }
 ]
 fuse-umount = [
-  { run = 'fusermount -u "$@"', desc = "Unmount fuse filesystem", for = "unix" }
-]
-fuse-umount-delete = [
-  { run = 'fusermount -u "$@" && rm -rf "$@"', desc = "Unmount fuse filesystem and remove directory", for = "unix" }
+  { run = 'fusermount -u %s1 && rm -rf %s1', desc = "Unmount fuse filesystem and remove" },
+  { run = 'fusermount -u "s1', desc = "Unmount fuse filesystem" }
 ]
 copy-jpeg = [
-  { run = 'copy-jpeg "$@"', desc = "Convert image to jpeg and copy to clipboard", for = "unix" }
+  { run = 'copy-jpeg %s', desc = "Convert to jpeg and copy to clipboard", for = "unix" }
+]
+convert-jxl = [
+  { run = 'cnvrt jxl %s', desc = "Convert to jxl" }
+]
+convert-chd = [
+  { run = 'cnvrt chd %s', desc = "Convert to chd (cd)" },
+  { run = 'cnvrt chd -t dvd %s', desc = "Convert to chd (dvd)" }
+]
+convert-opus = [
+  { run = 'cnvrt opus %s', desc = "Convert to opus" }
 ]
 innoextract = [
-  { run = 'innoextract "$@"', desc = "Extract executable with innoextract" }
+  { run = 'innoextract %s', desc = "Extract with innoextract" }
+]
+appimage-extract = [
+  { run = 'run %s1 --appimage-extract', desc = "Extract" }
 ]
 
 [open]
 prepend_rules = [
-  { mime = "application/x-executable", use = [ "exec" ] },
-  { mime = "application/x-pie-executable", use = [ "exec" ] },
-  { name = "*.AppImage", use = [ "exec" ] },
-  { name = "*.jar", use = [ "open", "extract", "reveal" ] },
-  { name = "*.dwarfs", use = [ "dwarfs-mount", "reveal" ] },
+  { url = "*.AppImage", use = [ "exec", "archive-mount", "appimage-extract" ] },
+  { mime = "application/executable", use = [ "exec" ] },
+  { mime = "application/pie-executable", use = [ "exec" ] },
+  { url = "*.jar", use = [ "open", "extract", "reveal" ] },
+  { url = "*.dwarfs", use = [ "dwarfs", "reveal" ] },
   { mime = "application/microsoft.portable-executable", use = [ "wine", "innoextract", "reveal" ] },
   { mime = "application/json", use = [ "term-open", "jless", "reveal" ] },
-  { mime = "inode/directory", use = [ "open", "fuse-umount", "fuse-umount-delete", "reveal" ] },
-  { mime = "image/*", use = [ "open", "copy-jpeg", "reveal" ] },
+  { mime = "application/wine-extension-ini", use = [ "edit", "reveal" ] },
+  { mime = "image/*", use = [ "open", "convert-jxl", "copy-jpeg", "reveal" ] },
+  { mime = "application/{zip,java-archive}", use = [ "extract", "zip-mount", "reveal" ] },
+  { mime = "application/{vnd.rar,x-7z-compressed}", use = [ "extract", "archive-mount", "reveal" ] },
+  { url = "*.{gdi,cue}", use = [ "edit", "convert-chd", "reveal" ] },
+  { mime = "audio/flac", use = [ "play", "convert-opus", "reveal" ] },
+  { mime = "folder/*", use = [ "open", "fuse-umount", "reveal" ] },
 ]
 
 [plugin]
 prepend_previewers = [
-  { mime = "audio/*", run = "exifaudio" },
+  { mime = "image/jxl", run = "vips" },
+  { mime = "audio/*", run = "preview-audio" },
+  { mime = 'application/sqlite3', run = 'preview-sqlite' },
+  { url = "*.service", run = "preview-systemd" },
+  { url = '**/.git/', run = 'preview-git' },
   # { mime = "image/*", run = "allmytoes" },
 ]
 
-prepend_preloader = [
-  # { mime = "image/*", run = "vips" },
+prepend_preloaders = [
+  { url = "/home/solitude/pbl/**", run = "noop" },
+  { mime = "image/jxl", run = "vips" },
+  { mime = "audio/*", run = "preview-audio" },
   # { mime = "image/*", run = "allmytoes" },
 ]
 
 prepend_fetchers = [
-  { id = "git", name = "*", run = "git" },
-  { id = "git", name = "*/", run = "git" },
-  { id = "count", name = "*/", run = "count" },
+  { url = "/home/solitude/pbl/**", run = "mime-ext", prio = "high", group = "mime" },
+  { url = "*", run = "git", group = "git" },
+  { url = "*/", run = "git", group = "git" },
+  { url = "*/", run = "count", group = "count" },
+]
+
+prepend_spotters = [
+  { mime = "audio/*", run = "spot-audio" },
+  { mime = "video/*", run = "spot-video" },
 ]

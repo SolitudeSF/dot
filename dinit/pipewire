@@ -1,3 +1,0 @@
-type = process
-command = strat arch pipewire
-depends-on = dbus-session

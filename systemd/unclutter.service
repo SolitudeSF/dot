@@ -1,0 +1,11 @@
+[Unit]
+Description=unclutter
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/unclutter
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

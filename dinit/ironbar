@@ -1,3 +1,0 @@
-type = process
-command = ironbar
-depends-on = wayland-compositor

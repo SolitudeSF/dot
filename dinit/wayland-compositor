@@ -1,3 +1,0 @@
-type = internal
-depends-on = wayland-env
-depends-on = wayland-compositor-alias

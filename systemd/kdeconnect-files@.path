@@ -1,0 +1,6 @@
+[Unit]
+Description=Monitor KDE Connect %I directory for new files
+
+[Path]
+PathChanged=%h/dwn/%I/.new
+Unit=auto-open@%i.service

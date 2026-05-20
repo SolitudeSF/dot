@@ -31,9 +31,10 @@
 }
 window {
     background-color: @background;
-    width: 1024px;
+    width:            1024px;
     border:           1;
     padding:          5;
+    transparency:     "real";
 }
 mainbox {
     border:  0;

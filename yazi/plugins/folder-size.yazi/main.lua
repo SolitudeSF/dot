@@ -1,73 +1,52 @@
-local get_selected_dirs = ya.sync(function(st)
+local get_selected_dirs = ya.sync(function(_)
 	local selected = {}
-	for i, file in ipairs(cx.active.current.files) do
+	for _, file in ipairs(cx.active.current.files) do
 		if file.cha.is_dir and file:is_selected() then
-			selected[#selected + 1] = tostring(file.url)
+			selected[#selected + 1] = file.url
 		end
 	end
 	return selected
 end)
 
-local get_hovered = ya.sync(function(st)
+local get_hovered_dir = ya.sync(function(_)
 	local h = cx.active.current.hovered
 	if h.cha.is_dir then
-    		return tostring(h.url)
+    		return h.url
 	end
 end)
 
-local save_size = ya.sync(function(st, path, size)
-	st.sizes[path] = size
-	ya.render()
-end)
+local function update_size(url)
+	local size = 0
 
-local function setup(st, opts)
-	st.sizes = {}
-	opts.order = opts.order or 1200
-
-	Linemode:children_add(function(self)
-    		if self._file.cha.is_dir and next(st.sizes) then
-        		local size = st.sizes[tostring(self._file.url)]
-        		if size then
-            			return " " .. size
-        		else
-            			return ""
-        		end
-    		end
-	end, opts.order)
-end
-
-local function get_size(path)
-	local output = Command("du")
-		:arg("-sh"):arg(path)
-		:stdout(Command.PIPED):stderr(Command.PIPED)
-		:output()
-
-	if output.status.success then
-		return string.sub(output.stdout, 1, string.find(output.stdout, "\t") - 1)
+	local it = fs.calc_size(url)
+	while true do
+		local next = it:recv()
+		if next then
+			size = size + next
+		else
+			break
+		end
 	end
+
+	local op = fs.op("size", { url = url.parent, sizes = { [url.urn] = size } })
+	ya.emit("update_files", { op = op })
+	ui.render()
 end
 
 local function entry()
 	local selected = get_selected_dirs()
 	if #selected > 0 then
-    		for _, path in ipairs(selected) do
-        		local size = get_size(path)
-        		if size then
-            			save_size(path, size)
-        		end
+		for _, url in ipairs(selected) do
+			update_size(url)
 		end
 	else
-		local hovered = get_hovered()
+		local hovered = get_hovered_dir()
 		if hovered then
-    			local size = get_size(hovered)
-    			if size then
-    				save_size(hovered, size)
-			end
+			update_size(hovered)
 		end
 	end
 end
 
 return {
-	setup = setup,
-	entry = entry,
+	entry = entry
 }

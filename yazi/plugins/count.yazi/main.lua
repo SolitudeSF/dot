@@ -1,26 +1,30 @@
 local save = ya.sync(function(st, counts)
-	st.counts = counts
-	ya.render()
+	for key, value in pairs(counts) do
+		st.counts[key] = value
+	end
+	ui.render()
 end)
 
 local function setup(st, opts)
 	st.counts = {}
 
 	Linemode:children_add(function(self)
-		if self._file.cha.is_dir and next(st.counts) then
+		if self._file.in_current and self._file.cha.is_dir and next(st.counts) then
 			local count = st.counts[tostring(self._file.url)]
-			return " " .. tostring(count)
+			if count == nil then return "" end
+			return " " .. count
 		else
 			return ""
 		end
 	end, opts.order or 4000)
 end
 
-local function fetch(self, args)
+local function fetch(_, job)
 	local counts = {}
 
-	for _, file in ipairs(args.files) do
-    		if file.cha.is_dir then counts[tostring(file.url)] = file:count() end
+	for _, file in ipairs(job.files) do
+		local files, _ = fs.read_dir(file.url, {})
+		counts[tostring(file.url)] = #files
 	end
 
 	save(counts)

@@ -1,0 +1,30 @@
+[meta]
+version = 1
+name = "ntr"
+description = "ntr generated theme"
+variant = "dark"
+icon = "icons/solarized.png"
+
+[colors.core]
+background = "<{color.bg}>"
+foreground = "<{color.fg}>"
+secondary_background = "<{lighten:<{color.bg}>:0.2}>"
+border = "<{lighten:<{color.bg}>:0.1}>"
+accent = "<{color0}>"
+
+[colors.accents]
+blue = "<{color4}>"
+green = "<{color2}>"
+magenta = "<{color5}>"
+orange = "<{color11}>"
+purple = "<{color13}>"
+red = "<{color1}>"
+yellow = "<{color3}>"
+cyan = "<{color6}>"
+
+[colors.list.item.selection]
+background = "<{darken:<{color.bg}>:0.2}>"
+secondary_background = "<{lighten:<{color.bg}>:0.1}>"
+
+[colors.list.item.hover]
+background = "<{saturate:<{color.bg}>:0.1}>"

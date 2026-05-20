@@ -1,4 +1,0 @@
-type = scripted
-command = noisetorch -i
-stop-command = noisetorch -u
-depends-on = pipewire

@@ -1,0 +1,11 @@
+[Unit]
+Description=copyparty file server
+
+[Service]
+Type=notify
+WorkingDirectory=/mnt/media/
+ExecReload=/bin/kill -s USR1 $MAINPID
+ExecStart=/usr/bin/python3 /usr/bin/copyparty
+
+[Install]
+WantedBy=default.target

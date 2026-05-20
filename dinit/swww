@@ -1,3 +1,0 @@
-type = process
-command = swww-daemon
-depends-on = wayland-compositor

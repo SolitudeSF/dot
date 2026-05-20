@@ -1,0 +1,8 @@
+[Unit]
+Description=Nested Weston for Waydroid
+
+[Service]
+ExecStart=weston --width=2560 --height=1440 --socket=waydroid --shell=kiosk-shell.so
+
+[Install]
+WantedBy=graphical-session.target

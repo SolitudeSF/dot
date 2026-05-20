@@ -1,0 +1,8 @@
+[Unit]
+Description=adb
+PartOf=adb.service
+[Socket]
+ListenStream=127.0.0.1:5037
+Accept=no
+[Install]
+WantedBy=sockets.target

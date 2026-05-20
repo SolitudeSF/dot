@@ -1,5 +1,3 @@
 #!/bin/sh
-pkill xwinwrap
-exec xwinwrap -ni -fs -s -nf -b -un -argb -fdt -- \
-mpv --wid=WID --no-terminal --no-audio --no-config --no-border \
---x11-bypass-compositor=no --keepaspect=no --loop "$@"
+exec xwinwrap -g "$(xrandr | awk '/ connected/ {print $4}')" -un -fdt -ni -b -nf -- \
+mpv -wid WID --hwdec=vulkan --no-audio --no-config --no-border --no-window-dragging --no-input-default-bindings --no-osd-bar --no-sub --loop "$@"

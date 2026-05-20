@@ -1,16 +1,25 @@
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
-
-# [flavor]
-# use = "tokyo-night"
+#:schema https://yazi-rs.github.io/schemas/theme.json
 
 [status]
-separator_open = ""
-separator_close = ""
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+[tabs]
+active = { fg = "black", bg = "blue", bold = true }
+inactive = { fg = "cyan", bg = "reset" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[indicator]
+padding = { open = "█", close = "█" }
+
+[git]
+modified_sign = " "
+untracked_sign = " "
+added_sign = " "
 
 [icon]
 prepend_exts = [
-  { name = "jxl", text = "", fg = "magenta" },
-
   { name = "ttf", text = "" },
   { name = "ttc", text = "" },
 
@@ -31,19 +40,19 @@ prepend_exts = [
 ]
 
 prepend_globs = [
-  { name = "*/rom/nes/", text = "󰺵", fg = "white" },
-  { name = "*/rom/snes/", text = "󰊗", fg = "white" },
-  { name = "*/rom/gb/", text = "󱎓", fg = "white" },
-  { name = "*/rom/gbc/", text = "󱎓", fg = "white" },
-  { name = "*/rom/gba/", text = "󱎓", fg = "white" },
-  { name = "*/rom/ps2/", text = "", fg = "blue" },
-  { name = "*/rom/ps3/", text = "", fg = "blue" },
-  { name = "*/rom/psp/", text = "", fg = "blue" },
-  { name = "*/rom/psx/", text = "", fg = "blue" },
-  { name = "*/rom/psx-multidisk/", text = "", fg = "blue" },
-  { name = "*/rom/switch/", text = "󰟡", fg = "red" },
-  { name = "*/rom/wii/", text = "󰖫", fg = "white" },
-  { name = "*/rom/wiiu/", text = "󰜭", fg = "blue" },
-  { name = "*/rom/xbox/", text = "", fg = "green" },
-  { name = "*/rom/xbox360/", text = "", fg = "green" },
+  { url = "*/rom/nes/", text = "󰺵", fg = "white" },
+  { url = "*/rom/snes/", text = "󰊗", fg = "white" },
+  { url = "*/rom/gb/", text = "󱎓", fg = "white" },
+  { url = "*/rom/gbc/", text = "󱎓", fg = "white" },
+  { url = "*/rom/gba/", text = "󱎓", fg = "white" },
+  { url = "*/rom/ps2/", text = "", fg = "blue" },
+  { url = "*/rom/ps3/", text = "", fg = "blue" },
+  { url = "*/rom/psp/", text = "", fg = "blue" },
+  { url = "*/rom/psx/", text = "", fg = "blue" },
+  { url = "*/rom/psx-multidisk/", text = "", fg = "blue" },
+  { url = "*/rom/switch/", text = "󰟡", fg = "red" },
+  { url = "*/rom/wii/", text = "󰖫", fg = "white" },
+  { url = "*/rom/wiiu/", text = "󰜭", fg = "blue" },
+  { url = "*/rom/xbox/", text = "", fg = "green" },
+  { url = "*/rom/xbox360/", text = "", fg = "green" },
 ]

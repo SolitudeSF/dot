@@ -1,0 +1,31 @@
+#![enable(implicit_some)]
+#![enable(unwrap_newtypes)]
+#![enable(unwrap_variant_newtypes)]
+(
+  address: "/run/user/1000/mpd/socket",
+  theme: "default",
+  max_fps: 60,
+  scrolloff: 3,
+  wrap_navigation: true,
+  tabs: [
+    (name: "Queue", pane: Split(
+      direction: Horizontal,
+      panes: [
+        (size: "35%", pane: Split(direction: Vertical, panes: [
+          (size: "3", pane: Pane(Lyrics)),
+          (size: "100%", pane: Pane(AlbumArt), borders: "ALL", border_symbols: Empty)
+	])),
+        (size: "65%", pane: Split(direction: Vertical, panes: [
+	  (size: "2", pane: Pane(QueueHeader()), borders: "BOTTOM", border_symbols: Empty),
+	  (size: "100%", pane: Pane(Queue))
+        ])),
+      ],
+    )),
+    (name: "Directories", pane: Pane(Directories)),
+    (name: "Artists", pane: Pane(Artists)),
+    (name: "Album Artists", pane: Pane(AlbumArtists)),
+    (name: "Albums", pane: Pane(Albums)),
+    (name: "Playlists", pane: Pane(Playlists)),
+    (name: "Search", pane: Pane(Search)),
+  ],
+)

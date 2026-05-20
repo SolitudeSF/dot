@@ -1,25 +1,20 @@
-local save = ya.sync(function(st, output)
-	st.output = output
-	ya.render()
-end)
+local label = nil
 
 local function setup(st, opts)
 	opts = opts or {}
 	Header:children_add(function()
-		return ui.Line { st.output or "" }
+		return ui.Line { label or "" }
 	end, opts.order or 900, opts.align or Header.RIGHT)
 
 	local refresh = function()
-		ya.manager_emit("plugin", { st._id })
+		ya.async(function ()
+			label = Command("fsfree"):output().stdout
+			ui.render()
+		end)
 	end
 
 	ps.sub("cd", refresh)
 	ps.sub("tab", refresh)
-end
-
-local function entry(_, job)
-	local output = Command("fsfree"):output()
-	save(output.stdout)
 end
 
 return {

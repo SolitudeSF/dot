@@ -1,0 +1,22 @@
+[Unit]
+Description=user environment
+Before=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/systemctl-setenv \
+  APP2UNIT_INSERT_XSD=false \
+  GOPATH=$XDG_DATA_HOME/go \
+  CARGO_HOME=$XDG_DATA_HOME/cargo \
+  GRADLE_USER_HOME=$XDG_DATA_HOME/gradle \
+  PATH=$HOME/.local/bin:$XDG_DATA_HOME/soar/bin:$HOME/.nimble/bin:$CARGO_HOME/bin:$GOPATH/bin:$PATH \
+  EDITOR=kak \
+  VISUAL=kak \
+  PAGER=kak \
+  MANPAGER=kak \
+  GNUPGHOME=$XDG_DATA_HOME/gnupg \
+  NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc \
+  RUSTUP_HOME=$XDG_DATA_HOME/rustup
+
+[Install]
+WantedBy=default.target

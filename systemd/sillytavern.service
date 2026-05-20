@@ -1,0 +1,9 @@
+[Unit]
+Description=Silly Tavern
+
+[Service]
+WorkingDirectory=/home/solitude/git/app/SillyTavern/
+ExecStart=node server.js
+
+[Install]
+WantedBy=default.target

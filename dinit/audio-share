@@ -1,3 +1,0 @@
-type = process
-command = as-cmd -b 0.0.0.0
-depends-on = pipewire

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+
+	<alias binding="same">
+		<family>Arial</family>
+		<accept><family>sans-serif</family></accept>
+	</alias>
+
+	<alias binding="same">
+		<family>Helvetica</family>
+		<accept><family>sans-serif</family></accept>
+	</alias>
+
+	<alias binding="same">
+		<family>Verdana</family>
+		<accept><family>sans-serif</family></accept>
+	</alias>
+
+	<alias binding="same">
+  		<family>Lucida</family>
+		<accept><family>sans-serif</family></accept>
+	</alias>
+
+	<alias binding="same">
+		<family>Nimbus Sans L</family>
+		<accept><family>sans-serif</family></accept>
+	</alias>
+
+	<alias binding="same">
+		<family>Times New Roman</family>
+		<accept><family>serif</family></accept>
+	</alias>
+
+	<alias binding="same">
+		<family>Courier New</family>
+		<accept><family>monospace</family></accept>
+	</alias>
+
+	<alias>
+		<family>serif</family>
+		<prefer><family>Liberation Serif</family></prefer>
+	</alias>
+
+	<alias>
+		<family>sans-serif</family>
+		<prefer><family>Liberation Sans</family></prefer>
+	</alias>
+
+	<alias>
+		<family>monospace</family>
+		<prefer><family>Iosevka</family></prefer>
+	</alias>
+
+	<match target="pattern">
+		<test name="prgname">
+			<string>kitty</string>
+		</test>
+		<test name="family">
+			<string>monospace</string>
+		</test>
+		<edit name="family" mode="assign" binding="strong">
+			<string>Iosevka Term</string>
+		</edit>
+	</match>
+
+	<match target="scan">
+		<test name="family">
+			<string>Iosevka Term</string>
+		</test>
+		<test name="weight">
+			<const>demibold</const>
+		</test>
+		<edit name="family" mode="assign">
+			<string>Iosevka Term Semibold</string>
+		</edit>
+	</match>
+
+	<match target="font">
+		<test name="family" compare="contains" ignore-blanks="true">
+			<string>Iosevka</string>
+		</test>
+		<edit name="fontfeatures" mode="append">
+			<string>VSAA=2</string>
+		</edit>
+	</match>
+
+</fontconfig>

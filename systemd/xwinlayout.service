@@ -1,0 +1,11 @@
+[Unit]
+Description=xwinlayout
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/env xwinlayout
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

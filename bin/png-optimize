@@ -1,2 +1,0 @@
-#!/bin/sh
-exec xe -a -j0 optipng -quiet -keep -o7 -- "$@"

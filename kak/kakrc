@@ -1,44 +1,85 @@
-# External plugins
-
 eval %sh{
-    kak-tree-sitter -dks -vvvvv --init $kak_session
+    kak-tree-sitter -dks --init $kak_session
     colorcol
 }
 
 eval %sh{kak-lsp}
 
-# Initialization
+source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
+
+bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
+bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
+  require-module encapsul8-load-defaults
+}
+bundle smarttab.kak https://github.com/andreyorst/smarttab.kak
+bundle grep-write.kak https://github.com/jtrv/grep-write.kak
+bundle kakoune-readline https://github.com/chambln/kakoune-readline
+bundle diff.kak https://github.com/harryoooooooooo/diff.kak
+bundle-customload kakoune-boost https://github.com/krobelus/kakoune-boost %{
+  source "%opt{bundle_path}/kakoune-boost/git.kak"
+}
+bundle kakoune-auto-percent https://github.com/Delapouite/kakoune-auto-percent
+bundle kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
+bundle kakoune-cd https://github.com/Delapouite/kakoune-cd %{
+  alias global cdb change-directory-current-buffer
+}
+bundle kakoune-buffers https://github.com/Delapouite/kakoune-buffers %{
+  hook global WinDisplay .* info-buffers
+  map global normal -docstring 'buffers…' b ': enter-buffers-mode<ret>'
+  map global normal -docstring 'buffers (lock)…' <a-b> ': enter-user-mode -lock buffers<ret>'
+}
+bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
+  hook global KakBegin .* %{
+      state-save-reg-load colon
+      state-save-reg-load pipe
+      state-save-reg-load slash
+  }
+  hook global KakEnd .* %{
+      state-save-reg-save colon
+      state-save-reg-save pipe
+      state-save-reg-save slash
+  }
+}
+bundle kakoune-mark-show https://gitlab.com/Screwtapello/kakoune-mark-show %{
+  mark-show-enable
+}
+bundle kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer
+bundle kakoune-sudo-write https://github.com/occivink/kakoune-sudo-write %{
+  alias global sw sudo-write
+}
+bundle kakoune-find https://github.com/occivink/kakoune-find %{
+  alias global f find
+}
+bundle kakoune-buffer-switcher https://github.com/occivink/kakoune-buffer-switcher %{
+  map global normal -docstring 'buffer switcher' B ': buffer-switcher<ret>'
+}
+bundle kakoune-vertical-selection https://github.com/occivink/kakoune-vertical-selection
+bundle kakoune-sort-selections https://github.com/occivink/kakoune-sort-selections
 
 colorscheme ntr
 
-require-module grep
+require-module replace-mode
 require-module search-highlighter
 require-module word-select
-require-module replace-mode
-require-module fandt
+require-module grep
 require-module kakpipe
-require-module kittyutils
-require-module encapsul8-load-defaults
+# try %{ require-module kittyutils }
 
-set global ui_options terminal_assistant=none
+set global ui_options terminal_assistant=none 'kakodemon_font=Iosevka 18'
+source "%val{config}/kakodemon_colors.kak"
 set global scrolloff 7,7
 set global autoreload yes
 set global grepcmd 'rg -iHL --column --vimgrep'
-set global modelinefmt '%opt{git_branch_str}%val{bufname}
-%val{cursor_line}:%val{cursor_char_column} {{mode_info}}
-{{context_info}}{MenuForeground}%val{client}⊙%val{session}'
+set global modelinefmt '%opt{lsp_modeline_breadcrumbs}%opt{lsp_modeline_code_actions}%opt{lsp_modeline_progress}%opt{lsp_modeline_message_requests}
+%opt{git_branch_str}%val{bufname} %val{cursor_line}:%val{cursor_char_column}
+{{mode_info}} {{context_info}}{MenuForeground}%val{client}⊙%val{session}'
 set global disabled_hooks '.+-insert'
 set global path '%/' ./
 
-alias global sw sudo-write
-alias global cdb change-directory-current-buffer
-alias global f find
 alias global g grep
 
 face global LineNumbersWrapped black
 face global WhitespaceIndent bright-black,default+d
-
-# Keybinds
 
 map global normal -docstring 'remove all sels except main' <backspace> ,
 map global normal -docstring 'remove main sel' <a-backspace> <a-,>
@@ -57,15 +98,13 @@ map global normal <a-q> ': word-select-previous-big-word<ret>'
 map global normal Q B
 map global normal <a-Q> <a-B>
 
-map global user -docstring 'replace mode' <a-r> ': enter-replace-mode<ret>'
+map global user -docstring 'choose file' f ': choose-file<ret>'
 map global user -docstring 'change directory' <a-c> ': enter-user-mode cd<ret>'
+map global user -docstring 'replace mode' <a-r> ': enter-replace-mode<ret>'
 
-map global user -docstring 'expand selection' e ': expand<ret>'
-map global user -docstring 'expand repeat' E ': expand-repeat<ret>'
-
-map global normal -docstring 'buffers…' b ': enter-buffers-mode<ret>'
-map global normal -docstring 'buffers (lock)…' <a-b> ': enter-user-mode -lock buffers<ret>'
-map global normal -docstring 'buffer switcher' B ': buffer-switcher<ret>'
+map global goto d <esc>:lsp-definition<ret> -docstring 'LSP definition'
+map global goto r <esc>:lsp-references<ret> -docstring 'LSP references'
+map global goto y <esc>:lsp-type-definition<ret> -docstring 'LSP type definition'
 
 declare-user-mode anchor
 map global normal ';' ': enter-user-mode anchor<ret>'
@@ -76,16 +115,14 @@ map global anchor -docstring 'reduce to anchor' a '<a-;>;'
 map global anchor -docstring 'reduce to cursor' c ';'
 map global anchor -docstring 'select cursor and anchor' s '<a-S>'
 
-map global user -docstring 'clip-paste after' p '<a-!>kitten clipboard -g<ret>'
-map global user -docstring 'clip-paste before' P '!kitten clipboard -g<ret>'
-map global user -docstring 'clip-paste replace' R '|kitten clipboard -g<ret>'
+map global user -docstring 'clip-paste after' p '<a-!>xclip -sel c -o<ret>'
+map global user -docstring 'clip-paste before' P '!xclip -sel c -o<ret>'
+map global user -docstring 'clip-paste replace' R '|xclip -sel c -o<ret>'
 map global user -docstring 'clip-yank' y '<a-|>kitten clipboard<ret>'
 map global user -docstring 'clip-cut' d '<a-|>kitten clipboard<ret><a-d>'
 map global user -docstring 'clip-cut -> insert mode' c '<a-|>kitten clipboard<ret><a-c>'
 
 map global normal -docstring 'Enter tree-sitter mode' <c-space> ': enter-user-mode tree-sitter<ret>'
-
-# Functions
 
 def type -params 1 -docstring 'Set buffer filetype' %{
     set window filetype %arg{1}
@@ -99,6 +136,7 @@ def lint-engage -docstring 'Enable linting' %{
 def lsp-engage -docstring 'Enable language server' %{
     lsp-enable-window
     lsp-auto-hover-enable
+    lsp-inlay-diagnostics-enable window
     map window user -docstring 'Enter lsp user mode' l ': enter-user-mode lsp<ret>'
 }
 
@@ -146,21 +184,29 @@ select-or-add-cursor %{
     } catch nop
 }
 
-define-command select-or-extend-lines %{
-  execute-keys '<a-:>'
+def select-or-extend-lines %{
+  exec '<a-:>'
   try %{
     # At least one selection is not full, so select whole lines.
-    execute-keys -draft '<a-K>\A^.*\n\z<ret>'
-    execute-keys 'x'
+    exec -draft '<a-K>\A^.*\n\z<ret>'
+    exec 'x'
   } catch %{
-    execute-keys 'Jx'
+    exec 'Jx'
   }
 }
 
-# Hooks
+def choose-file -docstring 'Choose file' %{
+  set local windowing_placement overlay
+  terminal sh -c %exp{
+    file=/tmp/yazi-choose-file.%val{client_pid}
+    yazi "%opt{current_bufname}" --chooser-file="$file"
+    printf "eval -client %val{client} edit -existing \"%%s\"\n" "$(cat "$file")" | kak -p %val{session}
+    rm "$file"
+  }
+}
 
 hook global WinCreate '\*stdin(?:-\d+)?\*' %{
-    set-option window filetype scrollback
+  set window filetype scrollback
 }
 
 hook global WinCreate '.*man\.XXXX\w{6}' %{
@@ -169,40 +215,23 @@ hook global WinCreate '.*man\.XXXX\w{6}' %{
 }
 
 hook global WinSetOption filetype=(?!scrollback).* %{
-    try %{
+    # try %{
       addhl window/number-lines number-lines -hlcursor -separator ' '
       addhl window/ruler column 100 default,rgb:303030
       addhl window/trailing-whitespace regex '\h+$' 0:default,red
       addhl window/todo regex \b(TODO|FIXME|XXX|NOTE)\b 0:default+rb
       addhl window/matching-brackets show-matching -previous
       addhl window/wrap wrap -word -indent -marker ''
-      addhl window/indent show-whitespaces -indent '🭰' -spc ' ' -nbspc ' ' -lf ' ' -tab ' ' -tabpad ' '
+      addhl window/indent show-whitespaces -indent '🭰' -spc ' ' -nbsp ' ' -lf ' ' -tab ' ' -tabpad ' '
 
       smarttab
       readline-enable
       colorcol-enable
       colorcol-refresh-continuous
-      indentguide-enable
-      indentguide-refresh-continuous
-      mark-show-enable
 
       hook window NormalIdle .* refresh-git-branch
-    }
+    # }
 }
-
-hook global KakBegin .* %{
-    state-save-reg-load colon
-    state-save-reg-load pipe
-    state-save-reg-load slash
-}
-
-hook global KakEnd .* %{
-    state-save-reg-save colon
-    state-save-reg-save pipe
-    state-save-reg-save slash
-}
-
-hook global WinDisplay .* info-buffers
 
 hook global BufWritePre .* %{ nop %sh{
     mkdir -p "$(dirname "$kak_buffile")"
@@ -217,22 +246,16 @@ hook global ModuleLoaded kitty %{
     set global kitty_window_type os-window
 }
 
-# Filetype detection
-
 hook global BufCreate .*srcpkgs/.+/template$ %{
     set window filetype sh
     def xgensum %{ %sh{ xgensum -i "$kak_buffile" } }
 }
 
-hook global BufCreate .*/\.?((sx|xinit)(rc)?|profile) %{ set buffer filetype sh }
 hook global BufCreate .*\.ino %{ set buffer filetype cpp }
 hook global BufCreate .*\.cs %{ addhl buffer/java ref java }
 hook global BufCreate .*\.rasi %{ set buffer filetype css }
 hook global BufCreate .*\.nu %{ set buffer filetype nu }
 hook global BufCreate .*\.sccprofile %{ set buffer filetype json }
-hook global BufCreate .*hyprland\.conf %{ set buffer filetype hyprlang }
-
-# Filetype settings
 
 hook global WinSetOption filetype=kak %{
     no-tabs 2
@@ -243,6 +266,7 @@ hook global WinSetOption filetype=sh %{
     lint-on-write
     set window lsp_servers %{
       [bash-language-server]
+      root_globa = [".git"]
       args = ["start"]
     }
     lsp-engage
@@ -252,6 +276,7 @@ hook global WinSetOption filetype=elvish %{
     no-tabs 2
     set window lsp_servers %{
       [elvish]
+      root_globs = ["rc.elv", ".git"]
       args = ["-lsp"]
     }
     lsp-engage
@@ -260,7 +285,7 @@ hook global WinSetOption filetype=elvish %{
 hook global WinSetOption filetype=go %{
     set window lsp_servers %{
       [gopls]
-      roots = ["Gopkg.toml", "go.mod", ".git"]
+      root_globs = ["Gopkg.toml", "go.mod", ".git"]
     }
     lsp-engage
 }
@@ -269,7 +294,7 @@ hook global WinSetOption filetype=(c|cpp) %{
     set window formatcmd clang-format
     set window lsp_servers %{
       [clangd]
-      roots = ["compile_commands.json", ".clangd", ".git"]
+      root_globs = ["compile_commands.json", ".clangd", ".git"]
       args = ["--suggest-missing-include"]
     }
     lsp-engage
@@ -284,7 +309,7 @@ hook global WinSetOption filetype=rust %{
     }
     set window lsp_servers %{
       [rust-analyzer]
-      roots = ["Cargo.toml"]
+      root_globs = ["Cargo.toml"]
     }
     lsp-engage
 }
@@ -297,7 +322,7 @@ hook global WinSetOption filetype=markdown %{
 hook global WinSetOption filetype=python %{
     set window lsp_servers %{
       [pyls]
-      roots = ["requirements.txt", "setup.py", ".git"]
+      root_globs = ["requirements.txt", "setup.py", ".git"]
     }
     lsp-engage
 }
@@ -316,7 +341,7 @@ hook global WinSetOption filetype=toml %{
     set window formatcmd 'taplo fmt -'
     set window lsp_servers %{
       [taplo]
-      root = ".git"
+      root_globs = [".git"]
       args = ["server"]
     }
     lsp-engage
@@ -328,6 +353,23 @@ hook global WinSetOption filetype=json %{
 }
 
 hook global WinSetOption filetype=lua %{
+    eval %sh{
+      case "$kak_buffile" in
+        *yazi*) printf '%s' 'set window lsp_servers %{
+          [lua-language-server]
+          root_globs = [".git", ".hg"]
+          single_instance = false
+          settings_section = "Lua"
+          [lua-language-server.settings.Lua]
+          runtime.version = "Lua 5.4"
+          workspace.library = [
+            "~/git/yazi/plugins/types.yazi/",
+            "~/git/app/yazi/yazi-plugin/preset/",
+            "~/git/app/yazi/yazi-plugin/preset/components/"
+          ]
+        }';;
+      esac
+    }
     lsp-engage
 }
 
@@ -335,6 +377,7 @@ hook global WinSetOption filetype=nu %{
     no-tabs 2
     set window lsp_servers %{
       [nu]
+      root_globs = ["config.nu", ".git"]
       args = ["--lsp"]
     }
     lsp-engage
@@ -343,7 +386,7 @@ hook global WinSetOption filetype=nu %{
 hook global WinSetOption filetype=hyprlang %{
     set window lsp_servers %{
       [hyprls]
-      roots = [".git"]
+      root_globs = [".git"]
     }
     lsp-engage
 }

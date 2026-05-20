@@ -1,3 +1,0 @@
-type = process
-command = perWindowLayoutD -n
-depends-on = xorg

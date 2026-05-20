@@ -1,5 +1,0 @@
-type = process
-command = strat arch $XDG_CONFIG_HOME/dinit.d/scripts/xorg-launcher
-depends-on = dbus-session
-ready-notification = pipevar:DINIT_READYFD
-options = runs-on-console

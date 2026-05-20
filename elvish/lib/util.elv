@@ -74,6 +74,14 @@ fn add-after-command {|@hooks|
   }
 }
 
+fn add-after-chdir {|@hooks|
+  for hook $hooks {
+    if (not (has-value $after-chdir $hook)) {
+      set after-chdir = (conj $after-chdir $hook)
+    }
+  }
+}
+
 fn eval-namespace {|&ns=(ns [&]) code|
   eval &ns=$ns &on-end=$put~ $code
 }

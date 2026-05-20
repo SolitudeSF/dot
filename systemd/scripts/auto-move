@@ -1,0 +1,8 @@
+#!/bin/sh
+cd ~/dwn/"$1"/.new || exit 1
+for file in *; do
+    if [ -f "$file" ]; then
+        mv "$file" ..
+        app2unit-open "../$file"
+    fi;
+done

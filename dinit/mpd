@@ -1,3 +1,0 @@
-type = process
-command = mpd --no-daemon
-depends-on = pipewire

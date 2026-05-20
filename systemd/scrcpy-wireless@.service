@@ -1,0 +1,12 @@
+[Unit]
+Description=scrcpy over Wi-Fi
+After=graphical-session.target adb.socket
+Requires=graphical-session.target adb.socket
+
+[Service]
+ExecStartPre=adb connect %I
+ExecStart=scrcpy -s %I --video-codec=h265 --keep-active --show-touches --power-off-on-close
+ExecStopPost=adb disconnect %I
+
+[Install]
+WantedBy=graphical-session.target

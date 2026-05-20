@@ -1,3 +1,0 @@
-type = process
-command = hypridle
-depends-on = hyprland

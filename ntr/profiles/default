@@ -7,3 +7,6 @@ polybar: <{$XDG_CONFIG_HOME}>/polybar/color
 rofi-theme: <{$XDG_CONFIG_HOME}>/rofi/theme.rasi
 homepage.css: <{$HOME}>/.mozilla/firefox/homepage.css
 colorscheme.kak: <{$XDG_CONFIG_HOME}>/kak/colors/ntr.kak
+kakodemon.kak: <{$XDG_CONFIG_HOME}>/kak/kakodemon_colors.kak
+ghostty: <{$XDG_CONFIG_HOME}>/ghostty/themes/ntr
+vicinae: <{$XDG_DATA_HOME}>/vicinae/themes/ntr.toml

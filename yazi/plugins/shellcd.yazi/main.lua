@@ -10,7 +10,7 @@ return { entry = function(_, job)
 		if string.sub(path, -1) == "\n" then
 			path = string.sub(path, 0, string.len(path) - 1)
 		end
-		ya.manager_emit("cd", { path })
+		ya.emit("cd", { path })
 	else
 		ya.err(tostring(output.stderr))
 	end

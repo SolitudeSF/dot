@@ -1,4 +1,0 @@
-type = process
-command = polybar main
-depends-on = xorg
-after = bspwm

@@ -1,0 +1,11 @@
+[Unit]
+Description=mpv wallpaper
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=sh -c 'exec mpvwall --no-terminal "$(cat $XDG_CONFIG_HOME/mpv-wallpaper/conf)"'
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

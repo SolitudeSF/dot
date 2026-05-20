@@ -1,0 +1,64 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+scan_timeout = 500
+command_timeout = 2000
+continuation_prompt = "[▸ ](dimmed white)"
+
+format = """
+$character\
+$directory  """
+
+right_format = """
+$git_state\
+$git_status\
+$git_branch\
+$fossil_branch\
+$hg_branch\
+$pijul_channel\
+$cmd_duration\
+$jobs"""
+
+[character]
+format = "[ $symbol ](white)"
+success_symbol = "[▲](bright white)"
+error_symbol = "[△](purple)"
+
+[directory]
+home_symbol = "~"
+truncation_length = 2
+truncation_symbol = "…/"
+read_only = " 󰈡 "
+use_os_path_sep = true
+fish_style_pwd_dir_length = 1
+style = "cyan"
+format = '[$path]($style)[$read_only]($read_only_style)'
+repo_root_style = 'blue'
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)'
+
+[git_status]
+format = "$ahead_behind$all_status"
+conflicted = "[󰞇 ${count}](italic bright-magenta)"
+ahead = "[⇡${count}](italic green)"
+behind = "[⇣${count}](italic red)"
+diverged = "[󰞘 [${ahead_count}](regular white)󰞔 [${behind_count}](regular white)](italic bright-magenta)"
+untracked = "[ ${count}](bold green)"
+stashed = "[ ${count}](italic white)"
+modified = "[ ${count}](italic yellow)"
+staged = "[ ${count}](italic bright-cyan)"
+renamed = "[󱍵 ${count}](italic bright-blue)"
+deleted = "[󰗨 ${count}](bold red)"
+
+[git_branch]
+format = " [$symbol$branch(:$remote_branch)]($style) "
+symbol = ""
+style = "italic bright-blue"
+truncation_length = 12
+only_attached = true
+
+[cmd_duration]
+format = "[ $duration](italic white)"
+
+[jobs]
+format = "[$symbol $number]($style) "
+style = "white"
+symbol = "[ ](blue italic)"

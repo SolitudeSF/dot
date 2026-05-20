@@ -1,3 +1,0 @@
-type = process
-command = dunst
-depends-on = dbus-session

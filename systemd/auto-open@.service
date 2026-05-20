@@ -1,0 +1,7 @@
+[Unit]
+Description=Open received files from %I
+Requires=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%E/systemd/user/scripts/auto-move %I

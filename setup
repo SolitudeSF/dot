@@ -5,6 +5,7 @@ cd "$(dirname "$0")" || exit
 OP="ln -s"
 DIR="$(pwd)"
 CONF=${XDG_CONFIG_HOME:-$HOME/.config/}
+DATA=${XDG_DATA_HOME:-$HOME/.local/share/}
 CONTEXT=${COLORSCHEME:-$(find "$DIR/ntr/contexts" | sort -R | head -1)}
 
 _help() {
@@ -34,6 +35,11 @@ zathura
 neofetch
 gtk
 user-dirs
+starship
+cargo
+makepkg
+systemd
+rmpc
 fontconfig'
 }
 
@@ -136,6 +142,17 @@ for arg; do
 			_install fontconfig "$CONF/fontconfig/fonts.conf";;
 		xonotic)
 			_install xonotic.cfg "$HOME/.xonotic/autoexec.cfg";;
+		starship)
+			_install starship.toml "$CONF/starship.toml";;
+		cargo)
+			_install cargo/binstall.toml "$DATA/cargo/binstall.toml"
+			_install cargo/config.toml "$DATA/cargo/config.toml";;
+		makepkg)
+			_install makepkg.conf "$CONF/pacman/makepkg.conf";;
+		systemd)
+			_install systemd "$CONF/systemd";;
+		rmpc)
+			_install rmpc "$CONF/rmpc";;
 		*)
 			echo "Not recognized argument: $arg";;
 	esac

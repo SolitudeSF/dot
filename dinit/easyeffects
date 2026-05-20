@@ -1,4 +1,0 @@
-type = process
-command = easyeffects --gapplication-service
-depends-on = pipewire
-depends-on = xorg

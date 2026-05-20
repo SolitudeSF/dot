@@ -1,3 +1,0 @@
-type = process
-command = waybar
-depends-on = wayland-compositor

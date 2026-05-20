@@ -1,0 +1,11 @@
+[Unit]
+Description=polkit agent
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/lxqt-policykit-agent
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

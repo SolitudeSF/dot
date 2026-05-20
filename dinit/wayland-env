@@ -1,4 +1,0 @@
-type = scripted
-command = $XDG_CONFIG_HOME/dinit.d/scripts/wayland-env
-depends-on = dbus-session
-before = wayland-compositor-alias

@@ -1,0 +1,12 @@
+[Unit]
+Description=sxhkd
+After=graphical-session.target
+Requires=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/sxhkd
+ExecReload=/bin/kill -USR1 $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

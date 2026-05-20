@@ -1,0 +1,11 @@
+[Unit]
+Description=Waydroid session
+BindsTo=waydroid-weston.service
+After=waydroid-weston.service
+
+[Service]
+Environment=WAYLAND_DISPLAY=waydroid XDG_SESSION_TYPE=wayland
+ExecStart=/usr/bin/waydroid show-full-ui
+
+[Install]
+WantedBy=graphical-session.target

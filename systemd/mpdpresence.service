@@ -1,0 +1,13 @@
+[Unit]
+Description=mpdpresence
+Requires=mpd.socket
+
+[Service]
+ExecStart=/usr/bin/env mpdpresence
+Restart=on-failure
+RestartSec=5
+RestartSteps=5
+RestartMaxDelaySec=60
+
+[Install]
+WantedBy=graphical-session.target

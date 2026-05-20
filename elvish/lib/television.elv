@@ -3,12 +3,12 @@ use store
 fn smart-autocomplete {
   var pre-prompt = $edit:current-command[..$edit:-dot]
   if (not (== (count $pre-prompt) 0)) {
-    var output = (var error = ?(tv --autocomplete-prompt $pre-prompt 2>/dev/tty </dev/tty))
+    var @output = (var error = ?(tv --autocomplete-prompt $pre-prompt 2>/dev/tty </dev/tty))
     if (and $error (not (== (count $output) 0))) {
         if (not (==s $pre-prompt[-1] ' ')) {
           set pre-prompt = $pre-prompt" "
         }
-        set edit:current-command = $pre-prompt$output$edit:current-command[$edit:-dot..]
+        set edit:current-command = $pre-prompt$output[0]$edit:current-command[$edit:-dot..]
     }
   }
 }

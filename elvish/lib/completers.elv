@@ -26,56 +26,6 @@ fn prefix-completer {|p a|
   }
 }
 
-set edit:completion:arg-completer[waifu2x-converter-cpp] = {|@cmd|
-  if (has-value [-i --input -o --output] $cmd[-2]) {
-    edit:complete-filename $cmd[-1]
-  } elif (has-value [-m --mode] $cmd[-2]) {
-    put noise scale noise-scale
-  } elif (eq $cmd[-2] --noise-level) {
-    put 0 1 2 3
-  } else {
-    put --scale-ratio --noise-level --mode --jobs --png-compression ^
-      --image-quality --silent -i -o
-  }
-}
-
-var kitty-cmds = $nil
-var kitty-kittens = $nil
-
-set edit:completion:arg-completer[kitty] = {|@cmd|
-  if (not $kitty-cmds) {
-    set @kitty-cmds = (kitty @ --help | peach {|x| if (re:match '^  \w' $x) { put $x[2..] } })
-    set @kitty-kittens = (tmp pwd = /usr/lib/kitty/kittens; f main.py | peach {|x| path:dir $x })
-  }
-  if (has-value [kitten '+kitten'] $cmd[-2]) {
-    all $kitty-kittens
-  } elif (eq $cmd[-2] '@') {
-    all $kitty-cmds
-  } else {
-    edit:complete-filename $cmd[-1]
-  }
-}
-
-set edit:completion:arg-completer[sv] = {|@cmd|
-  if (== (count $cmd) 2) {
-    put status up down once pause cont hup alarm interrupt quit kill term 1 2 ^
-      exit start try-restart check {force-,}{stop,reload,restart,shutdown}
-  } else {
-    tmp pwd = /var/service; put *
-  }
-}
-
-set edit:completion:arg-completer[man] = {|@cmd|
-  tmp pwd = /bedrock/cross/man; put man*/* | each {|a|
-    re:replace &literal=$true '(\.\dp?)?(\.gz)?$' '' (path:base $a)
-  }
-}
-
-set edit:completion:arg-completer[kill] = {|@cmd|
-  ps -u (whoami) --no-headers -o pid,command |^
-    re:awk {|_ p @c| edit:complex-candidate &display=(print ' '$@c) $p }
-}
-
 set edit:completion:arg-completer[nimble] = {|@cmd|
   if (== (count $cmd) 2) {
     put {un,}install develop check init publish build c cc js test doc{,2} ^
@@ -126,34 +76,6 @@ set edit:completion:arg-completer[ntr] = {|@cmd|
 
 set edit:completion:arg-completer[update] = {|@cmd|
   update | each {|x| if (str:has-prefix $x "    ") { put $x[4..] } }
-}
-
-set edit:completion:arg-completer[xr] = {|@cmd|
-  xpkg -m
-  xpkg -O | peach {|x| edit:complex-candidate &display=(styled $x bg-red) $x }
-}
-
-set edit:completion:arg-completer[xi] = {|@cmd|
-  tmp pwd = $E:XBPS_DISTDIR/srcpkgs; put *
-}
-
-var xbps-src-cmds = $nil
-var xbps-src-arch = $nil
-
-set edit:completion:arg-completer[xbps-src] = {|@cmd|
-  if (not $xbps-src-cmds) {
-    set @xbps-src-cmds = (xbps-src -h | take 129 | drop 4 | each {|x| put (re:find &max=1 '^\w+(\-\w+)*' $x)[text] })
-    set @xbps-src-arch = (xbps-src -h | take 162 | drop 136)[1..]
-  }
-  if (eq $cmd[-2] '-a') {
-    all $xbps-src-arch
-  } else {
-    if (not (overlap-at $xbps-src-cmds $cmd)) {
-      all $xbps-src-cmds
-    } else {
-      tmp pwd = $E:XBPS_DISTDIR/srcpkgs; put *
-    }
-  }
 }
 
 set edit:completion:arg-completer[strat] = {|@cmd|
@@ -222,61 +144,6 @@ set edit:completion:arg-completer[promotescript] = {|@cmd|
   tmp pwd = ~/.local/bin; f -t f
 }
 
-set edit:completion:arg-completer[ferium] = {|@cmd|
-  var cmds = [add complete help list modpack profile remove upgrade]
-  var cmd-pos = (overlap-at $cmds $cmd)
-  if (not $cmd-pos) {
-    if (> (count $cmd) 2) {
-      if (eq $cmd[-2] --config-file) {
-        edit:complete-filename $cmd[-1]
-      } elif (has-value [--threads -t] $cmd[-2]) {
-        range 9
-      } else {
-        all $cmds
-        put --config-file --github-token --help --threads --version
-      }
-    } else {
-      all $cmds
-      put --config-file --github-token --help --threads --version
-    }
-  } else {
-    var command = $cmd[$cmd-pos]
-    if (eq $command help) {
-      all $cmds
-    } elif (eq $command add) {
-      put --dont-add-dependencies --dont-check-game-version --dont-check-mod-loader
-    } elif (eq $command list) {
-      put --markdown --verbose
-    }
-  }
-}
-
-set edit:completion:arg-completer[vkpurge] = {|@cmd|
-  var cmds = [list rm]
-  var cmd-pos = (overlap-at $cmds $cmd)
-  if (not $cmd-pos) {
-    all $cmds
-  } else {
-    var command = $cmd[$cmd-pos]
-    if (eq $command rm) {
-      vkpurge list
-      put all
-    }
-  }
-}
-
-set edit:completion:arg-completer[dinitctl] = {|@cmd|
-  var cmds = [status is-started is-failed start stop restart wake release unpin unload reload list shutdown add-dep rm-dep enable disable trigger untrigger setenv catlog signal]
-  var cmd-pos = (overlap-at $cmds $cmd)
-  if (not $cmd-pos) {
-    all $cmds
-  }
-}
-
-set edit:completion:arg-completer[stratify] = {|@cmd|
-  if (== 2 (count $cmd)) { brl list }
-}
-
 set edit:completion:arg-completer[playerctl] = {|@cmd|
   var cmds = [play pause play-pause stop next previous position volume status metadata open loop shuffle]
   var cmd-pos = (overlap-at $cmds $cmd)
@@ -314,12 +181,6 @@ set edit:completion:arg-completer[mise] = {|@cmd|
   }
 }
 set edit:completion:arg-completer[edit-script] = $edit:complete-sudo~
-set edit:completion:arg-completer[whereis] = $edit:complete-sudo~
-set edit:completion:arg-completer[which] = $edit:complete-sudo~
-
-set edit:completion:arg-completer[xq] = $edit:completion:arg-completer[xi]
-set edit:completion:arg-completer[xqt] = $edit:completion:arg-completer[xi]
-set edit:completion:arg-completer[xbps-install] = $edit:completion:arg-completer[xi]
 
 var prefixes = [
   &sudo=$edit:complete-sudo~
@@ -335,4 +196,4 @@ each {|c|
       eval (carapace $c elvish | slurp)
       $edit:completion:arg-completer[$c] $@arg
   }
-} [git kak ffmpeg cargo mkdir dd rsync yt-dlp gitui mpv env set-env unset-env elvish nu sysctl mount umount go pip gdb bluetoothctl]
+} [git jj kak ffmpeg cargo kill which whereis chmod chown mkdir dd lsblk lsusb rsync yt-dlp gitui mpv env set-env unset-env rg elvish nu sysctl mount umount go pip gdb bluetoothctl yay makepkg pacman systemctl systemd-analyze journalctl bun bunx chdman kitty kitten fastfetch lnav man]

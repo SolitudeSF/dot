@@ -1,0 +1,7 @@
+[Unit]
+Description=adb
+After=adb.socket
+Requires=adb.socket
+[Service]
+Type=simple
+ExecStart=/usr/bin/adb server nodaemon -L acceptfd:3
