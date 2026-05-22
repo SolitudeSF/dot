@@ -1,6 +1,5 @@
 #!/bin/sh
 xrandr --output DisplayPort-1 --primary
-xrandr --output HDMI-A-0 --auto --left-of DisplayPort-1
 
 xset s off
 xset -dpms
